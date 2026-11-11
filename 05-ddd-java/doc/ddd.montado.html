@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><title>CaminhoSeguro - Domain Driven Design - Java</title>
 <!--
-  TEMPLATE da documentação. Os marcadores [LINK DO GITHUB] e [LINK DO DEPLOY] são trocados por
+  TEMPLATE da documentação. Os marcadores https://github.com/vitorbordalo/citizentech-caminhoseguro e https://citizentech-caminhoseguro.onrender.com são trocados por
   `node doc/montar_pdf.mjs LINK_GITHUB LINK_DEPLOY` (que também gera o PDF).  = número da página no índice.
 -->
 <link rel="stylesheet" href="../../_doc/doc.css">
@@ -60,8 +60,8 @@
       <tr><td>Vitor Bordalo</td><td>561592</td></tr>
     </table>
     <table class="links">
-      <tr><td>Repositório GitHub</td><td><a class="mark" href="[LINK DO GITHUB]">[LINK DO GITHUB]</a></td></tr>
-      <tr><td>Deploy (Render)</td><td><a class="mark" href="[LINK DO DEPLOY]">[LINK DO DEPLOY]</a></td></tr>
+      <tr><td>Repositório GitHub</td><td><a class="mark" href="https://github.com/vitorbordalo/citizentech-caminhoseguro">https://github.com/vitorbordalo/citizentech-caminhoseguro</a></td></tr>
+      <tr><td>Deploy (Render)</td><td><a class="mark" href="https://citizentech-caminhoseguro.onrender.com">https://citizentech-caminhoseguro.onrender.com</a></td></tr>
     </table>
   </div>
   <div class="rodape">São Paulo — novembro de 2026</div>
@@ -80,14 +80,14 @@
     <li><span class="t">5. Diagrama de classes (reflete o código Java)</span><span class="pg">7</span></li>
     <li class="sub"><span class="t">Figuras 1 a 9: model, camadas por recurso, DAO, exceções, dto e config</span><span class="pg">7</span></li>
     <li><span class="t">6. DER: modelo do banco de dados (Oracle)</span><span class="pg">16</span></li>
-    <li><span class="t">7. Tabela de endpoints (GET, POST, PUT e DELETE)</span><span class="pg">18</span></li>
-    <li class="sub"><span class="t">7.1 Exemplos de requisição e resposta (JSON)</span><span class="pg">19</span></li>
-    <li><span class="t">8. Protótipos das telas do front-end</span><span class="pg">20</span></li>
-    <li><span class="t">9. Instruções para executar</span><span class="pg">26</span></li>
-    <li class="sub"><span class="t">9.1 Ferramentas e versões · 9.2 Links</span><span class="pg">26</span></li>
-    <li class="sub"><span class="t">9.3 Passo a passo (H2 rápido e Oracle FIAP) · 9.4 Testes</span><span class="pg">26</span></li>
-    <li class="sub"><span class="t">9.5 Deploy no Render (Docker)</span><span class="pg">27</span></li>
-    <li><span class="t">10. Demais informações</span><span class="pg">28</span></li>
+    <li><span class="t">7. Tabela de endpoints (GET, POST, PUT e DELETE)</span><span class="pg">20</span></li>
+    <li class="sub"><span class="t">7.1 Exemplos de requisição e resposta (JSON)</span><span class="pg">21</span></li>
+    <li><span class="t">8. Protótipos das telas do front-end</span><span class="pg">22</span></li>
+    <li><span class="t">9. Instruções para executar</span><span class="pg">28</span></li>
+    <li class="sub"><span class="t">9.1 Ferramentas e versões · 9.2 Links</span><span class="pg">28</span></li>
+    <li class="sub"><span class="t">9.3 Passo a passo (H2 rápido e Oracle FIAP) · 9.4 Testes</span><span class="pg">28</span></li>
+    <li class="sub"><span class="t">9.5 Deploy no Render (Docker)</span><span class="pg">29</span></li>
+    <li><span class="t">10. Demais informações</span><span class="pg">30</span></li>
   </ol>
   <div class="nota" style="margin-top:14pt"><b>Como o documento está organizado.</b> As seções 1 a 3 são a especificação. As seções 4 e 5 mostram a estrutura do código: o diagrama é gerado
   automaticamente a partir dos arquivos <code>.java</code>, então reflete o que está no repositório. As seções 6 a 8 trazem o banco, a API e as telas.
@@ -239,7 +239,7 @@ muita gente desistir de sair de casa ou correr risco no caminho.</p>
 <!-- ============================ 6. DER ============================ -->
 <section class="paisagem" id="s6">
   <h2>6. DER: modelo do banco de dados (Oracle)</h2>
-  <figure><img src="img/modelo_logico_recortado.png" alt="DER" style="width:100%; max-height:none"><figcaption>Figura 10. Modelo relacional do CaminhoSeguro (chaves primárias P, estrangeiras F, únicas U e obrigatórias *; relacionamentos 1:N).</figcaption></figure>
+  <figure><img src="img/modelo_logico_recortado.png" alt="DER" style="width:100%; max-height:none"><figcaption>Figura 10. Modelo relacional do CaminhoSeguro, gerado no Oracle SQL Developer Data Modeler 24.3 (chaves primárias P, estrangeiras F, únicas U e obrigatórias *; relacionamentos 1:N).</figcaption></figure>
 </section>
 <section>
   <p style="margin-top:0">O banco foi projetado na disciplina de Database Design (Oracle Data Modeler) e criado no Oracle da FIAP pelos scripts <code>04-database/01_DDL_caminhoseguro.sql</code> (tabelas e constraints) e <code>02_DML_caminhoseguro.sql</code> (dados simulados). São <b>8 tabelas</b> com prefixo <code>T_CS_</code>; as classes do pacote <code>model</code> correspondem uma a uma a elas.</p>
@@ -351,13 +351,13 @@ muita gente desistir de sair de casa ou correr risco no caminho.</p>
 
 <!-- ============================ 8. TELAS ============================ -->
 <h2 id="s8">8. Protótipos das telas do front-end</h2>
-<p>O front-end é um protótipo web estático (HTML, CSS e JS puros) que <b>consome a API real</b>; os prints abaixo foram tirados com a API rodando. Persona principal: dona Maria, 72 anos. Decisões gerais: letra base de 20 px, contraste alto (texto escuro sobre fundo claro, acima de 15:1), botões com no mínimo 56 px de altura, estados sempre com ícone e texto (nunca só cor), foco visível no teclado, campos com <code>&lt;label&gt;</code>, mensagens em regiões <code>aria-live</code> e <code>prefers-reduced-motion</code> respeitado. Se a API não responder, o front usa dados simulados e mostra o selo &quot;Modo demonstração&quot;.</p>
-<figure><img src="img/1-inicio.png" style="width:132mm" alt="Tela 1"><figcaption><b>Tela 1: Início (<code>index.html</code>).</b> &quot;Para onde você quer ir?&quot;: listas de lugares (<code>GET /api/locais</code>) em vez de digitar endereço; três critérios em cartões grandes, com &quot;Mais acessível&quot; marcado por padrão; uma ação principal, &quot;Ver caminho&quot;.</figcaption></figure>
-<figure><img src="img/2-rota.png" style="width:132mm" alt="Tela 2"><figcaption><b>Tela 2: Resultado do caminho (<code>rota.html</code>).</b> Usa <code>GET /api/rotas</code>. Passos numerados com tempo e acessibilidade, tempo total em destaque, selo &quot;Totalmente acessível&quot;, pontos de apoio destacados e atalho &quot;Avisar um problema neste caminho&quot;. Sem rota (404) mostra mensagem amigável.</figcaption></figure>
-<figure><img src="img/3-ocorrencia.png" style="width:132mm" alt="Tela 3"><figcaption><b>Tela 3: Registrar problema (<code>ocorrencia.html</code>).</b> Usa <code>GET /api/trechos</code>, <code>GET /api/tipos-ocorrencia</code> e <code>POST /api/ocorrencias</code>. Trecho pré-selecionado quando vem da rota, tipos em botões com ícone, gravidade de 1 a 5 em palavras, descrição opcional e confirmação clara.</figcaption></figure>
-<figure><img src="img/4-painel.png" style="width:132mm" alt="Tela 4"><figcaption><b>Tela 4: Painel do agente público (<code>painel.html</code>).</b> Usa <code>GET /api/ocorrencias</code> (com filtro de status) e <code>PUT /api/ocorrencias/{id}</code>. Três contadores (abertos, em análise, resolvidos), cartões ordenados por urgência e troca de situação no próprio cartão.</figcaption></figure>
+<p>O front-end é um protótipo web estático (HTML, CSS e JS puros) que <b>consome a API real</b>; os prints abaixo foram tirados com a API rodando. Persona principal: dona Maria, 72 anos. Quem entra pela primeira vez entende o app em 3 passos (escolher os lugares, ver o caminho, avisar um problema), e cada tela indica o próximo passo. Decisões gerais: linguagem simples (&quot;Mais seguro&quot;, &quot;Sem degraus&quot; em vez de termos técnicos), letra base de 18 px, alto contraste, tema claro e escuro, botões e alvos de toque com 48 a 56 px, estados sempre com ícone e texto (nunca só cor), foco visível no teclado, campos com <code>&lt;label&gt;</code>, mensagens em regiões <code>aria-live</code> e <code>prefers-reduced-motion</code> respeitado. Como o plano gratuito do Render &quot;dorme&quot;, o front avisa &quot;Acordando o servidor…&quot; quando a API demora; se ela não responder, usa dados simulados e mostra o selo &quot;Modo demonstração&quot;.</p>
+<figure><img src="img/1-inicio.png" style="width:132mm" alt="Tela 1"><figcaption><b>Tela 1: Início (<code>index.html</code>).</b> Explica em uma frase o que é o app e mostra os 3 passos de uso. Formulário numerado: de onde sai e para onde vai (listas de <code>GET /api/locais</code>, sem digitar endereço), tipo de caminho em cartões grandes (&quot;Mais acessível&quot; marcado por padrão) e uma ação principal, &quot;Traçar meu caminho&quot;.</figcaption></figure>
+<figure><img src="img/2-rota.png" style="width:132mm" alt="Tela 2"><figcaption><b>Tela 2: Resultado do caminho (<code>rota.html</code>).</b> Usa <code>GET /api/rotas</code> (uma chamada por critério, para comparar) e <code>GET /api/locais</code>/<code>/api/trechos</code> para desenhar o mapa. Três cartões comparam &quot;Mais acessível&quot;, &quot;Mais segura&quot; e &quot;Mais rápida&quot;; o mapa mostra o trajeto em formato de linha de metrô, com SAÍDA, CHEGADA, minutos de cada trecho e pontos de apoio; ao lado, o passo a passo em linguagem simples e o atalho &quot;Avisar um problema neste caminho&quot;. Sem rota (404) ou origem igual ao destino (422) mostram mensagens amigáveis.</figcaption></figure>
+<figure><img src="img/3-ocorrencia.png" style="width:132mm" alt="Tela 3"><figcaption><b>Tela 3: Registrar problema (<code>ocorrencia.html</code>).</b> Usa <code>GET /api/trechos</code>, <code>GET /api/tipos-ocorrencia</code> e <code>POST /api/ocorrencias</code>. Formulário em 3 passos: trecho (pré-selecionado quando vem da rota, com mini-mapa), tipo de problema em botões com ícone e gravidade de 1 a 5 em palavras; descrição opcional e tela de confirmação com o próximo passo.</figcaption></figure>
+<figure><img src="img/4-painel.png" style="width:132mm" alt="Tela 4"><figcaption><b>Tela 4: Painel do agente público (<code>painel.html</code>).</b> Usa <code>GET /api/ocorrencias</code> (com filtro de status) e <code>PUT /api/ocorrencias/{id}</code>. Contadores (total, abertos, em análise, resolvidos), lista dos trechos com mais avisos abertos (tocar filtra os avisos daquele trecho), filtros por situação e troca de situação no próprio cartão.</figcaption></figure>
 <figure><img src="img/5-swagger.png" style="width:150mm" alt="Swagger"><figcaption><b>Documentação interativa (Swagger UI, <code>/swagger-ui.html</code>).</b> Lista todos os endpoints da seção 7 e permite testá-los pelo navegador.</figcaption></figure>
-<h3>Versão para celular (390 px)</h3>
+<h3>Versão para celular</h3>
 <p>O layout é pensado primeiro para o celular: uma coluna, sem rolagem lateral; no desktop o conteúdo se reorganiza em duas colunas.</p>
 <div class="cel">
   <figure><img src="img/1-inicio-celular.png" alt="Início no celular"><figcaption>Início</figcaption></figure>
@@ -381,10 +381,10 @@ muita gente desistir de sair de casa ou correr risco no caminho.</p>
 </table>
 <h3>9.2 Links do projeto</h3>
 <table class="links">
-  <tr><td>Repositório GitHub</td><td><a class="mark" href="[LINK DO GITHUB]">[LINK DO GITHUB]</a></td></tr>
-  <tr><td>Aplicação publicada (Render)</td><td><a class="mark" href="[LINK DO DEPLOY]">[LINK DO DEPLOY]</a></td></tr>
-  <tr><td>Health check</td><td><code>[LINK DO DEPLOY]/api/status</code></td></tr>
-  <tr><td>Swagger (documentação da API)</td><td><code>[LINK DO DEPLOY]/swagger-ui.html</code></td></tr>
+  <tr><td>Repositório GitHub</td><td><a class="mark" href="https://github.com/vitorbordalo/citizentech-caminhoseguro">https://github.com/vitorbordalo/citizentech-caminhoseguro</a></td></tr>
+  <tr><td>Aplicação publicada (Render)</td><td><a class="mark" href="https://citizentech-caminhoseguro.onrender.com">https://citizentech-caminhoseguro.onrender.com</a></td></tr>
+  <tr><td>Health check</td><td><code>https://citizentech-caminhoseguro.onrender.com/api/status</code></td></tr>
+  <tr><td>Swagger (documentação da API)</td><td><code>https://citizentech-caminhoseguro.onrender.com/swagger-ui.html</code></td></tr>
 </table>
 <p style="font-size:9.5pt">Observação: no plano gratuito do Render o serviço &quot;dorme&quot; após alguns minutos sem uso, e a primeira chamada depois disso demora um pouco mais.</p>
 

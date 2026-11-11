@@ -388,3 +388,15 @@ h1[tabindex="-1"]:focus { outline: none; box-shadow: none; }
 @media (max-width: 39.99rem) { #mapa-avisos .mapa { min-width: 560px; } }
 .mapa-compacto .m-rotulo.forte { font-weight: 800; }
 .mapa.mapa-esq { min-width: 0; }
+
+/* Painel: trechos com mais avisos */
+.top-trechos { margin-bottom: 1.5rem; }
+.barras { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.barra-item { width: 100%; min-height: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "nome n" "trilho trilho"; gap: .3rem .75rem; align-items: center; text-align: left; padding: .6rem .9rem; border: 2px solid var(--line); border-radius: var(--raio-m); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+.barra-item:hover { border-color: var(--brand); }
+.barra-item[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-soft); }
+.b-nome { grid-area: nome; font-weight: 700; }
+.b-n { grid-area: n; font-weight: 800; color: var(--danger); white-space: nowrap; }
+.b-trilho { grid-area: trilho; height: 10px; border-radius: 10px; background: var(--bg-2); overflow: hidden; }
+.b-trilho i { display: block; height: 100%; background: var(--danger); border-radius: 10px; }
+@media (min-width: 64rem) { .painel-layout { grid-template-columns: 4fr 8fr; } .top-trechos { position: sticky; top: 5.5rem; margin-bottom: 0; } }
