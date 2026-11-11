@@ -356,26 +356,29 @@ O protótipo do CaminhoSeguro apresenta quatro telas que cobrem os dois fluxos p
 
 ---
 
-## 6. Roteiro do Vídeo Pitch (até 3 minutos)
+## 6. Vídeo Pitch (link e roteiro)
 
-**Narradores:** Lucas (L) e Vitor (V). **Fala total:** cerca de 315 palavras (≈ 2 min 05 s em ritmo calmo), dentro do limite de 2 min 50 s de fala; o restante é pausa e transições. **Duração total prevista:** 2 min 55 s.
+**Link (YouTube, não listado):** https://youtu.be/JK46uoNLzO0
 
-### 6.1 Roteiro cronometrado
+**Duração:** 2 min 06 s (limite: 3 min). **Narração:** Vitor Bordalo, com a voz gravada pelo integrante (sem voz sintética). O vídeo é ilustrado com artes da história da dona Maria e telas reais da aplicação, com legendas na tela (acessibilidade) e trilha suave.
+
+### 6.1 Roteiro cronometrado (como foi gravado)
 
 | Cena | Tempo | O que aparece na tela | Narração |
 |---|---|---|---|
-| 1. Problema | 0:00 a 0:20 | Foto ou ilustração de calçada quebrada e ladeira na Bela Vista; texto "Bela Vista, São Paulo" | **L:** "Imagine ter 72 anos e querer ir sozinha à UBS. Na Bela Vista, calçada quebrada, ladeira e travessia perigosa fazem muita gente desistir de sair de casa. Esse é o problema que a gente quis resolver." |
-| 2. Cidadão | 0:20 a 0:40 | Ilustração de dona Maria; selo "personagem fictícia"; ao lado, Carlos e Renata | **V:** "Esta é a dona Maria, personagem fictícia de 72 anos. Ela quer ir sozinha ao mercado e à UBS, mas não sabe qual caminho é seguro para ela. O CaminhoSeguro é para ela, para cadeirantes e para cuidadores." |
-| 3. Solução funcionando | 0:40 a 1:30 | Tela 1 (escolher origem, destino e critério); Tela 2 (resultado com passo a passo, tempo, risco, pontos de apoio); Tela 3 (registrar problema); Tela 4 (painel da agente mudando o status) | **L:** "Na tela inicial, ela escolhe de onde sai, aonde vai e como quer ir: mais rápida, mais segura ou mais acessível. Recebe o caminho passo a passo, com tempo, risco e pontos de apoio." **V:** "Se vê um buraco, registra o problema em poucos toques. A agente da subprefeitura vê no painel, muda o status para em análise ou resolvida, e os problemas graves passam a pesar nas próximas rotas." |
-| 4. Tecnologia (7 disciplinas) | 1:30 a 2:15 | Slide com sete ícones, um por disciplina, aparecendo em sequência | **V:** "Em Agile, organizamos o trabalho em backlog e dois sprints. Em Database, um banco relacional guarda locais, trechos e ocorrências. Em DDD Java, uma API no Render entrega rotas e ocorrências." **L:** "Em Dynamic Programming, o Dijkstra calcula as rotas e a mochila prioriza melhorias com orçamento. Em Data Science, analisamos as ocorrências por trecho. Em AR-VR, simulamos as barreiras da calçada. Em Network, uma rede com VLANs, NAT, ACL e SSH conecta equipe e servidor." |
-| 5. Impacto e ODS | 2:15 a 2:40 | Dois indicadores em destaque; logos dos ODS 11, 10 e 3; frase "Outro bairro: trocar os dados" | **L:** "Medimos o impacto por dois indicadores: o percentual de trechos acessíveis e o número de rotas acessíveis consultadas por semana. Isso apoia os ODS 11, 10 e 3: cidade acessível, menos desigualdade e mais bem-estar. Para outro bairro, basta trocar os dados." |
-| 6. Fechamento | 2:40 a 2:55 | Logo CaminhoSeguro, nomes, RMs, turma 2ESPH, equipe 1, link do repositório | **V:** "Os dados desta fase são simulados, mas a solução funciona. Somos Vitor Bordalo e Lucas Branquinho, equipe 1, turma 2ESPH." **Ambos:** "CaminhoSeguro: sair de casa com segurança." |
+| 1. O problema | 0:00 a 0:17 | Rua com calçada quebrada e ladeira; dona Maria na porta de casa | "Um buraco na calçada pode prender uma pessoa dentro de casa. Esta é a dona Maria, personagem de 72 anos da Bela Vista. Ela quer ir ao posto de saúde a pé, sozinha. Mas calçada quebrada e ladeira transformam cada passo em risco. E nenhum mapa conta a ela qual caminho é seguro." |
+| 2. Para quem | 0:17 a 0:25 | Dona Maria, idosos, cadeirante e cuidadora nas ruas do bairro | "Foi por ela que criamos o CaminhoSeguro. É um app que mostra o caminho a pé mais seguro e acessível. Para idosos, cadeirantes e quem cuida de alguém." |
+| 3. O app funcionando | 0:25 a 0:53 | Telas da aplicação: escolha de origem, destino e critério; mapa da rota com tempo e pontos de apoio; registro de ocorrência em três passos; painel da agente mudando o status | "Dona Maria escolhe a origem, o destino e o caminho: acessível, seguro ou rápido. O mapa mostra o trajeto, o tempo a pé e pontos de apoio para descansar. No caminho, ela encontra um buraco. Em três passos, ela avisa. A prefeitura acompanha o aviso em um painel e atualiza a situação. Quando o problema é grave, o app passa a evitar aquele trecho nas próximas rotas. Assim, o aviso de uma pessoa protege todas as outras. E ela chega ao posto de saúde com tranquilidade." |
+| 4. Como construímos | 0:53 a 1:21 | Uma arte por disciplina, em sequência | "Por trás do app, sete disciplinas trabalharam juntas. Em Agile, backlog e dois sprints organizaram o trabalho. Em Database, um banco Oracle guarda locais, trechos e avisos. Em Java, uma API na nuvem calcula as rotas. Em Dynamic Programming, um algoritmo escolhe o melhor caminho. Em Data Science, analisamos os avisos. Em AR e VR, simulamos as barreiras em 3D. E em Network, desenhamos a rede." |
+| 5. Ecossistema e impacto | 1:21 a 1:53 | Moradores, prefeitura, posto de saúde e comércio; os dois indicadores; ODS 11, 10 e 3 | "Um caminho seguro depende de muita gente. Os moradores avisam problemas. A prefeitura e a subprefeitura acompanham os reparos. Postos de saúde e o comércio local entram como pontos de apoio. Vamos medir o impacto com dois indicadores. O primeiro, o percentual de trechos acessíveis. O segundo, as rotas acessíveis consultadas por semana. Isso apoia os Objetivos de Desenvolvimento Sustentável 11, 10 e 3. Cidade acessível, menos desigualdade e mais saúde. E para chegar a outro bairro, basta trocar os dados." |
+| 6. Fechamento | 1:53 a 2:06 | Dona Maria chegando ao posto; logo, nomes, RMs, equipe 1, turma 2ESPH | "Os dados desta fase são simulados, mas o app já funciona e está no ar. Somos Vitor Bordalo e Lucas Branquinho, equipe 1, turma 2ESPH. CaminhoSeguro: para a dona Maria e para todos, sair de casa com segurança." |
 
-### 6.2 Orientações de gravação
+### 6.2 Como o vídeo foi produzido
 
-- Telas gravadas do protótipo ou da aplicação rodando; destacar o critério escolhido e o resultado.
-- Falas curtas, sem pressa; legendas na tela (acessibilidade). Exportar com no máximo 3 min.
-- Publicar no YouTube como **não listado** e colocar o link na capa do PDF.
+- Narração gravada pelo integrante, uma faixa por cena, com volume normalizado.
+- Telas capturadas da própria aplicação (entrega de DDD Java); demais imagens são ilustrações próprias, sem marcas de terceiros. Trilha sonora sintetizada pela equipe.
+- Legendas na tela, em letra grande e alto contraste, sincronizadas com a fala.
+- Publicado no YouTube como **não listado**; o link está na capa deste PDF.
 
 ### 6.3 Como as sete disciplinas se conectam
 

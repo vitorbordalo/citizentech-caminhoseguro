@@ -1,0 +1,39 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css"><script src="comum.js"></script></head><body>
+<div class="palco" id="p"></div>
+<script>
+let h='<div class="topo"><span class="chip amb">Ecossistema e impacto</span></div>';
+const H1=(t)=>`<h1 style="position:absolute;left:90px;top:130px;width:1740px">${t}</h1>`;
+const eco={a:[],b:[0],c:[1],d:[2,3]}[V];
+if(eco){
+ const N=[['pessoas','Moradores','Avisam os problemas',90,330],['predio','Prefeitura e subprefeitura','Acompanham os reparos',1330,330],['cruz','Postos de saúde','Pontos de apoio',90,640],['loja','Comércio local','Pontos de apoio',1330,640]];
+ let li='',nd='';
+ N.forEach(([i,t,s,x,y],k)=>{const on=V==='a'?true:eco.includes(k);const dim=V==='a'?1:(on?1:.3);
+  const cx=x<900?x+500:x,cy=y+85;const dx=960-cx,dy=465-cy,d=Math.hypot(dx,dy),ex=Math.round(960-dx/d*88),ey=Math.round(465-dy/d*88);
+  li+=`<path d="M${cx} ${cy} L${ex} ${ey}" stroke="${on&&V!=='a'?'#f5b83d':'#2dd4bf'}" stroke-width="${on&&V!=='a'?7:4}" stroke-dasharray="${on&&V!=='a'?'0':'4 14'}" stroke-linecap="round" opacity="${dim*.8}"/>`;
+  nd+=`<div class="card" style="position:absolute;left:${x}px;top:${y}px;width:500px;height:170px;display:flex;align-items:center;gap:26px;padding:0 34px;opacity:${dim};${on&&V!=='a'?'border-color:#f5b83d;box-shadow:0 0 0 6px rgba(245,184,61,.22),0 24px 60px rgba(0,0,0,.4)':''}">
+   <span style="width:92px;height:92px;border-radius:26px;background:${on&&V!=='a'?'#f5b83d':'rgba(245,184,61,.16)'};color:${on&&V!=='a'?'#0d2b45':'#f5b83d'};display:flex;align-items:center;justify-content:center;font-size:54px;flex:none">${ic(i)}</span>
+   <div><div style="font-size:35px;font-weight:800;line-height:1.1">${t}</div><div style="font-size:26px;color:var(--ink2);margin-top:6px">${s}</div></div></div>`;});
+ h+=H1('Um caminho seguro <em>depende de muita gente</em>')+`<svg width="1920" height="1080" style="position:absolute;inset:0">${li}</svg>`+nd
+  +`<div style="position:absolute;left:760px;top:390px;width:400px;text-align:center"><span class="logo" style="width:150px;height:150px;font-size:88px">${ic('escudo')}</span><div style="position:absolute;left:0;top:-64px;width:400px;font-size:38px;font-weight:800">CaminhoSeguro</div></div>`;
+}else if('efg'.includes(V)){
+ const ind=(x,n,t,s,lit,rot)=>`<div class="card" style="position:absolute;left:${x}px;top:300px;width:790px;height:480px;padding:56px;opacity:${lit?1:.3};${lit&&V!=='e'?'border-color:#f5b83d;box-shadow:0 0 0 6px rgba(245,184,61,.22),0 24px 60px rgba(0,0,0,.4)':''}">
+ <span style="width:120px;height:120px;border-radius:34px;background:rgba(45,212,191,.15);color:var(--teal);display:flex;align-items:center;justify-content:center;font-size:70px">${ic(n)}</span>
+ <div style="position:absolute;right:56px;top:56px;font-size:30px;font-weight:800;color:var(--amber)">${rot}</div>
+ <div style="font-size:54px;font-weight:800;margin-top:36px;letter-spacing:-.02em;line-height:1.15">${t}</div><div style="font-size:30px;color:var(--ink2);margin-top:14px">${s}</div></div>`;
+ h+=H1('Dois indicadores para <em>medir o impacto</em>')+ind(90,'check','Percentual de trechos acessíveis','Quanto da calçada do bairro já é segura para todos',V!=='g','Indicador 1')+ind(1040,'graf','Rotas acessíveis consultadas por semana','Quantas pessoas usam o caminho mais acessível',V!=='f','Indicador 2');
+}else if(V==='h'){
+ const o=(x,nu,c,t,s,i2)=>`<div style="position:absolute;left:${x}px;top:340px;width:540px;height:470px;border-radius:32px;background:${c};padding:44px;color:#fff;box-shadow:0 24px 60px rgba(0,0,0,.4)">
+ <div style="font-size:30px;font-weight:700">ODS</div><div style="font-size:150px;font-weight:800;line-height:1;letter-spacing:-.04em">${nu}</div>
+ <div style="font-size:46px;font-weight:800;margin-top:20px;line-height:1.1">${t}</div><div style="font-size:27px;margin-top:10px;line-height:1.3">${s}</div>
+ <span style="position:absolute;right:36px;top:36px;font-size:84px">${ic(i2)}</span></div>`;
+ h+=H1('Apoia os <em>Objetivos de Desenvolvimento<br>Sustentável (ODS)</em>')
+ +o(90,11,'#b86b00','Cidade acessível','Calçadas e caminhos para todos','pin')+o(690,10,'#c4104f','Menos desigualdade','Mobilidade para quem mais precisa','cadeira')+o(1290,3,'#3d8a2c','Mais saúde','Saúde e bem-estar para a comunidade','cora');
+}else{
+ const box=(x,t,s)=>`<div class="card" style="position:absolute;left:${x}px;top:330px;width:520px;height:360px;padding:44px;text-align:center"><div style="color:var(--amber);font-size:84px">${ic('pin')}</div><div style="font-size:48px;font-weight:800;margin-top:14px">${t}</div><div style="font-size:28px;color:var(--ink2);margin-top:10px">${s}</div></div>`;
+ h+=H1('Para chegar a outro bairro, <em>é só trocar os dados</em>')
+ +box(90,'Bela Vista','Dados desta fase')+box(1310,'Outro bairro','Novos dados')
+ +`<div style="position:absolute;left:660px;top:340px;width:600px;text-align:center"><span class="logo" style="width:150px;height:150px;font-size:88px">${ic('escudo')}</span><div style="font-size:44px;font-weight:800;margin-top:20px">O mesmo CaminhoSeguro</div>
+ <div style="color:var(--teal);font-size:70px;margin-top:20px">${ic('troca')}</div></div>`;
+}
+document.getElementById('p').innerHTML=h;
+</script></body></html>

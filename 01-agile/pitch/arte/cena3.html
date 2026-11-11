@@ -1,0 +1,32 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css"><script src="comum.js"></script></head><body>
+<div class="palco" id="p"></div>
+<script>
+function celular(img,off,x,y){const W=400,H=730;
+ return `<div style="position:absolute;left:${x}px;top:${y}px;width:${W+34}px;height:${H+34}px;border-radius:64px;background:#05090d;padding:17px;box-shadow:0 0 0 3px #2a4152,0 40px 90px rgba(0,0,0,.6)">
+ <div style="width:${W}px;height:${H}px;border-radius:48px;overflow:hidden;position:relative;background:#09141d"><img src="../capturas/${img}.png" style="position:absolute;left:0;top:${-off*.8}px;width:400px"></div></div>`;}
+function notebook(img,x,y){const W=1100,H=688;
+ return `<div style="position:absolute;left:${x}px;top:${y}px;width:${W+40}px">
+ <div style="width:${W+40}px;height:${H+40}px;border-radius:26px 26px 8px 8px;background:#05090d;padding:20px;box-shadow:0 0 0 3px #2a4152,0 40px 90px rgba(0,0,0,.55)"><div style="width:${W}px;height:${H}px;overflow:hidden;border-radius:6px"><img src="../capturas/${img}.png" style="width:${W}px;display:block"></div></div>
+ <div style="height:22px;margin:0 -60px;border-radius:0 0 40px 40px;background:linear-gradient(#3b5366,#1b2c3a)"></div></div>`;}
+const txt=(n,t,s,extra)=>`<div style="position:absolute;left:90px;top:140px;width:600px"><span class="chip amb">${n}</span><h1 style="font-size:64px;margin-top:26px">${t}</h1><div class="sub" style="margin-top:22px;font-size:32px">${s}</div>${extra||''}</div>`;
+const pill=(t)=>`<div style="margin-top:14px"><span class="chip" style="font-size:26px">${t}</span></div>`;
+const txtL=(n,t,s)=>`<div style="position:absolute;left:90px;top:70px;width:1100px"><span class="chip amb">${n}</span><h1 style="font-size:64px;margin-top:22px">${t}</h1><div class="sub" style="margin-top:14px;font-size:32px">${s}</div></div>`;
+const chao=`<div style="position:absolute;left:0;top:790px;width:1920px;height:290px;background:linear-gradient(#9fb0bd,#7d909f 14%,#16242f 14.5%)"></div>`;
+const ceu=`<div style="position:absolute;inset:0;background:linear-gradient(180deg,#0b2a3a,#115e59 60%,#e0a73f)"></div>`;
+let h='';
+if(V==='a')h=txt('Dona Maria &middot; 1','Escolhe de onde sai e para onde vai','Depois, o tipo de caminho.',pill('Acessível')+pill('Seguro')+pill('Rápido'))+celular('inicio_cel',650,1130,70);
+if(V==='b')h=txt('Dona Maria &middot; 2','O mapa mostra o trajeto','Tempo a pé e pontos de apoio para descansar.')+notebook('rota_note',690,110);
+if(V==='c')h=ceu+chao+txtL('Dona Maria &middot; 3','No caminho, ela encontra um buraco','O tipo de problema que o app ajuda a mostrar.')+`<svg width="1920" height="1080" style="position:absolute;inset:0">
+ <g transform="translate(420 800) scale(.8)">${maria()}</g>
+ <path d="M900 800 l130 -10 l170 8 l70 40 l-40 70 l-170 26 l-160 -20 l-60 -60Z" fill="#14202a"/><path d="M950 815 l100 -8 l130 8 l44 28 l-30 44 l-130 18 l-110 -12 l-40 -40Z" fill="#05090d"/>
+ <g transform="translate(790 804)"><path d="M0 0 L26 -90 L52 0Z" fill="#f5762d"/><rect x="-10" y="0" width="72" height="14" rx="4" fill="#f5762d"/><path d="M9 -40 H43 M15 -62 H37" stroke="#fff" stroke-width="8"/></g>
+ <g transform="translate(1260 520)"><path d="M0 0 L100 -170 L200 0Z" fill="#f5b83d" stroke="#0d2b45" stroke-width="10" stroke-linejoin="round"/><text x="100" y="-24" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="110" fill="#0d2b45">!</text></g></svg>`;
+if(V==='d')h=txt('Dona Maria &middot; 4','Em três passos, ela avisa','Trecho, tipo do problema e o quanto atrapalha.')+celular('aviso_cel',0,1130,70);
+if(V==='e')h=txt('Prefeitura','Acompanha o aviso no painel','E atualiza a situação de cada um.')+notebook('painel_note',690,110);
+if(V==='f')h=txt('Problema grave','O app evita o trecho','Nas próximas rotas, o caminho foge do perigo.',pill('Mais segura'))+celular('rota_segura_cel',0,1130,70);
+if(V==='g'){const pos=[[360,500,'#f5b83d'],[640,430,'#2dd4bf'],[1280,430,'#f5b83d'],[1560,500,'#2dd4bf'],[420,760,'#2dd4bf'],[1500,760,'#f5b83d']];
+ let li='',pe='';pos.forEach(([x,y,c])=>{li+=`<path d="M${x} ${y} L960 610" stroke="${c}" stroke-width="5" stroke-dasharray="4 16" stroke-linecap="round" opacity=".7"/>`;pe+=`<g transform="translate(${x} ${y+30}) scale(2.2)">${pessoa(c)}</g>`;});
+ h=txtL('Todos protegidos','O aviso de uma pessoa protege todas as outras','')+`<svg width="1920" height="1080" style="position:absolute;inset:0">${li}${pe}</svg><div style="position:absolute;left:810px;top:460px">${SHIELD(300)}</div>`;}
+if(V==='h')h=ceu+chao+txtL('Dona Maria &middot; 5','E ela chega com tranquilidade','Ao posto de saúde, pelo caminho seguro.')+`<svg width="1920" height="1080" style="position:absolute;inset:0"><g transform="translate(1330 800)">${posto()}</g><g transform="translate(860 830) scale(.95)">${maria()}</g></svg>`;
+document.getElementById('p').innerHTML=h;
+</script></body></html>

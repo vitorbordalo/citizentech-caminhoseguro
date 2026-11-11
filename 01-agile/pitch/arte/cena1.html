@@ -1,0 +1,55 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><link rel="stylesheet" href="comum.css"><script src="comum.js"></script></head><body>
+<div class="palco" style="background:linear-gradient(180deg,#0b2a3a 0%,#115e59 55%,#e0a73f 100%)">
+<svg id="s" width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;inset:0"></svg>
+<div class="topo" id="t"></div></div>
+<script>
+const y=x=>800-0.17*x, ang=-Math.atan(0.17)*180/Math.PI; let o='';
+const sol=(cx,cy)=>`<circle cx="${cx}" cy="${cy}" r="150" fill="#ffd36b" opacity=".18"/><circle cx="${cx}" cy="${cy}" r="86" fill="#ffd36b" opacity=".9"/>`;
+const chip=(t)=>`<span class="chip amb" style="background:rgba(9,20,29,.55)">${t}</span>`;
+const h1=(a,b)=>`<h1 style="margin-top:22px;text-shadow:0 4px 30px rgba(0,0,0,.4)">${a}<br><em style="color:#ffd36b">${b}</em></h1>`;
+const cores=['#1d4f73','#8a5a3b','#2a6f6a','#a86a45','#355c7d','#7a4a36','#2f7f77','#9b6b4a'];
+if(V==='b'){
+ o+=sol(1560,230);
+ o+=`<path d="M0 560 Q300 440 560 520 T1100 470 T1920 420 V900 H0Z" fill="#0d4d4a" opacity=".6"/>`;
+ // morro até o posto
+ o+=`<path d="M560 840 C900 840 1100 640 1250 560 C1380 495 1480 480 1920 480 V1080 H560Z" fill="#0b3a3a"/>`;
+ o+=`<path d="M700 835 C980 835 1130 660 1260 590 C1380 530 1480 520 1560 520" stroke="#f5b83d" stroke-width="12" stroke-dasharray="6 26" stroke-linecap="round" fill="none"/>`;
+ o+=`<g transform="translate(1560 520) scale(.7)">${posto()}</g>`;
+ // casa
+ o+=`<rect x="0" y="860" width="1920" height="220" fill="#0b2f33"/><rect x="0" y="820" width="860" height="60" fill="#9fb0bd"/>`;
+ o+=`<rect x="90" y="360" width="540" height="470" fill="#8a5a3b"/><path d="M60 365 L360 250 L660 365Z" fill="#0d2b45"/>`;
+ o+=`<rect x="130" y="440" width="110" height="130" rx="8" fill="#ffe29a" opacity=".9"/><rect x="480" y="440" width="110" height="130" rx="8" fill="#ffe29a" opacity=".9"/>`;
+ o+=`<rect x="290" y="480" width="150" height="350" rx="8" fill="#0d2b45"/><rect x="298" y="488" width="134" height="342" rx="6" fill="#f5b83d" opacity=".25"/>`;
+ o+=`<g transform="translate(365 840) scale(.72)">${maria()}</g>`;
+ o+=`<g transform="translate(760 560)"><rect x="0" y="0" width="360" height="100" rx="30" fill="#fff4d6"/><path d="M40 98 l-26 44 l66 -44Z" fill="#fff4d6"/><text x="180" y="64" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="40" fill="#0d2b45">Posto de saúde?</text></g>`.replace('translate(760 560)','translate(470 420)');
+ document.getElementById('t').innerHTML=chip('Dona Maria, 72 anos &middot; Bela Vista')+h1('Ela quer ir ao posto','a pé e sozinha.');
+}else{
+ const comMaria=V==='c';
+ o+=sol(1560,250);
+ o+=`<path d="M0 520 Q300 380 560 470 T1100 400 T1920 330 V900 H0Z" fill="#0d4d4a" opacity=".7"/>`;
+ let hx=640,i=0;
+ while(hx<1900){const w=190+(i*37)%70,h=170+(i*53)%110,b=y(hx+w/2)+8;
+  o+=`<g><rect x="${hx}" y="${b-h}" width="${w}" height="${h+120}" fill="${cores[i%8]}"/>
+  <path d="M${hx-12} ${b-h} L${hx+w/2} ${b-h-60} L${hx+w+12} ${b-h}Z" fill="#0d2b45"/>
+  <rect x="${hx+28}" y="${b-h+34}" width="44" height="52" rx="6" fill="#ffe29a" opacity=".9"/>
+  <rect x="${hx+w-80}" y="${b-h+34}" width="44" height="52" rx="6" fill="#ffe29a" opacity=".6"/>
+  <rect x="${hx+w/2-24}" y="${b-70}" width="48" height="78" rx="5" fill="#0d2b45" opacity=".75"/></g>`;hx+=w+22;i++;}
+ o+=`<path d="M0 ${y(0)+60} L1920 ${y(1920)+60} V1080 H0Z" fill="#0b2f33"/><path d="M0 ${y(0)+150} L1920 ${y(1920)+150} V1080 H0Z" fill="#1a2b36"/>`;
+ o+=`<path d="M0 ${y(0)+330} L1920 ${y(1920)+330}" stroke="#f5b83d" stroke-width="8" stroke-dasharray="70 50" opacity=".85"/>`;
+ for(let k=0;k<7;k++){const x0=170+k*58;o+=`<path d="M${x0} ${y(x0)+100} l34 0 l-26 140 l-34 0Z" fill="#e8eef2" opacity=".92"/>`;}
+ o+=`<g transform="translate(640 ${y(640)+330}) rotate(${ang})"><rect x="0" y="-70" width="250" height="70" rx="16" fill="#c8372d"/><path d="M40 -70 L70 -118 H180 L215 -70Z" fill="#a72a22"/><path d="M78 -72 L98 -110 H128 V-72Z M138 -72 V-110 H172 L194 -72Z" fill="#bfe6f2"/><circle cx="62" cy="0" r="26" fill="#0b1117"/><circle cx="188" cy="0" r="26" fill="#0b1117"/><circle cx="62" cy="0" r="10" fill="#8a9cae"/><circle cx="188" cy="0" r="10" fill="#8a9cae"/></g>`;
+ o+=`<g transform="translate(0 ${y(0)+62}) rotate(${ang})"><rect x="0" y="0" width="2000" height="74" fill="#9fb0bd"/><rect x="0" y="0" width="2000" height="10" fill="#c7d3dc"/><rect x="0" y="74" width="2000" height="16" fill="#6c7f8e"/>`;
+ for(let x=100;x<2000;x+=150)o+=`<path d="M${x} 10 V74" stroke="#5b6e7d" stroke-width="3"/>`;
+ o+=`<path d="M310 10 l14 22 l-12 16 l18 26" stroke="#3b4a56" stroke-width="5" fill="none"/><path d="M706 12 l-10 24 l20 12 l-8 26" stroke="#3b4a56" stroke-width="5" fill="none"/><path d="M1456 12 l12 20 l-14 18 l16 24" stroke="#3b4a56" stroke-width="5" fill="none"/>`;
+ o+=`<path d="M940 6 l40 -6 l54 4 l22 24 l-14 34 l-52 12 l-50 -8 l-20 -30Z" fill="#14202a"/><path d="M956 22 l30 -4 l40 4 l14 16 l-10 22 l-40 8 l-36 -6 l-14 -20Z" fill="#05090d"/>`;
+ o+=`<path d="M1160 10 L1310 -14 L1316 74 L1160 74Z" fill="#b8c6d1"/><path d="M1160 10 L1310 -14 L1310 -4 L1160 20Z" fill="#dbe5ec"/>`;
+ o+=`<g transform="translate(890 -4)"><path d="M0 0 L22 -74 L44 0Z" fill="#f5762d"/><rect x="-8" y="0" width="60" height="12" rx="4" fill="#f5762d"/><path d="M7 -34 H37 M12 -52 H32" stroke="#fff" stroke-width="7"/></g>`;
+ o+=`<g transform="translate(1620 0) rotate(9.65)"><rect x="-5" y="-250" width="10" height="250" fill="#6c7f8e"/><path d="M0 -330 L72 -204 H-72Z" fill="#f5b83d" stroke="#0d2b45" stroke-width="8" stroke-linejoin="round"/><path d="M-36 -230 L40 -230 M-36 -230 L40 -266" stroke="#0d2b45" stroke-width="9" stroke-linecap="round"/></g></g>`;
+ if(comMaria){
+  o+=`<g transform="translate(270 ${y(270)+60}) scale(.55)">${maria()}</g>`;
+  o+=`<g transform="translate(360 ${y(270)-330})"><rect x="0" y="0" width="120" height="100" rx="30" fill="#fff4d6"/><path d="M10 70 l-40 40 l66 -22Z" fill="#fff4d6"/><text x="60" y="76" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="78" fill="#0d2b45">?</text></g>`;
+ }
+ document.getElementById('t').innerHTML=chip(comMaria?'Sem um mapa que mostre o caminho seguro':'O problema &middot; Bela Vista')+(comMaria?h1('Cada passo vira','um risco.'):h1('Um buraco na calçada','pode prender alguém em casa.'));
+}
+document.getElementById('s').innerHTML=o;
+</script></body></html>

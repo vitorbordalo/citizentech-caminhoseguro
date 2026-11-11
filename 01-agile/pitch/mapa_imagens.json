@@ -1,0 +1,9 @@
+{
+  "_ajuda": "Para cada cena, a imagem (0 = primeira, em ordem alfabetica) de cada frase do roteiro. Só vale se o numero de frases bater; senao o script distribui proporcionalmente.",
+  "1": [0, 1, 1, 2, 2],
+  "2": [0, 1, 2],
+  "3": [0, 1, 2, 3, 4, 5, 6, 7],
+  "4": [0, 1, 2, 3, 4, 5, 6, 7],
+  "5": [0, 1, 2, 3, 4, 5, 6, 7, 7, 8],
+  "6": [0, 1, 2]
+}
