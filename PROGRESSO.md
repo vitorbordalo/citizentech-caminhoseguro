@@ -1,6 +1,6 @@
-﻿# Progresso da GS — prazo 19/11/2026 23h55
+# Progresso da GS — prazo 19/11/2026 23h55
 
-Atualizado em: 05/11/2026 (Data Science concluída)
+Atualizado em: 11/11/2026 (todas as disciplinas produzidas; faltam passos humanos)
 
 ## Enunciados (04/11/2026)
 - `enunciados/GS-CitizenTech-2ES-2026.pdf`: o enunciado COMPLETO, com as 7 disciplinas (já resumido nos REQUISITOS.md).
@@ -18,11 +18,11 @@ Atualizado em: 05/11/2026 (Data Science concluída)
 ## Disciplinas
 | Disciplina | Responsável | Status | Próximo passo |
 |---|---|---|---|
-| 01 Agile | Vitor | não iniciado | depende da ideia |
-| 02 AR-VR | Vitor | não iniciado | aguardando detalhes do professor |
+| 01 Agile | Vitor | PDF pronto (`01-agile/GS-Agile-CaminhoSeguro.pdf`); pitch montado sem narração em `01-agile/pitch/` | gravar narração (Lucas e Vitor), subir no YouTube não listado, colocar link no PDF |
+| 02 AR-VR | Vitor | vídeo 3D de 55 s e PDF prontos (`02-ar-vr/`) | subir o vídeo no YouTube e colocar o link no PDF |
 | 03 Data Science | Lucas | feito no tema CaminhoSeguro/Bela Vista (base SIMULADA de 600 segmentos, seed 2026): notebook executado sem erro, `entrega-data-science.zip` conferido (notebook, CSV, `integrantes.txt`, `FONTE_DOS_DADOS.txt`, `gerar_base.py`; reexecutado do zero a partir do ZIP, sem erro) | só enviar o ZIP no Teams (um integrante) até 19/11 23h55. Estudar para a defesa: split ANTES do Pipeline (vazamento), imputação mediana/mais frequente, one-hot, MAE/RMSE/R² (teste: 1,76 / 2,66 / 0,67), matriz de confusão, precisão 0,75 / recall 0,44 / F1 0,56 com limiar 0,5, por que baixar o limiar, razão de chances, "E se?" (60 segmentos: 77,5% → 81,4%) e as limitações (dados simulados, causalidade, viés de registro) |
-| 04 Database | Vitor | não iniciado | depende da ideia |
-| 05 DDD Java | Vitor | não iniciado | depende do modelo de dados (04) |
+| 04 Database | Vitor | DDL/DML/DQL + PDF prontos (`04-database/`) | refazer o diagrama no Oracle Data Modeler e rodar os scripts no Oracle FIAP |
+| 05 DDD Java | Vitor | API + front + 21 testes + PDF prontos (`05-ddd-java/`) | GitHub público, deploy no Render com Oracle FIAP, links no PDF |
 | 06 Dynamic Programming | Lucas | feito no tema CaminhoSeguro/Bela Vista (dados simulados): 21 testes OK, `main.py` OK, `entrega-dp.zip` atualizado | só enviar o ZIP no Teams (um integrante) até 19/11 23h55; se a equipe trocar de tema/bairro, editar `dados/bairro.json`, regerar o ZIP e rodar `python -m unittest`. Estudar para a defesa: Dijkstra, Floyd-Warshall (tabulação), memoização em `menor_custo_com_limite`, mochila 0/1 (as duas versões), rota com parada, indicadores e por que a memoização reduz as chamadas |
 | 07 Network | Lucas | feito com X=1 (confirmado): .pkt + PDF + 7 testes OK + segurança reforçada + Ficha preenchida (CaminhoSeguro, Bela Vista/SP) | só o envio no Teams/Portal (link do GitHub já está na Ficha; ver "Network — detalhes") |
 
