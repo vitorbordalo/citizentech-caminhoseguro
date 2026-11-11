@@ -20,11 +20,39 @@ const CS = (() => {
     return dados;
   }
 
+  // O servidor gratuito "dorme": se a chamada demora, explicamos em vez de deixar a pessoa no escuro.
+  let pendentes = 0, timerAviso = null, timerSeg = null, inicio = 0;
+  function mostrarAcordando() {
+    if (document.getElementById("acordando")) return;
+    const d = document.createElement("div");
+    d.id = "acordando"; d.className = "acordando"; d.setAttribute("role", "status");
+    d.innerHTML = '<span class="giro" aria-hidden="true"></span><div><strong>Acordando o servidor...</strong>' +
+      '<p>O serviço gratuito descansa quando fica parado, e a primeira visita pode levar até 1 minuto. Fique nesta tela: já vai carregar. <span id="acordando-seg"></span></p>' +
+      '<div class="barra" aria-hidden="true"><i id="acordando-barra"></i></div></div>';
+    document.body.appendChild(d);
+    timerSeg = setInterval(() => {
+      const s = Math.round((Date.now() - inicio) / 1000);
+      const el = document.getElementById("acordando-seg"), b = document.getElementById("acordando-barra");
+      if (el) el.textContent = "(" + s + " s)";
+      if (b) b.style.width = Math.min(100, (s / 60) * 100) + "%";
+    }, 1000);
+  }
+  function iniciarEspera() {
+    if (pendentes++ === 0) { inicio = Date.now(); timerAviso = setTimeout(mostrarAcordando, 3000); }
+  }
+  function fimEspera() {
+    if (--pendentes > 0) return;
+    clearTimeout(timerAviso); clearInterval(timerSeg);
+    const d = document.getElementById("acordando"); if (d) d.remove();
+  }
+
   async function api(caminho, { metodo = "GET", corpo } = {}) {
     if (!demo) {
+      iniciarEspera();
+      const ctl = new AbortController(), limite = setTimeout(() => ctl.abort(), 90000);
       try {
         const r = await fetch(API_BASE + caminho, {
-          method: metodo,
+          method: metodo, signal: ctl.signal,
           headers: Object.assign({ Accept: "application/json" }, corpo ? { "Content-Type": "application/json" } : {}),
           body: corpo ? JSON.stringify(corpo) : undefined,
         });
@@ -34,7 +62,7 @@ const CS = (() => {
       } catch (e) {
         if (e instanceof ErroApi) throw e;
         entrarDemo();
-      }
+      } finally { clearTimeout(limite); fimEspera(); }
     }
     const { status, data } = CS_DEMO.request(metodo, caminho, corpo);
     return tratar(status, data);
@@ -75,6 +103,11 @@ const CS = (() => {
     usuario: '<circle cx="12" cy="8" r="4"/><path d="M4.500 21c.5-4.500 3.500-6.500 7.500-6.500s7 2 7.500 6.500"/>',
     seta: '<path d="M5 12h14M13 6l6 6-6 6"/>',
     check: '<path d="M5 12.500l4.500 4.500L19 7.500"/>',
+    sol: '<circle cx="12" cy="12" r="4.200"/><path d="M12 2.500v2.200M12 19.300v2.200M2.500 12h2.200M19.300 12h2.200M5.300 5.300l1.500 1.500M17.200 17.200l1.500 1.500M5.300 18.700l1.500-1.500M17.200 6.800l1.500-1.500"/>',
+    lua: '<path d="M20.500 14.500A8.500 8.500 0 1 1 9.500 3.500a6.800 6.800 0 0 0 11 11z"/>',
+    troca: '<path d="M7 4v14M3.500 14.500L7 18l3.500-3.500M17 20V6M13.500 9.500L17 6l3.500 3.500"/>',
+    imprimir: '<path d="M7 9V3.500h10V9"/><rect x="3.500" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.500H7z"/>',
+    mapa: '<path d="M9 4L3.500 6v14L9 18l6 2 5.500-2V4L15 6z"/><path d="M9 4v14M15 6v14"/>',
     nuvem: '<path d="M7 18a4.500 4.500 0 0 1-.5-9 6 6 0 0 1 11.500 1.500A3.800 3.800 0 0 1 17.500 18z"/>',
   };
   const icone = (nome, extra = "") =>
@@ -82,22 +115,34 @@ const CS = (() => {
   const ICONE_TIPO = { 1: "buraco", 2: "estreita", 3: "rampa", 4: "luz", 5: "travessia", 6: "ladeira" };
   const iconeTipo = (id) => ICONE_TIPO[id] || "alerta";
 
-  const LOGO = `<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect width="48" height="48" rx="12" fill="#ffc13b"/>
-    <path d="M24 41s-11-8.700-11-18.500a11 11 0 0 1 22 0C35 32.300 24 41 24 41z" fill="#072f47"/>
-    <path d="M18.500 22.500l4 4 7.500-8" fill="none" stroke="#fff" stroke-width="3.600" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const LOGO = `<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect width="48" height="48" rx="13" fill="#0f766e"/>
+    <path d="M24 40s-10-8-10-17a10 10 0 0 1 20 0c0 9-10 17-10 17z" fill="#fff"/>
+    <path d="M19 22.500l3.800 3.800 7-7.600" fill="none" stroke="#0f766e" stroke-width="3.400" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  function alternarTema() {
+    const novo = document.documentElement.getAttribute("data-tema") === "escuro" ? "claro" : "escuro";
+    document.documentElement.setAttribute("data-tema", novo);
+    try { localStorage.setItem("cs_tema", novo); } catch (e) { /* ok */ }
+    const b = document.getElementById("btn-tema");
+    if (b) b.setAttribute("aria-label", novo === "escuro" ? "Mudar para o tema claro" : "Mudar para o tema escuro");
+  }
 
   function renderShell(atual) {
     const item = (id, href, ic, txt) =>
       `<a href="${href}"${atual === id ? ' aria-current="page"' : ""}>${icone(ic)}<span>${txt}</span></a>`;
+    const escuro = document.documentElement.getAttribute("data-tema") === "escuro";
     $("#shell-topo").outerHTML = `<header class="topo"><div class="topo-int">
       <a class="marca" href="index.html" aria-label="CaminhoSeguro, ir para o início">${LOGO}<span>CaminhoSeguro<small>Calçadas seguras, juntos</small></span></a>
-      <span class="usuario">${icone("usuario")}<span>Olá, ${USUARIO_LOGADO.nome}</span></span>
       <span id="selo-demo" class="selo-demo" hidden title="A API não respondeu: estes são dados de exemplo, guardados só neste navegador.">${icone("nuvem")}Modo demonstração</span>
       <nav class="menu" aria-label="Principal">
-        ${item("inicio", "index.html", "casa", "Ir a um lugar")}
+        ${item("inicio", "index.html", "casa", "Traçar caminho")}
         ${item("ocorrencia", "ocorrencia.html", "alerta", "Avisar problema")}
         ${item("painel", "painel.html", "painel", "Painel<span class=\"sr-only\"> do agente</span>")}
-      </nav></div></header>`;
+      </nav>
+      <span class="usuario">${icone("usuario")}<span>Olá, ${USUARIO_LOGADO.nome}</span></span>
+      <button class="btn-tema" id="btn-tema" type="button" aria-label="${escuro ? "Mudar para o tema claro" : "Mudar para o tema escuro"}">${icone("sol", "sol")}${icone("lua", "lua")}</button>
+      </div></header>`;
+    $("#btn-tema").addEventListener("click", alternarTema);
     $("#shell-rodape").outerHTML = `<footer class="rodape"><div>
       <p><strong>CaminhoSeguro</strong>, uma CitizenTech da Global Solution FIAP 2026.2. Protótipo acadêmico.</p>
       <p>Todos os locais, ocorrências e usuários são fictícios. Não use para decidir um trajeto real.</p></div></footer>`;
@@ -107,7 +152,7 @@ const CS = (() => {
   function opcoesLocais(sel, locais, escolhido) {
     sel.innerHTML = "";
     const ph = document.createElement("option");
-    ph.value = ""; ph.textContent = "Escolha um lugar";
+    ph.value = ""; ph.textContent = "Escolha um lugar...";
     sel.appendChild(ph);
     locais.forEach((l) => {
       const o = document.createElement("option");
@@ -123,9 +168,9 @@ const CS = (() => {
   const STATUS = { ABERTA: "Aberta", EM_ANALISE: "Em análise", RESOLVIDA: "Resolvida" };
   const STATUS_ICONE = { ABERTA: "alerta", EM_ANALISE: "lupa", RESOLVIDA: "ok" };
   const CRITERIOS = {
-    ACESSIVEL: { nome: "Mais acessível", icone: "acessivel", desc: "Evita degraus e ladeiras fortes." },
-    SEGURA: { nome: "Mais segura", icone: "segura", desc: "Evita trechos com risco e com avisos de perigo." },
-    RAPIDA: { nome: "Mais rápida", icone: "rapida", desc: "O menor tempo a pé." },
+    ACESSIVEL: { nome: "Mais acessível", icone: "acessivel", desc: "Sem degraus nem ladeiras fortes." },
+    SEGURA: { nome: "Mais segura", icone: "segura", desc: "Foge dos trechos com perigo." },
+    RAPIDA: { nome: "Mais rápida", icone: "rapida", desc: "Chega no menor tempo a pé." },
   };
 
   const nomeTrecho = (t, locais) => {

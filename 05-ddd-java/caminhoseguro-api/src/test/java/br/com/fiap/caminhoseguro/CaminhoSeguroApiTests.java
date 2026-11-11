@@ -328,4 +328,60 @@ class CaminhoSeguroApiTests {
         mvc.perform(get("/api/rotas?origem=999&destino=3&criterio=RAPIDA")).andExpect(status().isNotFound());
         mvc.perform(get("/api/rotas?origem=1&destino=3&criterio=RAPIDA&usuario=999")).andExpect(status().isNotFound());
     }
+
+    // ---------- Rotas no mapa ampliado (25 locais, 48 trechos) ----------
+
+    @Test
+    void mapaAmpliadoTemMaisLocaisETrechos() throws Exception {
+        mvc.perform(get("/api/locais")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(25)))
+                .andExpect(jsonPath("$[*].nome", hasItem("UBS Bela Vista")));
+        mvc.perform(get("/api/trechos")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(48)));
+        mvc.perform(get("/api/locais?pontoApoio=true")).andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].nome", hasItem("CRAS Bela Vista")))
+                .andExpect(jsonPath("$[*].nome", not(hasItem("Padaria Pão Quente"))));
+    }
+
+    @Test
+    void rotaLongaCadaCriterioEscolheUmCaminhoDiferente() throws Exception {
+        // Casa da dona Maria (1) -> Ponto de Ônibus Treze de Maio (18)
+        mvc.perform(get("/api/rotas?origem=1&destino=18&criterio=RAPIDA")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.tempoTotalMin").value(15))
+                .andExpect(jsonPath("$.riscoTotal").value(19))
+                .andExpect(jsonPath("$.totalmenteAcessivel").value(false))
+                .andExpect(jsonPath("$.trechos.length()").value(3))
+                .andExpect(jsonPath("$.trechos[0]").value(2))
+                .andExpect(jsonPath("$.trechos[2]").value(29));
+        mvc.perform(get("/api/rotas?origem=1&destino=18&criterio=SEGURA")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.tempoTotalMin").value(20))
+                .andExpect(jsonPath("$.riscoTotal").value(12))
+                .andExpect(jsonPath("$.trechos.length()").value(4))
+                .andExpect(jsonPath("$.trechos[3]").value(46));
+        mvc.perform(get("/api/rotas?origem=1&destino=18&criterio=ACESSIVEL")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.tempoTotalMin").value(26))
+                .andExpect(jsonPath("$.riscoTotal").value(12))
+                .andExpect(jsonPath("$.totalmenteAcessivel").value(true))
+                .andExpect(jsonPath("$.trechos.length()").value(5))
+                .andExpect(jsonPath("$.trechos[3]").value(35));
+    }
+
+    @Test
+    void rotaIgrejaClinicaTemTresRotasDistintas() throws Exception {
+        // Igreja da Paz (17) -> Clínica da Família (25)
+        mvc.perform(get("/api/rotas?origem=17&destino=25&criterio=RAPIDA")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.tempoTotalMin").value(16))
+                .andExpect(jsonPath("$.locais.length()").value(4))
+                .andExpect(jsonPath("$.locais[1].id").value(18));
+        mvc.perform(get("/api/rotas?origem=17&destino=25&criterio=SEGURA")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.tempoTotalMin").value(17))
+                .andExpect(jsonPath("$.riscoTotal").value(10))
+                .andExpect(jsonPath("$.locais.length()").value(5))
+                .andExpect(jsonPath("$.locais[2].id").value(20));
+        mvc.perform(get("/api/rotas?origem=17&destino=25&criterio=ACESSIVEL")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.tempoTotalMin").value(26))
+                .andExpect(jsonPath("$.totalmenteAcessivel").value(true))
+                .andExpect(jsonPath("$.locais[1].id").value(8))
+                .andExpect(jsonPath("$.locais[3].id").value(5));
+    }
 }

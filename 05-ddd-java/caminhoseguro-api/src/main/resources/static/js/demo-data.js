@@ -18,6 +18,18 @@ const CS_DEMO = (() => {
     L(11, 1, 6, "FIAP Paulista", "Av. Paulista - Bela Vista", -23.564, -46.6525, "N"),
     L(12, 1, 3, "Farmácia", "Endereço de exemplo - Bela Vista", -23.5651, -46.6536, "N"),
     L(13, 2, 4, "Metrô Liberdade", "Praça da Liberdade - Liberdade", -23.5554, -46.6357, "N"),
+    L(14, 1, 2, "UBS Bela Vista", "Endereço de exemplo - Bela Vista", -23.5608, -46.646, "S"),
+    L(15, 1, 3, "Padaria Pão Quente", "Endereço de exemplo - Bela Vista", -23.5582, -46.643, "N"),
+    L(16, 1, 7, "CRAS Bela Vista", "Endereço de exemplo - Bela Vista", -23.556, -46.6432, "S"),
+    L(17, 1, 7, "Igreja da Paz", "Endereço de exemplo - Bela Vista", -23.5612, -46.6495, "S"),
+    L(18, 1, 4, "Ponto de Ônibus Treze de Maio", "Rua Treze de Maio - Bela Vista", -23.564, -46.647, "N"),
+    L(19, 1, 5, "Praça Dom Orione", "Endereço de exemplo - Bela Vista", -23.554, -46.6455, "N"),
+    L(20, 1, 1, "Casa do seu Antônio", "Rua fictícia, 250 - Bela Vista", -23.5655, -46.6455, "N"),
+    L(21, 1, 3, "Sacolão Bela Vista", "Endereço de exemplo - Bela Vista", -23.5668, -46.651, "N"),
+    L(22, 1, 3, "Casa Lotérica Paulista", "Av. Paulista - Bela Vista", -23.5675, -46.656, "N"),
+    L(23, 1, 4, "Ponto de Ônibus Paulista", "Av. Paulista - Bela Vista", -23.569, -46.6575, "N"),
+    L(24, 1, 5, "Praça da Cidadania", "Endereço de exemplo - Bela Vista", -23.566, -46.6545, "S"),
+    L(25, 1, 2, "Clínica da Família", "Endereço de exemplo - Bela Vista", -23.57, -46.653, "S"),
   ];
   // [id, origem, destino, tempoMin, risco, acessivel, declividadePct, larguraCalcadaM]
   const T = [
@@ -28,6 +40,15 @@ const CS_DEMO = (() => {
     [13, 8, 10, 4, 2, "S", 3.0, 2.1], [14, 7, 10, 5, 2, "S", 2.5, 2.5], [15, 3, 10, 9, 6, "N", 12.0, 1.0],
     [16, 5, 10, 8, 2, "S", 3.2, 2.7], [17, 11, 5, 5, 2, "S", 2.0, 3.5], [18, 11, 8, 6, 3, "S", 4.8, 2.2],
     [19, 11, 12, 3, 1, "S", 1.2, 3.2], [20, 12, 10, 4, 2, "S", 2.6, 2.4], [21, 6, 3, 5, 2, "S", 2.9, 2.3],
+    [22, 1, 15, 4, 2, "S", 2.0, 2.4], [23, 15, 16, 4, 3, "S", 3.1, 2.0], [24, 16, 2, 6, 2, "S", 2.8, 2.2],
+    [25, 16, 19, 5, 2, "S", 2.2, 2.5], [26, 19, 3, 5, 1, "S", 1.9, 2.7], [27, 9, 14, 7, 10, "S", 4.4, 1.9],
+    [28, 4, 14, 7, 6, "S", 5.2, 1.7], [29, 14, 18, 4, 7, "S", 3.0, 1.6], [30, 14, 17, 5, 3, "S", 4.0, 2.0],
+    [31, 17, 8, 6, 2, "S", 3.6, 2.3], [32, 18, 20, 3, 2, "S", 2.5, 2.5], [33, 18, 21, 6, 4, "S", 6.0, 1.8],
+    [34, 20, 21, 4, 1, "S", 1.7, 2.9], [35, 20, 5, 8, 3, "S", 4.8, 2.1], [36, 21, 5, 7, 2, "S", 3.3, 2.6],
+    [37, 21, 24, 5, 2, "S", 2.4, 2.4], [38, 24, 22, 4, 1, "S", 1.5, 3.0], [39, 22, 12, 6, 2, "S", 2.9, 2.2],
+    [40, 24, 12, 5, 3, "S", 3.8, 2.0], [41, 22, 23, 5, 4, "N", 10.5, 1.2], [42, 24, 23, 6, 2, "S", 2.7, 2.3],
+    [43, 23, 25, 4, 2, "S", 2.0, 2.6], [44, 25, 5, 8, 3, "S", 3.4, 2.4], [45, 25, 21, 6, 2, "S", 2.6, 2.5],
+    [46, 17, 18, 4, 5, "N", 8.9, 1.3], [47, 20, 14, 5, 6, "N", 9.5, 1.1], [48, 19, 2, 4, 2, "S", 2.3, 2.6],
   ].map(([id, idLocalOrigem, idLocalDestino, tempoMin, risco, ac, declividadePct, larguraCalcadaM]) =>
     ({ id, idLocalOrigem, idLocalDestino, tempoMin, risco, acessivel: ac === "S", declividadePct, larguraCalcadaM }));
   const tipos = [
@@ -51,6 +72,14 @@ const CS_DEMO = (() => {
     O(8, 7, 7, 1, "Buraco grande perto do mercado.", 4, "EM_ANALISE", "2026-10-18", null),
     O(9, 15, 2, 3, "Sem rampa na esquina do posto de saúde.", 4, "ABERTA", "2026-10-22", null),
     O(10, 8, 3, 5, "Semáforo de pedestres muito curto.", 5, "ABERTA", "2026-10-25", null),
+    O(11, 41, 4, 1, "Buraco grande na subida da lotérica.", 4, "ABERTA", "2026-10-27", null),
+    O(12, 29, 2, 5, "Travessia sem semáforo em frente à UBS.", 5, "ABERTA", "2026-10-28", null),
+    O(13, 33, 6, 6, "Ladeira forte até o sacolão, difícil com sacola.", 3, "ABERTA", "2026-10-29", null),
+    O(14, 25, 5, 4, "Poste queimado perto do CRAS.", 3, "EM_ANALISE", "2026-10-30", null),
+    O(15, 46, 1, 3, "Esquina da igreja sem rampa.", 4, "ABERTA", "2026-10-31", null),
+    O(16, 42, 7, 1, "Piso quebrado na praça, já consertado pela subprefeitura.", 4, "RESOLVIDA", "2026-10-26", "2026-11-04"),
+    O(17, 37, 3, 2, "Banca de frutas ocupando metade da calçada.", 3, "ABERTA", "2026-11-02", null),
+    O(18, 47, 6, 3, "Sem rampa na esquina da casa do seu Antônio.", 4, "ABERTA", "2026-11-03", null),
   ];
 
   const CHAVE = "caminhoseguro_demo_ocorrencias";

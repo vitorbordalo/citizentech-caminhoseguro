@@ -28,7 +28,7 @@ INSERT INTO T_CS_TIPO_LOCAL (id_tipo_local, ds_tipo_local) VALUES (6, 'Educaçã
 INSERT INTO T_CS_TIPO_LOCAL (id_tipo_local, ds_tipo_local) VALUES (7, 'Ponto de apoio comunitário');
 INSERT INTO T_CS_TIPO_LOCAL (id_tipo_local, ds_tipo_local) VALUES (8, 'Via ou travessia');
 
--- ---------------- T_CS_LOCAL (12 na Bela Vista + 1 na Liberdade) ----------------
+-- ---------------- T_CS_LOCAL (24 na Bela Vista + 1 na Liberdade) ----------------
 -- Coordenadas aproximadas da região (apenas para exibir no mapa do protótipo).
 INSERT INTO T_CS_LOCAL VALUES (1,  1, 1, 'Casa da dona Maria',   'Rua fictícia, 100 - Bela Vista',   -23.558900, -46.645200, 'N');
 INSERT INTO T_CS_LOCAL VALUES (2,  1, 5, 'Praça 14 Bis',         'Praça 14 Bis - Bela Vista',         -23.556800, -46.646500, 'N');
@@ -43,8 +43,20 @@ INSERT INTO T_CS_LOCAL VALUES (10, 1, 7, 'Centro Comunitário',   'Endereço de 
 INSERT INTO T_CS_LOCAL VALUES (11, 1, 6, 'FIAP Paulista',        'Av. Paulista - Bela Vista',         -23.564000, -46.652500, 'N');
 INSERT INTO T_CS_LOCAL VALUES (12, 1, 3, 'Farmácia',             'Endereço de exemplo - Bela Vista', -23.565100, -46.653600, 'N');
 INSERT INTO T_CS_LOCAL VALUES (13, 2, 4, 'Metrô Liberdade',      'Praça da Liberdade - Liberdade',    -23.555400, -46.635700, 'N');
+INSERT INTO T_CS_LOCAL VALUES (14, 1, 2, 'UBS Bela Vista',            'Endereço de exemplo - Bela Vista', -23.560800, -46.646000, 'S');
+INSERT INTO T_CS_LOCAL VALUES (15, 1, 3, 'Padaria Pão Quente',        'Endereço de exemplo - Bela Vista', -23.558200, -46.643000, 'N');
+INSERT INTO T_CS_LOCAL VALUES (16, 1, 7, 'CRAS Bela Vista',           'Endereço de exemplo - Bela Vista', -23.556000, -46.643200, 'S');
+INSERT INTO T_CS_LOCAL VALUES (17, 1, 7, 'Igreja da Paz',             'Endereço de exemplo - Bela Vista', -23.561200, -46.649500, 'S');
+INSERT INTO T_CS_LOCAL VALUES (18, 1, 4, 'Ponto de Ônibus Treze de Maio', 'Rua Treze de Maio - Bela Vista', -23.564000, -46.647000, 'N');
+INSERT INTO T_CS_LOCAL VALUES (19, 1, 5, 'Praça Dom Orione',          'Endereço de exemplo - Bela Vista', -23.554000, -46.645500, 'N');
+INSERT INTO T_CS_LOCAL VALUES (20, 1, 1, 'Casa do seu Antônio',       'Rua fictícia, 250 - Bela Vista',   -23.565500, -46.645500, 'N');
+INSERT INTO T_CS_LOCAL VALUES (21, 1, 3, 'Sacolão Bela Vista',        'Endereço de exemplo - Bela Vista', -23.566800, -46.651000, 'N');
+INSERT INTO T_CS_LOCAL VALUES (22, 1, 3, 'Casa Lotérica Paulista',    'Av. Paulista - Bela Vista',         -23.567500, -46.656000, 'N');
+INSERT INTO T_CS_LOCAL VALUES (23, 1, 4, 'Ponto de Ônibus Paulista',  'Av. Paulista - Bela Vista',         -23.569000, -46.657500, 'N');
+INSERT INTO T_CS_LOCAL VALUES (24, 1, 5, 'Praça da Cidadania',        'Endereço de exemplo - Bela Vista', -23.566000, -46.654500, 'S');
+INSERT INTO T_CS_LOCAL VALUES (25, 1, 2, 'Clínica da Família',        'Endereço de exemplo - Bela Vista', -23.570000, -46.653000, 'S');
 
--- ---------------- T_CS_TRECHO (21) ----------------
+-- ---------------- T_CS_TRECHO (48) ----------------
 -- (id, origem, destino, tempo_min, risco 0-10, acessível S/N, declividade %, largura calçada m)
 INSERT INTO T_CS_TRECHO VALUES (1,  1, 2,  5, 2, 'S',  3.5, 2.30);
 INSERT INTO T_CS_TRECHO VALUES (2,  1, 4,  4, 6, 'N',  9.8, 1.10);
@@ -67,6 +79,33 @@ INSERT INTO T_CS_TRECHO VALUES (18, 11, 8, 6, 3, 'S',  4.8, 2.20);
 INSERT INTO T_CS_TRECHO VALUES (19, 11, 12, 3, 1, 'S', 1.2, 3.20);
 INSERT INTO T_CS_TRECHO VALUES (20, 12, 10, 4, 2, 'S', 2.6, 2.40);
 INSERT INTO T_CS_TRECHO VALUES (21, 6, 3,  5, 2, 'S',  2.9, 2.30);
+INSERT INTO T_CS_TRECHO VALUES (22, 1, 15,  4, 2, 'S',  2.0, 2.40);
+INSERT INTO T_CS_TRECHO VALUES (23, 15, 16, 4, 3, 'S',  3.1, 2.00);
+INSERT INTO T_CS_TRECHO VALUES (24, 16, 2,  6, 2, 'S',  2.8, 2.20);
+INSERT INTO T_CS_TRECHO VALUES (25, 16, 19, 5, 2, 'S',  2.2, 2.50);
+INSERT INTO T_CS_TRECHO VALUES (26, 19, 3,  5, 1, 'S',  1.9, 2.70);
+INSERT INTO T_CS_TRECHO VALUES (27, 9, 14,  7, 10, 'S',  4.4, 1.90);
+INSERT INTO T_CS_TRECHO VALUES (28, 4, 14,  7, 6, 'S',  5.2, 1.70);
+INSERT INTO T_CS_TRECHO VALUES (29, 14, 18, 4, 7, 'S',  3.0, 1.60);
+INSERT INTO T_CS_TRECHO VALUES (30, 14, 17, 5, 3, 'S',  4.0, 2.00);
+INSERT INTO T_CS_TRECHO VALUES (31, 17, 8,  6, 2, 'S',  3.6, 2.30);
+INSERT INTO T_CS_TRECHO VALUES (32, 18, 20, 3, 2, 'S',  2.5, 2.50);
+INSERT INTO T_CS_TRECHO VALUES (33, 18, 21, 6, 4, 'S',  6.0, 1.80);
+INSERT INTO T_CS_TRECHO VALUES (34, 20, 21, 4, 1, 'S',  1.7, 2.90);
+INSERT INTO T_CS_TRECHO VALUES (35, 20, 5,  8, 3, 'S',  4.8, 2.10);
+INSERT INTO T_CS_TRECHO VALUES (36, 21, 5,  7, 2, 'S',  3.3, 2.60);
+INSERT INTO T_CS_TRECHO VALUES (37, 21, 24, 5, 2, 'S',  2.4, 2.40);
+INSERT INTO T_CS_TRECHO VALUES (38, 24, 22, 4, 1, 'S',  1.5, 3.00);
+INSERT INTO T_CS_TRECHO VALUES (39, 22, 12, 6, 2, 'S',  2.9, 2.20);
+INSERT INTO T_CS_TRECHO VALUES (40, 24, 12, 5, 3, 'S',  3.8, 2.00);
+INSERT INTO T_CS_TRECHO VALUES (41, 22, 23, 5, 4, 'N', 10.5, 1.20);
+INSERT INTO T_CS_TRECHO VALUES (42, 24, 23, 6, 2, 'S',  2.7, 2.30);
+INSERT INTO T_CS_TRECHO VALUES (43, 23, 25, 4, 2, 'S',  2.0, 2.60);
+INSERT INTO T_CS_TRECHO VALUES (44, 25, 5,  8, 3, 'S',  3.4, 2.40);
+INSERT INTO T_CS_TRECHO VALUES (45, 25, 21, 6, 2, 'S',  2.6, 2.50);
+INSERT INTO T_CS_TRECHO VALUES (46, 17, 18, 4, 5, 'N',  8.9, 1.30);
+INSERT INTO T_CS_TRECHO VALUES (47, 20, 14, 5, 6, 'N',  9.5, 1.10);
+INSERT INTO T_CS_TRECHO VALUES (48, 19, 2,  4, 2, 'S',  2.3, 2.60);
 
 -- ---------------- T_CS_USUARIO (7) - fictícios ----------------
 INSERT INTO T_CS_USUARIO VALUES (1, 'Maria (persona)',      'maria.persona@caminhoseguro.example',  'IDOSO',    DATE '2026-10-01');
@@ -85,7 +124,7 @@ INSERT INTO T_CS_TIPO_OCORRENCIA VALUES (4, 'Iluminação ruim',                
 INSERT INTO T_CS_TIPO_OCORRENCIA VALUES (5, 'Travessia perigosa',             5);
 INSERT INTO T_CS_TIPO_OCORRENCIA VALUES (6, 'Ladeira muito íngreme',          2);
 
--- ---------------- T_CS_OCORRENCIA (10) ----------------
+-- ---------------- T_CS_OCORRENCIA (18) ----------------
 -- (id, trecho, usuário, tipo, descrição, gravidade, status, registro, resolução)
 INSERT INTO T_CS_OCORRENCIA VALUES (1,  2, 1, 3, 'Esquina da escola sem rampa, precisei descer pela rua.',        4, 'ABERTA',     DATE '2026-10-02', NULL);
 INSERT INTO T_CS_OCORRENCIA VALUES (2,  3, 4, 5, 'Carros em alta velocidade perto do viaduto, sem faixa.',          5, 'EM_ANALISE', DATE '2026-10-04', NULL);
@@ -97,6 +136,14 @@ INSERT INTO T_CS_OCORRENCIA VALUES (7,  3, 1, 4, 'Iluminação fraca na passagem
 INSERT INTO T_CS_OCORRENCIA VALUES (8,  7, 7, 1, 'Buraco grande perto do mercado.',                                4, 'EM_ANALISE', DATE '2026-10-18', NULL);
 INSERT INTO T_CS_OCORRENCIA VALUES (9,  15, 2, 3, 'Sem rampa na esquina do posto de saúde.',                       4, 'ABERTA',     DATE '2026-10-22', NULL);
 INSERT INTO T_CS_OCORRENCIA VALUES (10, 8, 3, 5, 'Semáforo de pedestres muito curto.',                             5, 'ABERTA',     DATE '2026-10-25', NULL);
+INSERT INTO T_CS_OCORRENCIA VALUES (11, 41, 4, 1, 'Buraco grande na subida da lotérica.',                          4, 'ABERTA',     DATE '2026-10-27', NULL);
+INSERT INTO T_CS_OCORRENCIA VALUES (12, 29, 2, 5, 'Travessia sem semáforo em frente à UBS.',                       5, 'ABERTA',     DATE '2026-10-28', NULL);
+INSERT INTO T_CS_OCORRENCIA VALUES (13, 33, 6, 6, 'Ladeira forte até o sacolão, difícil com sacola.',              3, 'ABERTA',     DATE '2026-10-29', NULL);
+INSERT INTO T_CS_OCORRENCIA VALUES (14, 25, 5, 4, 'Poste queimado perto do CRAS.',                                 3, 'EM_ANALISE', DATE '2026-10-30', NULL);
+INSERT INTO T_CS_OCORRENCIA VALUES (15, 46, 1, 3, 'Esquina da igreja sem rampa.',                                  4, 'ABERTA',     DATE '2026-10-31', NULL);
+INSERT INTO T_CS_OCORRENCIA VALUES (16, 42, 7, 1, 'Piso quebrado na praça, já consertado pela subprefeitura.',     4, 'RESOLVIDA',  DATE '2026-10-26', DATE '2026-11-04');
+INSERT INTO T_CS_OCORRENCIA VALUES (17, 37, 3, 2, 'Banca de frutas ocupando metade da calçada.',                   3, 'ABERTA',     DATE '2026-11-02', NULL);
+INSERT INTO T_CS_OCORRENCIA VALUES (18, 47, 6, 3, 'Sem rampa na esquina da casa do seu Antônio.',                  4, 'ABERTA',     DATE '2026-11-03', NULL);
 
 -- ---------------- T_CS_ROTA_CONSULTA (8) ----------------
 -- (id, usuário, origem, destino, critério, tempo total, data)

@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#072f47">
-<title>Para onde você quer ir? | CaminhoSeguro</title>
-<meta name="description" content="CaminhoSeguro: caminhos mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<meta name="theme-color" content="#0f766e">
+<title>Traçar meu caminho | CaminhoSeguro</title>
+<meta name="description" content="CaminhoSeguro: caminhos a pé mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<script src="js/tema.js"></script>
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
@@ -13,39 +17,46 @@
 <div id="shell-topo"></div>
 <main id="conteudo" class="pagina" tabindex="-1">
   <div class="heroi">
-    <header class="titulo">
-      <h1>Para onde você quer ir?</h1>
-      <p class="lead">Escolha de onde sai e aonde chega. Mostramos o caminho com calçadas melhores, usando os avisos de quem mora aqui.</p>
-      <ul class="passos-mini" aria-label="Como funciona">
-        <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>Passo a passo, com letras grandes</li>
-        <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>Mostra onde há ponto de apoio para descansar</li>
-        <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>Você pode avisar se achar um problema</li>
-      </ul>
-    </header>
+    <div class="texto">
+      <p class="eyebrow">Para caminhar com tranquilidade</p>
+      <h1>Descubra o caminho a pé <em>mais seguro</em> do seu bairro.</h1>
+      <p class="lead">O CaminhoSeguro mostra a melhor rota entre dois lugares, com calçadas boas, pontos de apoio para descansar e avisos de quem mora aqui.</p>
 
-    <form id="form-rota" class="cartao" action="rota.html" method="get" novalidate>
+      <h2 class="sr-only">Como usar</h2>
+      <ol class="como">
+        <li><span class="num" aria-hidden="true">1</span><div><strong>Escolha de onde sai e para onde vai</strong><span class="d">É só selecionar nas duas listas.</span></div></li>
+        <li><span class="num" aria-hidden="true">2</span><div><strong>Veja o caminho no mapa</strong><span class="d">Com o passo a passo e o tempo a pé.</span></div></li>
+        <li><span class="num" aria-hidden="true">3</span><div><strong>Viu um problema na rua? Avise</strong><span class="d">Buraco, calçada quebrada, falta de luz.</span></div></li>
+      </ol>
+      <ul class="numeros" id="numeros" aria-label="O que já está no mapa" hidden></ul>
+    </div>
+
+    <form id="form-rota" class="cartao form-rota" action="rota.html" method="get" novalidate>
+      <h2>Para onde você quer ir?</h2>
       <div id="resumo-erros" class="aviso aviso-erro" role="alert" hidden></div>
       <div id="carregando" class="carregando" role="status"><span class="giro" aria-hidden="true"></span>Carregando os lugares...</div>
 
       <div class="campo">
-        <label for="origem">De onde você sai?</label>
+        <label for="origem">1. De onde você sai?</label>
         <select id="origem" name="origem" required aria-describedby="erro-origem"></select>
         <p class="erro-campo" id="erro-origem" hidden></p>
       </div>
+      <div class="troca"><button type="button" class="btn-troca" id="trocar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v14M3.500 14.500L7 18l3.500-3.500M17 20V6M13.500 9.500L17 6l3.500 3.500"/></svg>Trocar os dois</button></div>
       <div class="campo">
-        <label for="destino">Para onde você vai?</label>
+        <label for="destino">2. Para onde você vai?</label>
         <select id="destino" name="destino" required aria-describedby="erro-destino"></select>
         <p class="erro-campo" id="erro-destino" hidden></p>
       </div>
 
       <fieldset>
-        <legend>Que tipo de caminho você prefere?</legend>
+        <legend>3. Que tipo de caminho você prefere?</legend>
         <div class="opcoes tres" id="criterios"></div>
       </fieldset>
 
-      <button class="botao botao-destaque botao-bloco" type="submit" id="botao-ver">Ver caminho</button>
+      <button class="botao botao-grande botao-bloco" type="submit" id="botao-ver">Traçar meu caminho <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </form>
   </div>
+
 </main>
 <div id="shell-rodape"></div>
 <script src="js/config.js"></script>

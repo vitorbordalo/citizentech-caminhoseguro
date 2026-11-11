@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#072f47">
+<meta name="theme-color" content="#0f766e">
 <title>Seu caminho | CaminhoSeguro</title>
-<meta name="description" content="CaminhoSeguro: caminhos mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<meta name="description" content="CaminhoSeguro: caminhos a pé mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<script src="js/tema.js"></script>
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
@@ -14,12 +18,14 @@
 <main id="conteudo" class="pagina" tabindex="-1">
   <div id="resultado" aria-live="polite" aria-busy="true">
     <div class="carregando"><span class="giro" aria-hidden="true"></span>Procurando o melhor caminho...</div>
+    <div class="esqueleto" style="height:22rem;margin-top:1.5rem" aria-hidden="true"></div>
   </div>
 </main>
 <div id="shell-rodape"></div>
 <script src="js/config.js"></script>
 <script src="js/demo-data.js"></script>
 <script src="js/app.js"></script>
+<script src="js/mapa.js"></script>
 <script src="js/rota.js"></script>
 </body>
 </html>

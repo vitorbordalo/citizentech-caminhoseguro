@@ -11,8 +11,9 @@
       <span class="cartao-opcao">${icone(c.icone)}<span><strong>${esc(c.nome)}</strong><span class="desc">${esc(c.desc)}</span></span>
       <span class="marca-sel">${icone("check")}</span></span></label>`).join("");
 
+  let locais;
   try {
-    const locais = await api("/api/locais");
+    locais = await api("/api/locais");
     opcoesLocais(origem, locais, params.get("origem"));
     opcoesLocais(destino, locais, params.get("destino"));
     $("#carregando").hidden = true;
@@ -24,6 +25,13 @@
     return;
   }
 
+  // Números reais da API (se falhar, a página segue sem eles)
+  Promise.all([api("/api/trechos"), api("/api/ocorrencias?status=ABERTA")]).then(([trechos, abertas]) => {
+    const li = (n, s, p) => `<li><b>${n}</b> ${n === 1 ? s : p}</li>`;
+    $("#numeros").innerHTML = li(locais.length, "lugar", "lugares") + li(trechos.length, "calçada", "calçadas") + li(abertas.length, "aviso aberto", "avisos abertos");
+    $("#numeros").hidden = false;
+  }).catch(() => {});
+
   function erroCampo(campo, texto) {
     const p = $("#erro-" + campo.id), tem = !!texto;
     campo.setAttribute("aria-invalid", tem ? "true" : "false");
@@ -31,6 +39,8 @@
     p.innerHTML = tem ? icone("alerta") + "<span>" + esc(texto) + "</span>" : "";
     return tem;
   }
+
+  $("#trocar").addEventListener("click", () => { const o = origem.value; origem.value = destino.value; destino.value = o; erroCampo(origem, ""); erroCampo(destino, ""); });
 
   form.addEventListener("submit", (ev) => {
     ev.preventDefault();

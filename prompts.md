@@ -1,7 +1,6 @@
 # Registro de uso de IA (exigido pela GS)
 
 IA usada como copiloto para aprender e revisar. Cada integrante sabe explicar o que foi gerado.
-
 | Data | Disciplina | Ferramenta | Prompt (resumo) | Para que serviu |
 |---|---|---|---|---|
 | 04/11/2026 | Geral | Claude | Resumir o enunciado da GS e organizar as pastas por disciplina | Organização do projeto |
@@ -20,7 +19,6 @@ IA usada como copiloto para aprender e revisar. Cada integrante sabe explicar o 
 Observação: os testes e prints da Network foram executados e conferidos no Packet Tracer (não são texto gerado).
 
 ## Sessão do Vitor (10 e 11/11/2026) — Claude Code com equipe de agentes
-
 | Data | Disciplina | Ferramenta | Prompt (resumo) | Para que serviu |
 |---|---|---|---|---|
 | 10/11/2026 | 03, 06 e 07 (revisão) | Claude (agente revisor) | Revisar criticamente as entregas do Lucas contra a rubrica de cada disciplina, rodar notebook/testes e corrigir só o que fosse claro | DS: validação extra por trecho inédito (GroupKFold) e caminho para dados reais; DP: `pedir_inteiro()` no menu; Network: ordem `ip domain-name` antes de `crypto key` nos configs de texto do SW1 |
@@ -32,5 +30,7 @@ Observação: os testes e prints da Network foram executados e conferidos no Pac
 | 10/11/2026 | 01 Agile | Claude | Desenhar o diagrama de casos de uso em SVG e montar o PDF único | `01-agile/doc/`, `GS-Agile-CaminhoSeguro.pdf` |
 | 10/11/2026 | 02 AR-VR | Claude (agente de front) | Criar cena 3D em three.js da rota da dona Maria (barreiras, comunidade avisa, rota acessível) com renderização determinística e gerar vídeo de 55 s com ffmpeg | `02-ar-vr/` (cena, vídeo, PDF) |
 | 11/11/2026 | 01 Agile | Claude (agente de front) | Montar o vídeo do pitch ilustrado e legendado, sem voz, para a dupla gravar a narração | `01-agile/pitch/` |
+| 11/11/2026 | 05 DDD Java / 04 Database | Claude (agente dev) | Ampliar os dados de exemplo (25 locais com coordenadas, 48 trechos, 18 ocorrências) sem mudar o modelo nem os resultados já documentados, aplicar o mesmo no DML Oracle e criar testes de rotas longas | `data-h2.sql`, `02_DML`, `demo-data.js`, 3 testes novos |
+| 11/11/2026 | 05 DDD Java | Claude (agentes de front e QA) | Refazer a interface com foco em idosos: linguagem simples, fluxo guiado em 3 passos, mapa do caminho em formato de linha de metrô com passo a passo, tema claro/escuro, aviso de servidor acordando; depois testar fluxos e acessibilidade | `static/` (4 telas, `mapa.js`, `tema.js`) |
 
 Observação: a narração do pitch é gravada pelos integrantes (exigência da disciplina). Os dados são simulados.

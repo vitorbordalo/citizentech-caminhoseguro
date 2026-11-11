@@ -3,9 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#072f47">
+<meta name="theme-color" content="#0f766e">
 <title>Avisar um problema | CaminhoSeguro</title>
-<meta name="description" content="CaminhoSeguro: caminhos mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<meta name="description" content="CaminhoSeguro: caminhos a pé mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<script src="js/tema.js"></script>
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
@@ -15,39 +19,53 @@
   <div id="area-form">
     <header class="titulo">
       <h1>Avisar um problema na calçada</h1>
-      <p class="lead">Seu aviso ajuda outras pessoas e a prefeitura. Leva menos de um minuto.</p>
+      <p class="lead">Viu buraco, calçada quebrada ou falta de luz? Conte em 3 passos rápidos. Seu aviso ajuda outras pessoas a escolher o melhor caminho.</p>
     </header>
-    <form id="form-ocorrencia" class="cartao" novalidate>
-      <div id="resumo-erros" class="aviso aviso-erro" role="alert" hidden></div>
-      <div id="carregando" class="carregando" role="status"><span class="giro" aria-hidden="true"></span>Carregando...</div>
+    <div class="oc-layout">
+      <form id="form-ocorrencia" class="cartao" novalidate>
+        <div id="resumo-erros" class="aviso aviso-erro" role="alert" hidden></div>
+        <div id="carregando" class="carregando" role="status"><span class="giro" aria-hidden="true"></span>Carregando o formulário...</div>
 
-      <div class="campo">
-        <label for="trecho">Em que trecho foi?</label>
-        <p class="dica" id="dica-trecho">Um trecho é o pedaço de calçada entre dois lugares.</p>
-        <select id="trecho" name="trecho" required aria-describedby="dica-trecho erro-trecho"></select>
-        <p class="erro-campo" id="erro-trecho" hidden></p>
-      </div>
+        <div class="campo">
+          <label for="trecho">1. Em que trecho foi?</label>
+          <p class="dica" id="dica-trecho">Um trecho é o pedaço de calçada entre dois lugares. Escolha na lista e confira no mapa.</p>
+          <select id="trecho" name="trecho" required aria-describedby="dica-trecho erro-trecho"></select>
+          <p class="erro-campo" id="erro-trecho" hidden></p>
+          <div class="mini-mapa mapa-quadro mapa-compacto" id="mini-mapa" hidden></div>
+        </div>
 
-      <fieldset aria-describedby="erro-tipo">
-        <legend>Que problema você viu?</legend>
-        <div class="opcoes tipos compactas" id="tipos"></div>
-        <p class="erro-campo" id="erro-tipo" hidden></p>
-      </fieldset>
+        <fieldset aria-describedby="erro-tipo">
+          <legend>2. Que problema você viu?</legend>
+          <div class="opcoes tipos" id="tipos"></div>
+          <p class="erro-campo" id="erro-tipo" hidden></p>
+        </fieldset>
 
-      <fieldset aria-describedby="dica-grav erro-grav">
-        <legend>Quanto isso atrapalha?</legend>
-        <p class="dica" id="dica-grav">Escolha de 1 (incomoda um pouco) a 5 (perigoso).</p>
-        <div class="escala" id="gravidade"></div>
-        <p class="erro-campo" id="erro-grav" hidden></p>
-      </fieldset>
+        <fieldset aria-describedby="dica-grav erro-grav">
+          <legend>3. Quanto isso atrapalha?</legend>
+          <p class="dica" id="dica-grav">De 1 (incomoda um pouco) a 5 (perigoso).</p>
+          <div class="escala" id="gravidade"></div>
+          <p class="erro-campo" id="erro-grav" hidden></p>
+        </fieldset>
 
-      <div class="campo">
-        <label for="descricao">Quer contar mais? <span style="font-weight:400">(opcional)</span></label>
-        <textarea id="descricao" name="descricao" maxlength="300" rows="4" placeholder="Ex.: o buraco fica em frente à padaria."></textarea>
-      </div>
+        <div class="campo">
+          <label for="descricao">Quer contar mais? <span style="font-weight:400">(opcional)</span></label>
+          <textarea id="descricao" name="descricao" maxlength="300" rows="4" placeholder="Ex.: o buraco fica em frente à padaria."></textarea>
+          <p class="contagem" id="contagem" aria-hidden="true">0 de 300 letras</p>
+        </div>
 
-      <button class="botao botao-destaque botao-bloco" type="submit" id="botao-enviar">Enviar aviso</button>
-    </form>
+        <button class="botao botao-grande botao-bloco" type="submit" id="botao-enviar">Enviar aviso</button>
+      </form>
+
+      <aside class="cartao lado-dicas" aria-label="Dicas">
+        <h2>Como funciona</h2>
+        <ul>
+          <li>Seu aviso aparece para a prefeitura, no painel do agente público.</li>
+          <li>Quando o problema é grave, os caminhos passam a tentar evitar esse trecho.</li>
+          <li>Você pode voltar e ver o caminho de novo depois.</li>
+        </ul>
+        <a class="botao botao-claro" href="index.html">Ver um caminho</a>
+      </aside>
+    </div>
   </div>
 
   <section id="confirmacao" class="cartao confirma" hidden aria-live="polite"></section>
@@ -56,6 +74,7 @@
 <script src="js/config.js"></script>
 <script src="js/demo-data.js"></script>
 <script src="js/app.js"></script>
+<script src="js/mapa.js"></script>
 <script src="js/ocorrencia.js"></script>
 </body>
 </html>

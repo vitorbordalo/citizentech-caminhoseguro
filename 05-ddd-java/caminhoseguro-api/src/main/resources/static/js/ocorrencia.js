@@ -46,7 +46,15 @@
     if (t && !$('input[name="gravidade"]:checked')) { $(`input[name="gravidade"][value="${t.gravidadePadrao}"]`).checked = true; erro("grav", ""); }
   }));
   $$('input[name="gravidade"]').forEach((r) => r.addEventListener("change", () => erro("grav", "")));
-  selTrecho.addEventListener("change", () => erro("trecho", ""));
+  const mini = $("#mini-mapa");
+  function mapaTrecho() {
+    const t = trechos.find((x) => String(x.id) === selTrecho.value);
+    mini.hidden = !t;
+    if (t) CSMapa.desenhar(mini, { locais, trechos, soTrecho: t, fonte: 30, altura: 300, aria: "Mapa com o trecho escolhido em destaque: " + nomeTrecho(t, locais) });
+  }
+  selTrecho.addEventListener("change", () => { erro("trecho", ""); mapaTrecho(); });
+  mapaTrecho();
+  $("#descricao").addEventListener("input", (e) => { $("#contagem").textContent = e.target.value.length + " de 300 letras"; });
 
   form.addEventListener("submit", async (ev) => {
     ev.preventDefault();
@@ -75,8 +83,8 @@
       c.hidden = false;
       c.innerHTML = `${icone("ok")}<h1 tabindex="-1" id="titulo-conf">Aviso enviado. Obrigada, ${esc(USUARIO_LOGADO.nome)}!</h1>
         <p class="lead" style="margin-inline:auto">Seu aviso ajuda outras pessoas a escolher o melhor caminho.</p>
-        <div class="aviso aviso-ok" style="text-align:left">${icone("info")}<div><strong>${esc(tp.descricao)}</strong> (${esc(GRAVIDADE[salva.gravidade])})<br>${esc(nomeTrecho(t, locais))}<br>Situação: aberto, a prefeitura vai acompanhar.</div></div>
-        <div class="acoes"><a class="botao botao-destaque" href="index.html">Voltar ao início</a><a class="botao botao-claro" href="ocorrencia.html">Avisar outro problema</a></div>`;
+        <div class="aviso aviso-ok">${icone("info")}<div><strong>${esc(tp.descricao)}</strong> (${esc(GRAVIDADE[salva.gravidade])})<br>${esc(nomeTrecho(t, locais))}<br>Situação: aberto, a prefeitura vai acompanhar.</div></div>
+        <div class="acoes"><a class="botao" href="index.html">Traçar um caminho</a><a class="botao botao-claro" href="ocorrencia.html">Avisar outro problema</a></div>`;
       $("#titulo-conf").focus();
     } catch (e) {
       resumo.hidden = false;

@@ -1,8 +1,8 @@
 (async function () {
-  const { $, icone, iconeTipo, esc, api, mensagemAmigavel, renderShell, GRAVIDADE, STATUS, STATUS_ICONE, dataBR, nomeTrecho } = CS;
+  const { $, $$, icone, iconeTipo, esc, api, mensagemAmigavel, renderShell, GRAVIDADE, STATUS, STATUS_ICONE, dataBR, nomeTrecho } = CS;
   renderShell("painel");
-  const lista = $("#lista"), msg = $("#mensagem"), filtro = $("#filtro");
-  let ocs = [], tipos = [], trechos = [], locais = [];
+  const lista = $("#lista"), msg = $("#mensagem");
+  let ocs = [], tipos = [], trechos = [], locais = [], filtro = "", mapa = null, trechoMapa = null;
   const hoje = () => new Date().toISOString().slice(0, 10);
 
   try {
@@ -10,20 +10,42 @@
   } catch (e) {
     $("#area-lista").setAttribute("aria-busy", "false");
     lista.innerHTML = `<div class="aviso aviso-erro">${icone("alerta")}<div><strong>Não conseguimos carregar os avisos.</strong><p>${esc(mensagemAmigavel(e))} Recarregue a página.</p></div></div>`;
+    $("#contadores").innerHTML = "";
     return;
   }
 
   const ordem = { ABERTA: 0, EM_ANALISE: 1, RESOLVIDA: 2 };
+  const n = (s) => ocs.filter((o) => o.status === s).length;
+
   function contadores() {
-    const n = (s) => ocs.filter((o) => o.status === s).length;
-    const c = (cls, ic, rot, v) => `<div class="contador ${cls}"><span class="valor">${v}</span><span class="rotulo">${icone(ic)}${rot}</span></div>`;
-    $("#contadores").innerHTML = c("aberta", "alerta", "Abertos", n("ABERTA")) + c("analise", "lupa", "Em análise", n("EM_ANALISE")) + c("resolvida", "ok", "Resolvidos", n("RESOLVIDA"));
+    const c = (cls, ic, rot, v) => `<div class="kpi ${cls}"><span class="valor">${v}</span><span class="rotulo">${icone(ic)}${rot}</span></div>`;
+    $("#contadores").innerHTML = c("total", "painel", "Total de avisos", ocs.length) + c("aberta", "alerta", "Abertos", n("ABERTA")) +
+      c("analise", "lupa", "Em análise", n("EM_ANALISE")) + c("resolvida", "ok", "Resolvidos", n("RESOLVIDA"));
+    const t = ocs.length || 1, p = (s) => ((n(s) / t) * 100).toFixed(1);
+    $("#progresso").innerHTML = ocs.length ? `<i class="a" style="width:${p("ABERTA")}%"></i><i class="e" style="width:${p("EM_ANALISE")}%"></i><i class="r" style="width:${p("RESOLVIDA")}%"></i>` : "";
   }
+
+  function filtros() {
+    const itens = [["", "Todos", ocs.length], ["ABERTA", "Abertos", n("ABERTA")], ["EM_ANALISE", "Em análise", n("EM_ANALISE")], ["RESOLVIDA", "Resolvidos", n("RESOLVIDA")]];
+  $("#filtros").innerHTML = itens.map(([v, r, c]) => `<li><button type="button" data-f="${v}" aria-pressed="${v === filtro}">${r} (${c})</button></li>`).join("");
+  }
+
+  function desenhaMapa() {
+    const avisos = new Map();
+    ocs.filter((o) => o.status === "ABERTA").forEach((o) => avisos.set(o.idTrecho, (avisos.get(o.idTrecho) || 0) + 1));
+    $("#col-mapa").hidden = false;
+    const el = $("#mapa-avisos");
+    CSMapa.desenhar(el, { locais, trechos, avisos, destaque: trechoMapa ? new Set([trechoMapa]) : new Set(), altura: 440, fonte: 22, aria: "Mapa com o número de avisos abertos em cada trecho" });
+  }
+
   function desenha() {
-    contadores();
-    const f = filtro.value;
-    const itens = ocs.filter((o) => !f || o.status === f).sort((a, b) => ordem[a.status] - ordem[b.status] || b.gravidade - a.gravidade || b.id - a.id);
+    contadores(); filtros();
+    const itens = ocs.filter((o) => !filtro || o.status === filtro).sort((a, b) => ordem[a.status] - ordem[b.status] || b.gravidade - a.gravidade || b.id - a.id);
     $("#area-lista").setAttribute("aria-busy", "false");
+    if (!ocs.length) {
+      lista.innerHTML = `<div class="cartao vazio">${icone("ok")}<h3>Nenhum aviso ainda</h3><p>Quando um morador avisar um problema, ele aparece aqui para você acompanhar.</p><a class="botao" href="ocorrencia.html">Registrar um aviso</a></div>`;
+      return;
+    }
     if (!itens.length) {
       lista.innerHTML = `<div class="cartao vazio">${icone("ok")}<h3>Nenhum aviso aqui</h3><p>Não há avisos com essa situação. Escolha "Todos" para ver os demais.</p></div>`;
       return;
@@ -33,10 +55,11 @@
       const tr = trechos.find((t) => t.id === o.idTrecho);
       const opts = Object.entries(STATUS).map(([k, v]) => `<option value="${k}"${k === o.status ? " selected" : ""}>${v}</option>`).join("");
       const cls = o.status === "ABERTA" ? "selo-erro" : o.status === "EM_ANALISE" ? "selo-atencao" : "selo-ok";
-      return `<li class="ocorrencia s-${o.status}" data-id="${o.id}">
+      const pontos = [1, 2, 3, 4, 5].map((i) => `<i${i <= o.gravidade ? ' class="on"' : ""}></i>`).join("");
+      return `<li class="ocorrencia s-${o.status}" data-id="${o.id}" data-trecho="${o.idTrecho}">
         <h3>${icone(iconeTipo(o.idTipoOcorrencia))}${esc(tp.descricao)}</h3>
         <ul class="selos"><li class="selo ${cls}">${icone(STATUS_ICONE[o.status])}${STATUS[o.status]}</li>
-          <li class="selo ${o.gravidade >= 4 ? "selo-erro" : "selo-neutro"}">${icone(o.gravidade >= 4 ? "travessia" : "info")}Gravidade ${o.gravidade} de 5: ${esc(GRAVIDADE[o.gravidade])}</li></ul>
+          <li class="selo ${o.gravidade >= 4 ? "selo-erro" : "selo-neutro"}"><span class="pontos${o.gravidade >= 4 ? "" : " leve"}" aria-hidden="true">${pontos}</span>Gravidade ${o.gravidade} de 5: ${esc(GRAVIDADE[o.gravidade])}</li></ul>
         <p class="meta">${tr ? esc(nomeTrecho(tr, locais)) : "Trecho " + o.idTrecho} &middot; registrado em ${dataBR(o.dataRegistro)}${o.dataResolucao ? " &middot; resolvido em " + dataBR(o.dataResolucao) : ""}</p>
         ${o.descricao ? `<p class="desc">${esc(o.descricao)}</p>` : ""}
         <div class="muda"><div class="linha"><div><label for="st-${o.id}">Mudar a situação</label><select id="st-${o.id}">${opts}</select></div>
@@ -54,7 +77,7 @@
     try {
       const salvo = await api("/api/ocorrencias/" + id, { metodo: "PUT", corpo: Object.assign({}, o, { status: novo, dataResolucao: novo === "RESOLVIDA" ? hoje() : null }) });
       ocs[ocs.findIndex((x) => x.id === id)] = salvo;
-      desenha();
+      desenha(); desenhaMapa();
       msg.innerHTML = `<div class="aviso aviso-ok">${icone("ok")}<div>Aviso ${id} agora está como <strong>${STATUS[salvo.status]}</strong>.</div></div>`;
       const nb = $(`[data-salvar="${id}"]`); if (nb) nb.focus();
     } catch (e) {
@@ -62,6 +85,19 @@
       msg.innerHTML = `<div class="aviso aviso-erro">${icone("alerta")}<div><strong>Não foi possível salvar.</strong> ${esc(mensagemAmigavel(e))}</div></div>`;
     }
   });
-  filtro.addEventListener("change", () => { msg.innerHTML = ""; desenha(); });
-  desenha();
+  // Tocar num aviso (celular) mostra o trecho dele no mapa
+  lista.addEventListener("click", (ev) => { const li = ev.target.closest(".ocorrencia"); if (!li || ev.target.closest("select,button")) return; const t = Number(li.dataset.trecho); if (t !== trechoMapa) { trechoMapa = t; desenhaMapa(); } });
+  // Passar o mouse num aviso mostra o trecho dele no mapa
+  lista.addEventListener("mouseover", (ev) => {
+    const li = ev.target.closest(".ocorrencia"); const t = li ? Number(li.dataset.trecho) : null;
+    if (t !== trechoMapa) { trechoMapa = t; desenhaMapa(); }
+  });
+  $("#filtros").addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-f]"); if (!b) return;
+    filtro = b.dataset.f; msg.innerHTML = ""; desenha();
+    const nb = $(`[data-f="${filtro}"]`); if (nb) nb.focus();
+  });
+  const primeira = ocs.filter((o) => o.status === "ABERTA").sort((a, b) => b.gravidade - a.gravidade || b.id - a.id)[0];
+  if (primeira) trechoMapa = primeira.idTrecho;
+  desenha(); desenhaMapa();
 })();
