@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>CaminhoSeguro - AR-VR</title>
+<link rel="stylesheet" href="../../_doc/doc.css">
+<style>
+ .link{font-size:15pt;font-weight:700;color:#0b3d5c;border:2px solid #0b3d5c;padding:10pt;border-radius:6pt;text-align:center;margin:14pt 0;word-break:break-all}
+ .grade{display:grid;grid-template-columns:1fr 1fr;gap:8pt}
+ .grade figure{margin:0}
+ .grade img{border:1px solid #ccc}
+</style></head><body>
+
+<h1>CaminhoSeguro · AR-VR Modelling And Simulation</h1>
+<p><b>Global Solution FIAP 2026.2 · CitizenTech</b> · Engenharia de Software, 2º ano · Turma 2ESPH · Equipe 1</p>
+<table style="width:auto;min-width:55%">
+  <tr><th>Integrante</th><th>RM</th></tr>
+  <tr><td>Lucas Branquinho</td><td>562262</td></tr>
+  <tr><td>Vitor Bordalo</td><td>561592</td></tr>
+</table>
+
+<div class="link">Vídeo no YouTube (55 segundos):<br>{{LINK_VIDEO}}</div>
+
+<h2>O que o vídeo representa</h2>
+<p>O <b>CaminhoSeguro</b> é uma CitizenTech para idosos e pessoas com mobilidade reduzida do bairro Bela Vista (São Paulo). O app calcula a rota mais acessível, a mais segura ou a mais rápida, e usa os problemas de calçada que a própria comunidade registra. A simulação 3D mostra <b>a mesma rota pelos olhos do cidadão</b>: por que o caminho mais curto pode ser perigoso e como a rota acessível evita as barreiras. A personagem dona Maria (72 anos) é fictícia.</p>
+<table>
+  <tr><th>Tempo</th><th>Cena</th></tr>
+  <tr><td>0–6 s</td><td>Vista aérea de um quarteirão 3D da Bela Vista com o título “CaminhoSeguro, uma CitizenTech da Bela Vista”.</td></tr>
+  <tr><td>6–20 s</td><td>A câmera desce até a calçada. Dona Maria sai de casa e, no caminho mais curto, aparecem as barreiras: buraco na calçada, esquina sem rampa, ladeira muito íngreme e poste apagado.</td></tr>
+  <tr><td>20–32 s</td><td>“A comunidade avisa”: os moradores marcam os problemas no mapa e o caminho rápido, mas perigoso, fica marcado como “evitar”.</td></tr>
+  <tr><td>32–48 s</td><td>O app calcula a rota mais acessível (linha verde no chão), que passa por rampas, uma faixa com semáforo e um ponto de apoio com banco, água e Wi-Fi. Painel: “Rota mais acessível · 11 min · 0 barreiras”.</td></tr>
+  <tr><td>48–55 s</td><td>Chegada ao Posto de Saúde, a câmera sobe e aparece a mensagem final com os ODS 3, 10 e 11 e os integrantes.</td></tr>
+</table>
+
+<h2 class="quebra">Quadros do vídeo</h2>
+<div class="grade">
+  <figure><img src="../cena/quadros-chave/quadro-01-t3s.png"><figcaption>3 s: abertura</figcaption></figure>
+  <figure><img src="../cena/quadros-chave/quadro-02-t17s.png"><figcaption>17 s: barreiras no caminho curto</figcaption></figure>
+  <figure><img src="../cena/quadros-chave/quadro-03-t27s.png"><figcaption>27 s: a comunidade avisa</figcaption></figure>
+  <figure><img src="../cena/quadros-chave/quadro-04-t40s.png"><figcaption>40 s: rota acessível e ponto de apoio</figcaption></figure>
+  <figure><img src="../cena/quadros-chave/quadro-05-t53s.png"><figcaption>53 s: mensagem final e ODS</figcaption></figure>
+</div>
+
+<h2>Como foi feito</h2>
+<ul>
+  <li>Cena 3D feita em <b>three.js</b> (WebGL), com geometria criada por código (prédios, calçadas, faixas, árvores, avatar low-poly), luz com sombras e rótulos 3D legíveis. Não foram usados modelos nem imagens de terceiros.</li>
+  <li>Animação <b>determinística</b>: a função <code>renderFrame(t)</code> posiciona câmera, avatar e marcadores para cada instante. Cada quadro foi capturado pelo Chrome (DevTools Protocol) a 30 fps e montado em vídeo 1920x1080 com <b>ffmpeg</b>, com trilha sonora sintetizada.</li>
+  <li>A mesma cena pode ser aberta no navegador em <b>modo interativo</b>: arrastar gira a câmera, a roda dá zoom e a barra de espaço pausa (<code>node gravar.mjs --servir</code>).</li>
+  <li>A rota mostrada é a mesma calculada pelo app: dados simulados do bairro, usados também nas disciplinas de Database, DDD Java e Dynamic Programming.</li>
+</ul>
+<p><b>Código-fonte:</b> https://github.com/lucasfbranquinho/citizentech-caminhoseguro (pasta <code>02-ar-vr</code>).</p>
+</body></html>

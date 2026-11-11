@@ -1,0 +1,96 @@
+﻿1
+00:00:00,600 --> 00:00:04,978
+Lucas: Imagine ter 72 anos e querer ir sozinha à UBS.
+
+2
+00:00:05,098 --> 00:00:15,092
+Na Bela Vista, calçada quebrada, ladeira e travessia perigosa fazem muita gente desistir de sair de casa.
+
+3
+00:00:15,212 --> 00:00:19,400
+Esse é o problema que a gente quis resolver.
+
+4
+00:00:20,600 --> 00:00:25,450
+Vitor: Esta é a dona Maria, personagem fictícia de 72 anos.
+
+5
+00:00:25,570 --> 00:00:33,404
+Ela quer ir sozinha ao mercado e à UBS, mas não sabe qual caminho é seguro para ela.
+
+6
+00:00:33,524 --> 00:00:39,400
+O CaminhoSeguro é para ela, para cadeirantes e para cuidadores.
+
+7
+00:00:41,000 --> 00:00:54,644
+Lucas: Na tela inicial, ela escolhe de onde sai, aonde vai e como quer ir: mais rápida, mais segura ou mais acessível.
+
+8
+00:00:54,764 --> 00:01:03,000
+Recebe o caminho passo a passo, com tempo, risco e pontos de apoio.
+
+9
+00:01:05,500 --> 00:01:11,868
+Vitor: Se vê um buraco, registra o problema em poucos toques.
+
+10
+00:01:11,988 --> 00:01:21,776
+A agente da subprefeitura vê no painel, muda o status para em análise ou resolvida,
+
+11
+00:01:21,896 --> 00:01:28,500
+e os problemas graves passam a pesar nas próximas rotas.
+
+12
+00:01:31,000 --> 00:01:37,044
+Vitor: Em Agile, organizamos o trabalho em backlog e dois sprints.
+
+13
+00:01:37,164 --> 00:01:44,336
+Em Database, um banco relacional guarda locais, trechos e ocorrências.
+
+14
+00:01:44,456 --> 00:01:50,500
+Em DDD Java, uma API no Render entrega rotas e ocorrências.
+
+15
+00:01:51,500 --> 00:01:59,513
+Lucas: Em Dynamic Programming, o Dijkstra calcula as rotas e a mochila prioriza melhorias com orçamento.
+
+16
+00:01:59,633 --> 00:02:04,094
+Em Data Science, analisamos as ocorrências por trecho.
+
+17
+00:02:04,214 --> 00:02:07,849
+Em AR-VR, simulamos as barreiras da calçada.
+
+18
+00:02:07,969 --> 00:02:14,000
+Em Network, uma rede com VLANs, NAT, ACL e SSH conecta equipe e servidor.
+
+19
+00:02:16,000 --> 00:02:27,559
+Lucas: Medimos o impacto por dois indicadores: o percentual de trechos acessíveis e o número de rotas acessíveis consultadas por semana.
+
+20
+00:02:27,679 --> 00:02:35,206
+Isso apoia os ODS 11, 10 e 3: cidade acessível, menos desigualdade e mais bem-estar.
+
+21
+00:02:35,326 --> 00:02:39,000
+Para outro bairro, basta trocar os dados.
+
+22
+00:02:40,800 --> 00:02:44,899
+Vitor: Os dados desta fase são simulados, mas a solução funciona.
+
+23
+00:02:45,019 --> 00:02:49,400
+Somos Vitor Bordalo e Lucas Branquinho, equipe 1, turma 2ESPH.
+
+24
+00:02:50,200 --> 00:02:53,800
+Lucas e Vitor: CaminhoSeguro: sair de casa com segurança.
+

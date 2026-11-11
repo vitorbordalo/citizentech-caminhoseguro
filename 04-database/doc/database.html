@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>CaminhoSeguro - Database Design</title>
+<link rel="stylesheet" href="../../_doc/doc.css">
+<style>.diag{width:100%;border:1px solid #ccd} @page paisagem{size:A4 landscape;margin:10mm} .paisagem{page:paisagem;page-break-before:always;page-break-after:always}</style></head><body>
+
+<section class="capa">
+  <div class="topo">FIAP · ENGENHARIA DE SOFTWARE · 2º ANO · TURMA 2ESPH · GLOBAL SOLUTION 2026.2 — CITIZENTECH</div>
+  <div class="meio">
+    <div class="disc">Database Design</div>
+    <h1>CaminhoSeguro</h1>
+    <div class="sub">Rotas a pé acessíveis e seguras, decididas com a comunidade</div>
+    <p><b>Equipe:</b> Equipe 1 — CaminhoSeguro</p>
+    <p><b>Nome da solução:</b> CaminhoSeguro</p>
+    <table>
+      <tr><th>Integrante (ordem alfabética)</th><th>RM</th></tr>
+      <tr><td>Lucas Branquinho</td><td>562262</td></tr>
+      <tr><td>Vitor Bordalo</td><td>561592</td></tr>
+    </table>
+  </div>
+  <div class="rodape">São Paulo — novembro de 2026</div>
+</section>
+
+<section class="sumario">
+  <h2>Sumário</h2>
+  <ol>
+    <li>1. Objetivo e escopo do projeto</li>
+    <li>2. Principais funcionalidades da solução</li>
+    <li>3. Diagrama do Modelo Lógico (Oracle Data Modeler)</li>
+    <li>4. Descrição das tabelas e relacionamentos</li>
+    <li>5. Scripts SQL entregues (DDL, DML e DQL)</li>
+  </ol>
+</section>
+
+<h2>1. Objetivo e escopo do projeto</h2>
+<p>O <b>CaminhoSeguro</b> é uma CitizenTech para pessoas idosas e com mobilidade reduzida do bairro <b>Bela Vista, em São Paulo</b>. Calçadas quebradas, esquinas sem rampa, ladeiras e travessias perigosas fazem muitas dessas pessoas desistirem de sair de casa sozinhas. A solução mostra ao morador o caminho <b>mais acessível</b>, o <b>mais seguro</b> ou o <b>mais rápido</b> entre dois pontos do bairro. Os problemas das calçadas são registrados pela própria comunidade e entram no cálculo das rotas.</p>
+<p><b>Objetivo do banco de dados:</b> guardar, de forma organizada e consistente, o mapa do bairro (locais e trechos de calçada com tempo, risco e acessibilidade), os usuários, as ocorrências registradas pela comunidade e o histórico das rotas consultadas. O mesmo modelo é usado pela API Java (disciplina de Domain Driven Design) no Oracle da FIAP.</p>
+<p><b>Escopo desta entrega:</b> modelo relacional com 8 tabelas, implementação física em Oracle (DDL com todas as constraints), dados de exemplo (DML) e três consultas de apoio à decisão (DQL). Todos os dados são <b>simulados</b>: não há dados pessoais reais, e os e-mails usam o domínio de exemplo <code>.example</code>.</p>
+<p><b>Fora do escopo:</b> autenticação/senhas, fotos das ocorrências e integração com mapas externos. Essas funções ficam para versões futuras.</p>
+
+<h2 class="quebra">2. Principais funcionalidades da solução</h2>
+<table>
+  <tr><th>Funcionalidade</th><th>O que faz</th><th>Tabelas envolvidas</th></tr>
+  <tr><td>Mapa do bairro</td><td>Cadastra os pontos do bairro (casa, UBS, mercado, metrô, pontos de apoio) e os trechos de calçada entre eles, com tempo, risco (0–10), declividade, largura e se o trecho é acessível.</td><td>T_CS_BAIRRO, T_CS_TIPO_LOCAL, T_CS_LOCAL, T_CS_TRECHO</td></tr>
+  <tr><td>Buscar rota</td><td>O morador escolhe origem, destino e critério (RAPIDA, SEGURA ou ACESSIVEL) e recebe o passo a passo. Cada pedido fica salvo como histórico.</td><td>T_CS_LOCAL, T_CS_TRECHO, T_CS_ROTA_CONSULTA</td></tr>
+  <tr><td>Avisar um problema</td><td>Qualquer usuário registra uma ocorrência em um trecho (buraco, esquina sem rampa, iluminação ruim…), com gravidade de 1 a 5.</td><td>T_CS_OCORRENCIA, T_CS_TIPO_OCORRENCIA, T_CS_USUARIO</td></tr>
+  <tr><td>Painel do agente público</td><td>O agente da subprefeitura acompanha as ocorrências e muda o status (ABERTA → EM_ANALISE → RESOLVIDA), registrando a data de resolução.</td><td>T_CS_OCORRENCIA</td></tr>
+  <tr><td>Indicadores de impacto</td><td>Contagem de rotas acessíveis consultadas por semana, percentual de trechos acessíveis e tempo médio de resolução das ocorrências.</td><td>T_CS_ROTA_CONSULTA, T_CS_TRECHO, T_CS_OCORRENCIA</td></tr>
+</table>
+
+<div class="paisagem"><h2>3. Diagrama do Modelo Lógico (Oracle Data Modeler)</h2>
+<figure><img class="diag" style="max-height:150mm;width:auto;max-width:100%" src="modelo_logico.png" alt="Diagrama do modelo lógico relacional com 8 tabelas">
+<figcaption>Figura 1 — Modelo relacional do CaminhoSeguro: 8 tabelas, chaves primárias (P), estrangeiras (F), únicas (U), colunas obrigatórias (*) e cardinalidades 1:N.</figcaption></figure></div>
+<h3>Cardinalidades</h3>
+<table>
+  <tr><th>Relacionamento</th><th>Cardinalidade</th><th>Leitura</th></tr>
+  <tr><td>T_CS_BAIRRO → T_CS_LOCAL</td><td>1 : N</td><td>Um bairro tem vários locais; cada local pertence a um bairro.</td></tr>
+  <tr><td>T_CS_TIPO_LOCAL → T_CS_LOCAL</td><td>1 : N</td><td>Um tipo (ex.: Unidade de saúde) classifica vários locais.</td></tr>
+  <tr><td>T_CS_LOCAL → T_CS_TRECHO (origem)</td><td>1 : N</td><td>Um local é ponto de partida de vários trechos.</td></tr>
+  <tr><td>T_CS_LOCAL → T_CS_TRECHO (destino)</td><td>1 : N</td><td>Um local é ponto de chegada de vários trechos.</td></tr>
+  <tr><td>T_CS_TRECHO → T_CS_OCORRENCIA</td><td>1 : N</td><td>Um trecho pode ter várias ocorrências registradas.</td></tr>
+  <tr><td>T_CS_TIPO_OCORRENCIA → T_CS_OCORRENCIA</td><td>1 : N</td><td>Um tipo de problema aparece em várias ocorrências.</td></tr>
+  <tr><td>T_CS_USUARIO → T_CS_OCORRENCIA</td><td>1 : N</td><td>Um usuário registra várias ocorrências.</td></tr>
+  <tr><td>T_CS_USUARIO → T_CS_ROTA_CONSULTA</td><td>1 : N</td><td>Um usuário faz várias consultas de rota.</td></tr>
+  <tr><td>T_CS_LOCAL → T_CS_ROTA_CONSULTA (origem e destino)</td><td>1 : N</td><td>Um local aparece como origem ou destino de várias consultas.</td></tr>
+</table>
+<p>T_CS_TRECHO funciona como uma <b>tabela associativa</b> entre locais (relacionamento N:N de LOCAL com ele mesmo), com atributos próprios. É ela que forma o grafo usado no cálculo das rotas (Dijkstra) nas disciplinas de Dynamic Programming e Domain Driven Design.</p>
+
+<h2>4. Descrição das tabelas e relacionamentos</h2>
+<table>
+  <tr><th>Tabela</th><th>Finalidade</th><th>Constraints principais</th></tr>
+  <tr><td>T_CS_BAIRRO</td><td>Bairros atendidos. Permite levar a solução para outros bairros só cadastrando novos dados.</td><td>PK id_bairro; UNIQUE (nm_bairro, nm_cidade, sg_uf)</td></tr>
+  <tr><td>T_CS_TIPO_LOCAL</td><td>Domínio dos tipos de ponto do mapa.</td><td>PK; UNIQUE ds_tipo_local</td></tr>
+  <tr><td>T_CS_LOCAL</td><td>Pontos do bairro (nós do grafo). Indica se é ponto de apoio (descanso, água, Wi-Fi público).</td><td>PK; FK bairro e tipo; UNIQUE (id_bairro, nm_local); CHECK st_ponto_apoio IN ('S','N'); CHECK de latitude/longitude</td></tr>
+  <tr><td>T_CS_TRECHO</td><td>Trecho de calçada entre dois locais (aresta do grafo) com tempo, risco, declividade, largura e acessibilidade.</td><td>PK; 2 FKs para LOCAL; UNIQUE (origem, destino); CHECK tempo &gt; 0, risco 0–10, origem ≠ destino, st_acessivel S/N, largura &gt; 0</td></tr>
+  <tr><td>T_CS_USUARIO</td><td>Usuários (idoso, PCD, cuidador, morador, agente público). Dados fictícios.</td><td>PK; UNIQUE ds_email; CHECK perfil e formato do e-mail</td></tr>
+  <tr><td>T_CS_TIPO_OCORRENCIA</td><td>Domínio dos problemas de calçada, com gravidade padrão.</td><td>PK; UNIQUE descrição; CHECK gravidade 1–5</td></tr>
+  <tr><td>T_CS_OCORRENCIA</td><td>Problema registrado pela comunidade em um trecho, com status de atendimento.</td><td>PK; FKs trecho, usuário e tipo; CHECK gravidade 1–5, status (ABERTA, EM_ANALISE, RESOLVIDA), resolução ≥ registro</td></tr>
+  <tr><td>T_CS_ROTA_CONSULTA</td><td>Histórico das rotas pedidas. É a base do indicador de impacto.</td><td>PK; FKs usuário, origem e destino; CHECK critério (RAPIDA, SEGURA, ACESSIVEL), origem ≠ destino</td></tr>
+</table>
+<p>As chaves primárias usam <code>GENERATED BY DEFAULT AS IDENTITY</code>: a API não precisa informar o ID, e o script de dados pode usar IDs fixos para as chaves estrangeiras ficarem claras. Os nomes seguem o padrão <code>T_</code> para tabelas, <code>PK_</code>, <code>FK_</code>, <code>UN_</code> e <code>CK_</code> para constraints, e prefixos de coluna <code>id_</code>, <code>nm_</code>, <code>ds_</code>, <code>nr_</code>, <code>st_</code>, <code>tp_</code>, <code>dt_</code> e <code>sg_</code>.</p>
+
+<h2>5. Scripts SQL entregues (DDL, DML e DQL)</h2>
+<table>
+  <tr><th>Arquivo</th><th>Conteúdo</th></tr>
+  <tr><td><code>01_DDL_caminhoseguro.sql</code></td><td>CREATE TABLE das 8 tabelas e ALTER TABLE com todas as constraints: PK, FK, UNIQUE e CHECK.</td></tr>
+  <tr><td><code>02_DML_caminhoseguro.sql</code></td><td>INSERTs com no mínimo 5 linhas em cada tabela: 5 bairros, 8 tipos de local, 13 locais, 21 trechos, 7 usuários, 6 tipos de ocorrência, 10 ocorrências e 8 consultas de rota (78 linhas). No final, um <code>ALTER TABLE ... MODIFY ... GENERATED BY DEFAULT AS IDENTITY (START WITH LIMIT VALUE)</code> por tabela acerta o próximo ID automático (Oracle 12c ou superior).</td></tr>
+  <tr><td><code>03_DQL_caminhoseguro.sql</code></td><td>Consulta 1: INNER JOIN (pontos de apoio e seus tipos). Consulta 2: INNER JOIN + COUNT/AVG/MAX + GROUP BY (problemas mais registrados e gravidade média). Consulta 3: LEFT OUTER JOIN + WHERE + ORDER BY (locais da Bela Vista com as rotas pedidas até eles; os que nunca foram destino aparecem primeiro, marcados como NUNCA PEDIDO).</td></tr>
+</table>
+<p><b>Ordem de execução:</b> 01 → 02 → 03, no SQL Developer, conectado ao Oracle da FIAP. Os trechos e tempos do DML são os mesmos do grafo usado em Dynamic Programming, para que todas as partes da CitizenTech conversem.</p>
+</body></html>

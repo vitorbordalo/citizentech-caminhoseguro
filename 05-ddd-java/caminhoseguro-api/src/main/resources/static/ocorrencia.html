@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#072f47">
+<title>Avisar um problema | CaminhoSeguro</title>
+<meta name="description" content="CaminhoSeguro: caminhos mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div id="shell-topo"></div>
+<main id="conteudo" class="pagina" tabindex="-1">
+  <div id="area-form">
+    <header class="titulo">
+      <h1>Avisar um problema na calçada</h1>
+      <p class="lead">Seu aviso ajuda outras pessoas e a prefeitura. Leva menos de um minuto.</p>
+    </header>
+    <form id="form-ocorrencia" class="cartao" novalidate>
+      <div id="resumo-erros" class="aviso aviso-erro" role="alert" hidden></div>
+      <div id="carregando" class="carregando" role="status"><span class="giro" aria-hidden="true"></span>Carregando...</div>
+
+      <div class="campo">
+        <label for="trecho">Em que trecho foi?</label>
+        <p class="dica" id="dica-trecho">Um trecho é o pedaço de calçada entre dois lugares.</p>
+        <select id="trecho" name="trecho" required aria-describedby="dica-trecho erro-trecho"></select>
+        <p class="erro-campo" id="erro-trecho" hidden></p>
+      </div>
+
+      <fieldset aria-describedby="erro-tipo">
+        <legend>Que problema você viu?</legend>
+        <div class="opcoes tipos compactas" id="tipos"></div>
+        <p class="erro-campo" id="erro-tipo" hidden></p>
+      </fieldset>
+
+      <fieldset aria-describedby="dica-grav erro-grav">
+        <legend>Quanto isso atrapalha?</legend>
+        <p class="dica" id="dica-grav">Escolha de 1 (incomoda um pouco) a 5 (perigoso).</p>
+        <div class="escala" id="gravidade"></div>
+        <p class="erro-campo" id="erro-grav" hidden></p>
+      </fieldset>
+
+      <div class="campo">
+        <label for="descricao">Quer contar mais? <span style="font-weight:400">(opcional)</span></label>
+        <textarea id="descricao" name="descricao" maxlength="300" rows="4" placeholder="Ex.: o buraco fica em frente à padaria."></textarea>
+      </div>
+
+      <button class="botao botao-destaque botao-bloco" type="submit" id="botao-enviar">Enviar aviso</button>
+    </form>
+  </div>
+
+  <section id="confirmacao" class="cartao confirma" hidden aria-live="polite"></section>
+</main>
+<div id="shell-rodape"></div>
+<script src="js/config.js"></script>
+<script src="js/demo-data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/ocorrencia.js"></script>
+</body>
+</html>

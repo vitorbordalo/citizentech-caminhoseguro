@@ -1,0 +1,47 @@
+[
+ {
+  "id": 1,
+  "titulo": "Pacote model: entidades e referências por chave estrangeira",
+  "h": 490
+ },
+ {
+  "id": 2,
+  "titulo": "Camadas por recurso (1/5): usuários, tipos de ocorrência e status",
+  "h": 527
+ },
+ {
+  "id": 3,
+  "titulo": "Camadas por recurso (2/5): locais",
+  "h": 416
+ },
+ {
+  "id": 4,
+  "titulo": "Camadas por recurso (3/5): trechos",
+  "h": 364
+ },
+ {
+  "id": 5,
+  "titulo": "Camadas por recurso (4/5): ocorrências",
+  "h": 426
+ },
+ {
+  "id": 6,
+  "titulo": "Camadas por recurso (5/5): cálculo da rota (Dijkstra)",
+  "h": 471
+ },
+ {
+  "id": 7,
+  "titulo": "Pacote dao: hierarquia a partir de BaseDAO (JDBC puro)",
+  "h": 630
+ },
+ {
+  "id": 8,
+  "titulo": "Pacote exception: exceções próprias e tratador global (@RestControllerAdvice)",
+  "h": 575
+ },
+ {
+  "id": 9,
+  "titulo": "Pacotes dto e config e classe principal",
+  "h": 496
+ }
+]

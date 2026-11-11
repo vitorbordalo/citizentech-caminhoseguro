@@ -171,7 +171,7 @@ def menu(dados, grafo):
                     print("  SEM ROTA" if caminho is None
                           else f"  custo {custo} | {formatar_caminho(caminho)}")
                 else:
-                    k = int(input("Máximo de trechos: "))
+                    k = pedir_inteiro("Máximo de trechos: ")
                     # Com custos não negativos, a melhor rota nunca precisa de mais que (locais - 1)
                     # trechos. Limitar k dá o mesmo resultado e evita recursão profunda demais.
                     if k > len(grafo.locais) - 1:
@@ -187,7 +187,7 @@ def menu(dados, grafo):
                 for soma, local in ranking:
                     print(f"  {nome_legivel(local)} (soma {soma})")
             elif escolha == "5":
-                demo_orcamento(dados, grafo, int(input("Orçamento (mil R$): ")))
+                demo_orcamento(dados, grafo, pedir_inteiro("Orçamento (mil R$): "))
             elif escolha == "6":
                 if tem_locais_demo(grafo) and "melhorias" in dados and "orcamento_mil_reais" in dados:
                     demo_eficiencia(dados, grafo)
@@ -200,6 +200,15 @@ def menu(dados, grafo):
         except (EOFError, KeyboardInterrupt):
             print()
             return
+
+
+def pedir_inteiro(pergunta):
+    """Lê um número inteiro; texto que não é número vira uma mensagem clara."""
+    texto = input(pergunta).strip()
+    try:
+        return int(texto)
+    except ValueError:
+        raise ValueError(f"'{texto}' não é um número inteiro") from None
 
 
 def pedir_local(grafo, pergunta):

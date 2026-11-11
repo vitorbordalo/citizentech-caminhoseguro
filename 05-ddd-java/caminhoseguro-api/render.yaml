@@ -1,0 +1,15 @@
+# Blueprint do Render: cria o servico web a partir do Dockerfile deste repositorio.
+services:
+  - type: web
+    name: caminhoseguro-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/status
+    envVars:
+      - key: DB_URL
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false

@@ -18,3 +18,19 @@ IA usada como copiloto para aprender e revisar. Cada integrante sabe explicar o 
 | 05/11/2026 | 03, 06 e 07 (3ª revisão) | Claude | Revisar de novo até não achar erro: ler todo o código do DP, testar valores extremos e outro arquivo de dados; equipe 1 nas entregas | DP: valores enormes ajustados ao máximo útil, mensagens claras para arquivo de dados inválido e --parada sem --rota, exemplos não quebram com outro bairro; DS: gerador salva ao lado do script; número da equipe (1) no README, no DP e no Data Science |
 
 Observação: os testes e prints da Network foram executados e conferidos no Packet Tracer (não são texto gerado).
+
+## Sessão do Vitor (10 e 11/11/2026) — Claude Code com equipe de agentes
+
+| Data | Disciplina | Ferramenta | Prompt (resumo) | Para que serviu |
+|---|---|---|---|---|
+| 10/11/2026 | 03, 06 e 07 (revisão) | Claude (agente revisor) | Revisar criticamente as entregas do Lucas contra a rubrica de cada disciplina, rodar notebook/testes e corrigir só o que fosse claro | DS: validação extra por trecho inédito (GroupKFold) e caminho para dados reais; DP: `pedir_inteiro()` no menu; Network: ordem `ip domain-name` antes de `crypto key` nos configs de texto do SW1 |
+| 10/11/2026 | 04 Database | Claude | Modelar o banco Oracle do CaminhoSeguro coerente com o grafo do DP (8 tabelas, PK/FK/UNIQUE/CHECK), gerar DML com ≥5 linhas por tabela e as 3 consultas DQL pedidas | `04-database/*.sql`, diagrama lógico e PDF |
+| 10/11/2026 | 05 DDD Java | Claude (agente dev) | Criar API Spring Boot no padrão model/DAO (JDBC)/BO/controller/exception, Oracle FIAP por variáveis de ambiente, perfil H2 para testes, Dijkstra no BO, testes MockMvc, Dockerfile e render.yaml | `05-ddd-java/caminhoseguro-api/` |
+| 10/11/2026 | 05 DDD Java | Claude (agente revisor) | Revisar a API como professor: compatibilidade Oracle, códigos HTTP, exceções, deploy | Ajustes de Hikari, fuso no Dockerfile, 409 para trecho inverso, testes do Dijkstra |
+| 10/11/2026 | 01 Agile / 05 DDD | Claude (agente de front) | Criar 4 telas acessíveis (início, rota, registrar problema, painel do agente) em HTML/CSS/JS consumindo a API, com modo demonstração, e os comentários de UX | `05-ddd-java/front/` e `UX.md` |
+| 10/11/2026 | 01 Agile | Claude (agente de produto) | Escrever ideia, personas, especificação dos casos de uso, backlog com MoSCoW e Planning Poker, MVP, roteiro do pitch e roteiro de conversa com morador | `01-agile/conteudo_agile.md` |
+| 10/11/2026 | 01 Agile | Claude | Desenhar o diagrama de casos de uso em SVG e montar o PDF único | `01-agile/doc/`, `GS-Agile-CaminhoSeguro.pdf` |
+| 10/11/2026 | 02 AR-VR | Claude (agente de front) | Criar cena 3D em three.js da rota da dona Maria (barreiras, comunidade avisa, rota acessível) com renderização determinística e gerar vídeo de 55 s com ffmpeg | `02-ar-vr/` (cena, vídeo, PDF) |
+| 11/11/2026 | 01 Agile | Claude (agente de front) | Montar o vídeo do pitch ilustrado e legendado, sem voz, para a dupla gravar a narração | `01-agile/pitch/` |
+
+Observação: a narração do pitch é gravada pelos integrantes (exigência da disciplina). Os dados são simulados.

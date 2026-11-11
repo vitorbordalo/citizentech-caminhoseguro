@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#072f47">
+<title>Painel do agente | CaminhoSeguro</title>
+<meta name="description" content="CaminhoSeguro: caminhos mais acessíveis, seguros ou rápidos pelo bairro Bela Vista, com avisos da comunidade.">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div id="shell-topo"></div>
+<main id="conteudo" class="pagina" tabindex="-1">
+  <header class="titulo">
+    <h1>Painel do agente público</h1>
+    <p class="lead">Acompanhe os avisos da comunidade e atualize a situação de cada um.</p>
+  </header>
+
+  <section aria-labelledby="titulo-resumo">
+    <h2 class="sr-only" id="titulo-resumo">Resumo</h2>
+    <div class="contadores" id="contadores" aria-live="polite"></div>
+  </section>
+
+  <div class="campo filtro">
+    <label for="filtro">Mostrar avisos</label>
+    <select id="filtro">
+      <option value="">Todos</option>
+      <option value="ABERTA">Abertos</option>
+      <option value="EM_ANALISE">Em análise</option>
+      <option value="RESOLVIDA">Resolvidos</option>
+    </select>
+  </div>
+
+  <div id="mensagem" role="status" aria-live="polite"></div>
+  <section aria-labelledby="titulo-lista" aria-busy="true" id="area-lista">
+    <h2 id="titulo-lista">Avisos</h2>
+    <div id="lista"><div class="carregando"><span class="giro" aria-hidden="true"></span>Carregando...</div></div>
+  </section>
+</main>
+<div id="shell-rodape"></div>
+<script src="js/config.js"></script>
+<script src="js/demo-data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/painel.js"></script>
+</body>
+</html>

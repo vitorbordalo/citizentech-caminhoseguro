@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 490" width="1040" height="490" font-family="Segoe UI, Arial, sans-serif">
+<rect width="1040" height="490" fill="#fff"/>
+<g transform="translate(3,0)">
+<rect x="-4" y="18" width="1034" height="458" rx="4" fill="#dbe9f6" fill-opacity=".28" stroke="#6d9bc8" stroke-width="1.3" stroke-dasharray="7 4"/>
+<rect x="-4" y="1" width="214.4" height="17" fill="#dbe9f6" stroke="#6d9bc8" stroke-width="1.3"/>
+<text x="4" y="13.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#222">br.com.fiap.caminhoseguro.model</text>
+<line x1="280.0" y1="103.8" x2="198.0" y2="103.8" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="209.0,109.8 198.0,103.8 209.0,97.8" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="280.0" y1="205.5" x2="198.0" y2="320.0" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="209.3,314.6 198.0,320.0 199.5,307.6" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="828.0" y1="134.8" x2="746.0" y2="134.8" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="757.0,140.8 746.0,134.8 757.0,128.8" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="828.0" y1="221.0" x2="746.0" y2="320.0" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="757.6,315.4 746.0,320.0 748.4,307.7" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="924.0" y1="241.0" x2="924.0" y2="300.0" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="930.0,289.0 924.0,300.0 918.0,289.0" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="472.0" y1="367.5" x2="554.0" y2="367.5" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="543.0,361.5 554.0,367.5 543.0,373.5" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="365.0" y1="300.0" x2="365.0" y2="225.5" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="359.0,236.5 365.0,225.5 371.0,236.5" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="387.0" y1="300.0" x2="387.0" y2="225.5" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="381.0,236.5 387.0,225.5 393.0,236.5" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="554.0" y1="123.8" x2="472.0" y2="123.8" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="483.0,129.8 472.0,123.8 483.0,117.8" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<line x1="554.0" y1="145.8" x2="472.0" y2="145.8" stroke="#0b3d5c" stroke-width="1.4"/>
+<polyline points="483.0,151.8 472.0,145.8 483.0,139.8" fill="none" stroke="#0b3d5c" stroke-width="1.5"/>
+<g>
+<rect x="6" y="44" width="192" height="119.5" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="6" y="44" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="102" y="62" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">Bairro</text>
+<line x1="6" y1="70" x2="198" y2="70" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="12" y="84" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="12" y="99.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- nome : String</text>
+<text x="12" y="115" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- cidade : String</text>
+<text x="12" y="130.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- uf : String</text>
+<line x1="6" y1="140" x2="198" y2="140" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="12" y="154" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<g>
+<rect x="280" y="44" width="192" height="181.5" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="280" y="44" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="376" y="62" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">Local</text>
+<line x1="280" y1="70" x2="472" y2="70" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="286" y="84" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="286" y="99.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idBairro : Long</text>
+<text x="286" y="115" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idTipoLocal : Long</text>
+<text x="286" y="130.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- nome : String</text>
+<text x="286" y="146" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- endereco : String</text>
+<text x="286" y="161.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- latitude : Double</text>
+<text x="286" y="177" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- longitude : Double</text>
+<text x="286" y="192.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- pontoApoio : Boolean</text>
+<line x1="280" y1="202" x2="472" y2="202" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="286" y="216" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<g>
+<rect x="554" y="44" width="192" height="181.5" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="554" y="44" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="650" y="62" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">Trecho</text>
+<line x1="554" y1="70" x2="746" y2="70" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="560" y="84" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="560" y="99.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idLocalOrigem : Long</text>
+<text x="560" y="115" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idLocalDestino : Long</text>
+<text x="560" y="130.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- tempoMin : Integer</text>
+<text x="560" y="146" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- risco : Integer</text>
+<text x="560" y="161.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- acessivel : Boolean</text>
+<text x="560" y="177" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- declividadePct : Double</text>
+<text x="560" y="192.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- larguraCalcadaM : Double</text>
+<line x1="554" y1="202" x2="746" y2="202" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="560" y="216" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<g>
+<rect x="828" y="44" width="192" height="197" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="828" y="44" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="924" y="62" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">Ocorrencia</text>
+<line x1="828" y1="70" x2="1020" y2="70" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="834" y="84" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="834" y="99.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idTrecho : Long</text>
+<text x="834" y="115" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idUsuario : Long</text>
+<text x="834" y="130.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idTipoOcorrencia : Long</text>
+<text x="834" y="146" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- descricao : String</text>
+<text x="834" y="161.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- gravidade : Integer</text>
+<text x="834" y="177" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- status : String</text>
+<text x="834" y="192.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- dataRegistro : LocalDate</text>
+<text x="834" y="208" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- dataResolucao : LocalDate</text>
+<line x1="828" y1="217.5" x2="1020" y2="217.5" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="834" y="231.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<g>
+<rect x="6" y="300" width="192" height="88.5" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="6" y="300" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="102" y="318" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">TipoLocal</text>
+<line x1="6" y1="326" x2="198" y2="326" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="12" y="340" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="12" y="355.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- descricao : String</text>
+<line x1="6" y1="365" x2="198" y2="365" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="12" y="379" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<g>
+<rect x="280" y="300" width="192" height="166" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="280" y="300" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="376" y="318" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">RotaConsulta</text>
+<line x1="280" y1="326" x2="472" y2="326" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="286" y="340" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="286" y="355.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idUsuario : Long</text>
+<text x="286" y="371" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idLocalOrigem : Long</text>
+<text x="286" y="386.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- idLocalDestino : Long</text>
+<text x="286" y="402" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- criterio : String</text>
+<text x="286" y="417.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- tempoTotal : Integer</text>
+<text x="286" y="433" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- dataConsulta : LocalDate</text>
+<line x1="280" y1="442.5" x2="472" y2="442.5" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="286" y="456.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<g>
+<rect x="554" y="300" width="192" height="135" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="554" y="300" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="650" y="318" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">Usuario</text>
+<line x1="554" y1="326" x2="746" y2="326" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="560" y="340" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="560" y="355.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- nome : String</text>
+<text x="560" y="371" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- email : String</text>
+<text x="560" y="386.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- perfil : String</text>
+<text x="560" y="402" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- dataCadastro : LocalDate</text>
+<line x1="554" y1="411.5" x2="746" y2="411.5" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="560" y="425.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<g>
+<rect x="828" y="300" width="192" height="104" fill="#fff" stroke="#0b3d5c" stroke-width="1.4"/>
+<rect x="828" y="300" width="192" height="26" fill="#dbe9f6" stroke="#0b3d5c" stroke-width="1.4"/>
+<text x="924" y="318" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0b3d5c" font-family="Segoe UI, Arial, sans-serif">TipoOcorrencia</text>
+<line x1="828" y1="326" x2="1020" y2="326" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="834" y="340" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- id : Long</text>
+<text x="834" y="355.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- descricao : String</text>
+<text x="834" y="371" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">- gravidadePadrao : Integer</text>
+<line x1="828" y1="380.5" x2="1020" y2="380.5" stroke="#0b3d5c" stroke-width="1.2"/>
+<text x="834" y="394.5" font-size="11" font-family="Consolas, 'Courier New', monospace" fill="#111">+ getters e setters</text>
+</g>
+<rect x="210.2" y="87.8" width="57.6" height="14" fill="#fff" fill-opacity=".92"/><text x="239.0" y="98.8" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idBairro</text>
+<text x="266.0" y="117.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="206.0" y="117.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="200.9" y="246.8" width="76.2" height="14" fill="#fff" fill-opacity=".92"/><text x="239.0" y="257.8" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idTipoLocal</text>
+<text x="266.0" y="219.5" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="204.0" y="314.0" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="758.2" y="118.8" width="57.6" height="14" fill="#fff" fill-opacity=".92"/><text x="787.0" y="129.8" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idTrecho</text>
+<text x="814.0" y="148.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="754.0" y="148.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="755.1" y="254.5" width="63.8" height="14" fill="#fff" fill-opacity=".92"/><text x="787.0" y="265.5" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idUsuario</text>
+<text x="814.0" y="235.0" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="752.0" y="314.0" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="928.0" y="263.5" width="107.2" height="14" fill="#fff" fill-opacity=".92"/><text x="981.6" y="274.5" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idTipoOcorrencia</text>
+<text x="930.0" y="255.0" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="930.0" y="294.0" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="481.1" y="351.5" width="63.8" height="14" fill="#fff" fill-opacity=".92"/><text x="513.0" y="362.5" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idUsuario</text>
+<text x="480.0" y="381.5" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="540.0" y="381.5" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="272.4" y="255.8" width="88.6" height="14" fill="#fff" fill-opacity=".92"/><text x="316.7" y="266.8" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idLocalOrigem</text>
+<text x="371.0" y="294.0" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="371.0" y="239.5" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="391.0" y="255.8" width="94.8" height="14" fill="#fff" fill-opacity=".92"/><text x="438.4" y="266.8" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idLocalDestino</text>
+<text x="393.0" y="294.0" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="393.0" y="239.5" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="468.7" y="107.8" width="88.6" height="14" fill="#fff" fill-opacity=".92"/><text x="513.0" y="118.8" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idLocalOrigem</text>
+<text x="540.0" y="137.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="480.0" y="137.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+<rect x="465.6" y="129.8" width="94.8" height="14" fill="#fff" fill-opacity=".92"/><text x="513.0" y="140.8" text-anchor="middle" font-size="10.5" font-family="Consolas, 'Courier New', monospace" fill="#0b3d5c">idLocalDestino</text>
+<text x="540.0" y="159.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">*</text>
+<text x="480.0" y="159.8" font-size="11" font-weight="700" font-family="Consolas, 'Courier New', monospace" fill="#333">1</text>
+</g>
+</svg>

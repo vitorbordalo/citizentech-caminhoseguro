@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Modelo lógico CaminhoSeguro</title>
+<style>
+  body{margin:0;background:#fff;font-family:"Segoe UI",Arial,sans-serif}
+  #wrap{position:relative;width:1900px;height:1060px}
+  svg{position:absolute;inset:0}
+  .t{position:absolute;width:300px;border:1.5px solid #3b5b7a;background:#fff;box-shadow:3px 3px 0 #dbe4ee;font-size:13px}
+  .t h3{margin:0;padding:6px 8px;background:#cfe0f1;border-bottom:1.5px solid #3b5b7a;font-size:14px;color:#13314f}
+  .t table{border-collapse:collapse;width:100%}
+  .t td{padding:2px 6px;white-space:nowrap}
+  .t td.k{width:28px;font-weight:700;color:#8a1c1c;font-size:11px}
+  .t td.ty{color:#555;text-align:right;font-size:12px}
+  .t tr.pk td{font-weight:600}
+  .t .cons{border-top:1px dashed #9bb;font-size:11px;color:#555;padding:3px 6px}
+  .legend{position:absolute;left:20px;bottom:14px;font-size:13px;color:#333}
+  .title{position:absolute;left:20px;top:10px;font-size:20px;font-weight:700;color:#13314f}
+</style></head><body>
+<div id="wrap"><svg id="lines" width="1900" height="1060"></svg>
+<div class="title">CaminhoSeguro — Modelo Relacional (lógico) · Oracle</div>
+<div class="legend"><b>P</b> chave primária · <b>F</b> chave estrangeira · <b>U</b> única · * obrigatório (NOT NULL) · linha com "pé de galinha" = lado N (muitos); traço = lado 1</div>
+</div>
+<script>
+const T = {
+ T_CS_BAIRRO:{x:30,y:80,cols:[["P","id_bairro","NUMBER(6)",1],["U","nm_bairro","VARCHAR2(60)",1],["U","nm_cidade","VARCHAR2(60)",1],["U","sg_uf","CHAR(2)",1]]},
+ T_CS_TIPO_LOCAL:{x:30,y:620,cols:[["P","id_tipo_local","NUMBER(4)",1],["U","ds_tipo_local","VARCHAR2(40)",1]]},
+ T_CS_LOCAL:{x:420,y:330,cols:[["P","id_local","NUMBER(8)",1],["F","id_bairro","NUMBER(6)",1],["F","id_tipo_local","NUMBER(4)",1],["U","nm_local","VARCHAR2(80)",1],["","ds_endereco","VARCHAR2(120)",0],["","nr_latitude","NUMBER(9,6)",0],["","nr_longitude","NUMBER(9,6)",0],["","st_ponto_apoio","CHAR(1)",1]]},
+ T_CS_TRECHO:{x:820,y:80,cols:[["P","id_trecho","NUMBER(8)",1],["F","id_local_origem","NUMBER(8)",1],["F","id_local_destino","NUMBER(8)",1],["","nr_tempo_min","NUMBER(4)",1],["","nr_risco","NUMBER(2)",1],["","st_acessivel","CHAR(1)",1],["","nr_declividade_pct","NUMBER(4,1)",0],["","nr_largura_calcada_m","NUMBER(4,2)",0]]},
+ T_CS_ROTA_CONSULTA:{x:820,y:640,cols:[["P","id_consulta","NUMBER(10)",1],["F","id_usuario","NUMBER(8)",1],["F","id_local_origem","NUMBER(8)",1],["F","id_local_destino","NUMBER(8)",1],["","tp_criterio","VARCHAR2(10)",1],["","nr_tempo_total","NUMBER(4)",0],["","dt_consulta","DATE",1]]},
+ T_CS_OCORRENCIA:{x:1220,y:80,cols:[["P","id_ocorrencia","NUMBER(10)",1],["F","id_trecho","NUMBER(8)",1],["F","id_usuario","NUMBER(8)",1],["F","id_tipo_ocorrencia","NUMBER(4)",1],["","ds_ocorrencia","VARCHAR2(400)",0],["","nr_gravidade","NUMBER(1)",1],["","st_ocorrencia","VARCHAR2(12)",1],["","dt_registro","DATE",1],["","dt_resolucao","DATE",0]]},
+ T_CS_USUARIO:{x:1220,y:640,cols:[["P","id_usuario","NUMBER(8)",1],["","nm_usuario","VARCHAR2(80)",1],["U","ds_email","VARCHAR2(120)",1],["","tp_perfil","VARCHAR2(12)",1],["","dt_cadastro","DATE",1]]},
+ T_CS_TIPO_OCORRENCIA:{x:1570,y:420,cols:[["P","id_tipo_ocorrencia","NUMBER(4)",1],["U","ds_tipo_ocorrencia","VARCHAR2(50)",1],["","nr_gravidade_padrao","NUMBER(1)",1]]}
+};
+const PKN = n => "PK_"+n.slice(2);
+const wrap=document.getElementById('wrap');
+for(const [n,t] of Object.entries(T)){
+  const d=document.createElement('div');d.className='t';d.id=n;d.style.left=t.x+'px';d.style.top=t.y+'px';
+  d.innerHTML=`<h3>${n}</h3><table>${t.cols.map(c=>`<tr class="${c[0]=='P'?'pk':''}"><td class="k">${c[0]}${c[3]?'*':''}</td><td>${c[1]}</td><td class="ty">${c[2]}</td></tr>`).join('')}</table><div class="cons">${PKN(n)} (${t.cols[0][1]})</div>`;
+  wrap.appendChild(d);
+}
+// relações: [pai, filho, coluna, offset]
+const R=[["T_CS_BAIRRO","T_CS_LOCAL","id_bairro"],["T_CS_TIPO_LOCAL","T_CS_LOCAL","id_tipo_local"],
+ ["T_CS_LOCAL","T_CS_TRECHO","id_local_origem",-45],["T_CS_LOCAL","T_CS_TRECHO","id_local_destino",45],
+ ["T_CS_LOCAL","T_CS_ROTA_CONSULTA","id_local_origem",-45],["T_CS_LOCAL","T_CS_ROTA_CONSULTA","id_local_destino",45],
+ ["T_CS_TRECHO","T_CS_OCORRENCIA","id_trecho"],["T_CS_USUARIO","T_CS_OCORRENCIA","id_usuario"],
+ ["T_CS_TIPO_OCORRENCIA","T_CS_OCORRENCIA","id_tipo_ocorrencia"],["T_CS_USUARIO","T_CS_ROTA_CONSULTA","id_usuario"]];
+const svg=document.getElementById('lines');
+function box(n){const e=document.getElementById(n);return {x:e.offsetLeft,y:e.offsetTop,w:e.offsetWidth,h:e.offsetHeight};}
+function anchor(a,b){ // ponto na borda de a voltado para b
+  const ca={x:a.x+a.w/2,y:a.y+a.h/2},cb={x:b.x+b.w/2,y:b.y+b.h/2};
+  const dx=cb.x-ca.x,dy=cb.y-ca.y;
+  if(Math.abs(dx)/a.w > Math.abs(dy)/a.h) return {x:dx>0?a.x+a.w:a.x,y:ca.y,side:dx>0?'r':'l'};
+  return {x:ca.x,y:dy>0?a.y+a.h:a.y,side:dy>0?'b':'t'};
+}
+let html='';
+for(const [p,c,col,off=0] of R){
+  const A=box(p),B=box(c);let s=anchor(A,B),e=anchor(B,A);
+  const shift=(pt)=>{if(pt.side=='l'||pt.side=='r')pt.y+=off;else pt.x+=off;};shift(s);shift(e);
+  const dir={r:[1,0],l:[-1,0],b:[0,1],t:[0,-1]};
+  const s2={x:s.x+dir[s.side][0]*30,y:s.y+dir[s.side][1]*30},e2={x:e.x+dir[e.side][0]*30,y:e.y+dir[e.side][1]*30};
+  html+=`<path d="M${s.x},${s.y} L${s2.x},${s2.y} L${e2.x},${e2.y} L${e.x},${e.y}" fill="none" stroke="#3b5b7a" stroke-width="1.6"/>`;
+  // lado 1: traço perpendicular
+  const [sx,sy]=dir[s.side];const px=-sy,py=sx;
+  html+=`<line x1="${s.x+sx*10+px*7}" y1="${s.y+sy*10+py*7}" x2="${s.x+sx*10-px*7}" y2="${s.y+sy*10-py*7}" stroke="#3b5b7a" stroke-width="1.6"/>`;
+  // lado N: pé de galinha
+  const [ex,ey]=dir[e.side];const qx=-ey,qy=ex;const bx=e.x+ex*14,by=e.y+ey*14;
+  html+=`<line x1="${bx}" y1="${by}" x2="${e.x+qx*8}" y2="${e.y+qy*8}" stroke="#3b5b7a" stroke-width="1.6"/><line x1="${bx}" y1="${by}" x2="${e.x-qx*8}" y2="${e.y-qy*8}" stroke="#3b5b7a" stroke-width="1.6"/>`;
+  const mx=(s2.x+e2.x)/2,my=(s2.y+e2.y)/2;
+  html+=`<text x="${mx+6+(off>0?0:-130)}" y="${my-4+off/3}" paint-order="stroke" stroke="#fff" stroke-width="4" font-size="11" fill="#8a1c1c">FK ${col}</text>`;
+}
+svg.innerHTML=html;
+</script></body></html>

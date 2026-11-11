@@ -1,0 +1,1250 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>CaminhoSeguro - Agile</title>
+<link rel="stylesheet" href="../../_doc/doc.css"><style>h3 + figure img{max-height:105mm} @page paisagem{size:A4 landscape;margin:10mm} .paisagem{page:paisagem;page-break-before:always;page-break-after:always} td{font-size:9pt}</style></head>
+<body>
+<section class="capa">
+  <div class="topo">FIAP · ENGENHARIA DE SOFTWARE · 2º ANO · TURMA 2ESPH · GLOBAL SOLUTION 2026.2 · CITIZENTECH</div>
+  <div class="meio">
+    <div class="disc">Agile Methodology With Squad Framework</div>
+    <h1>CaminhoSeguro</h1>
+    <div class="sub">Rotas a pé acessíveis e seguras, decididas com a comunidade</div>
+    <p><b>Equipe 1</b> · Bela Vista, São Paulo/SP</p>
+    <table><tr><th>Integrante</th><th>RM</th></tr><tr><td>Lucas Branquinho</td><td>562262</td></tr><tr><td>Vitor Bordalo</td><td>561592</td></tr></table>
+    <p style="margin-top:14pt"><b>Vídeo Pitch (YouTube, não listado):</b><br><a href="[LINK DO PITCH]">[LINK DO PITCH]</a></p>
+    <p><b>Repositório:</b> https://github.com/lucasfbranquinho/citizentech-caminhoseguro</p>
+  </div>
+  <div class="rodape">São Paulo · novembro de 2026</div>
+</section>
+<section class="sumario"><h2>Sumário</h2><ol>
+<li>1. Apresentação da ideia</li><li>2. Personas</li><li>3. Diagrama de Casos de Uso</li>
+<li>4. Backlog do Produto (MoSCoW, Planning Poker e MVP)</li><li>5. Protótipo das telas e comentários de UX</li>
+<li>6. Vídeo Pitch (link e roteiro)</li><li>Apêndice: conversa com moradora real</li></ol></section>
+<h2>1. Apresentação da ideia</h2>
+<h3>1.1 Ficha da CitizenTech</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Resposta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nome</td>
+<td>CaminhoSeguro</td>
+</tr>
+<tr>
+<td>Cidade e bairro</td>
+<td>São Paulo/SP, bairro Bela Vista (perto do campus FIAP Paulista)</td>
+</tr>
+<tr>
+<td>Cidadão beneficiado</td>
+<td>Pessoas com mobilidade reduzida e idosos que moram ou circulam na Bela Vista. Personagem: dona Maria, 72 anos (fictícia)</td>
+</tr>
+<tr>
+<td>Problema</td>
+<td>Calçadas irregulares, ladeiras e travessias de risco fazem moradores com mobilidade reduzida desistirem de sair de casa ou correrem risco no caminho</td>
+</tr>
+<tr>
+<td>Solução</td>
+<td>O morador pede uma rota entre dois pontos do bairro e recebe o caminho mais rápido, o mais seguro ou o mais acessível. Os trechos problemáticos são registrados pela comunidade e entram no cálculo das rotas (dados simulados nesta fase)</td>
+</tr>
+<tr>
+<td>Indicador de impacto</td>
+<td>Percentual de trechos do bairro acessíveis e número de rotas acessíveis consultadas por semana</td>
+</tr>
+<tr>
+<td>ODS</td>
+<td>11, 10 e 3</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2 Problema e por que o escolhemos</h3>
+<p>Quem tem mobilidade reduzida decide o dia pelo trajeto. Uma calçada estreita, uma ladeira íngreme ou uma travessia sem tempo suficiente transformam uma ida à UBS ou ao mercado em risco de queda. Muitas pessoas simplesmente deixam de sair, o que afeta autonomia, saúde e convívio social.</p>
+<p>Escolhemos esse problema por quatro razões:</p>
+<ol>
+<li><strong>É concreto e local.</strong> A Bela Vista tem relevo acidentado, calçadas de idades diferentes e grande circulação, e fica ao lado do nosso campus. Podemos observar o problema e conversar com quem convive com ele.</li>
+<li><strong>Existe lacuna na informação, não só na obra.</strong> Aplicativos de rota comuns otimizam tempo e distância. Eles não perguntam se o caminho é viável para uma bengala, um andador ou uma cadeira de rodas.</li>
+<li><strong>É resolvível em escala de equipe.</strong> Um grafo de locais e trechos, uma API e um painel simples já entregam valor. "Simples primeiro" foi nossa regra.</li>
+<li><strong>Conecta as sete disciplinas</strong> em uma única solução (seção 6.3 e README do repositório).</li>
+</ol>
+<p>Contexto público: o Censo 2022 do IBGE confirma o envelhecimento da população brasileira, o que tende a aumentar a demanda por espaços urbanos acessíveis. A norma ABNT NBR 9050 (acessibilidade a edificações, mobiliário, espaços e equipamentos urbanos) é a referência técnica para dimensões de calçadas e rampas. Por isso o banco guarda, por trecho, a declividade (<code>declividadePct</code>) e a largura da calçada (<code>larguraCalcadaM</code>), que permitem comparar o trecho com a norma. Os valores usados no projeto são simulados.</p>
+<h3>1.3 Foco, público-alvo e solução</h3>
+<ul>
+<li><strong>Foco:</strong> deslocamento a pé até serviços essenciais (UBS, mercado, Centro Comunitário), no bairro Bela Vista.</li>
+<li><strong>Público-alvo primário:</strong> idosos e pessoas com deficiência ou mobilidade reduzida. <strong>Secundário:</strong> cuidadores, moradores em geral, agentes da subprefeitura.</li>
+<li><strong>Solução:</strong> duas pontas que se alimentam.</li>
+<li><em>Ponta do cidadão:</em> pede rota por critério (RAPIDA, SEGURA ou ACESSIVEL), vê o passo a passo e registra ocorrências em trechos.</li>
+<li><em>Ponta do poder público:</em> a agente da subprefeitura vê as ocorrências no painel e muda o status (ABERTA, EM_ANALISE, RESOLVIDA).</li>
+<li><em>Ciclo:</em> ocorrência aberta de gravidade 4 ou 5 aumenta o peso do trecho nas rotas SEGURA e ACESSIVEL. A comunidade influencia o caminho recomendado.</li>
+</ul>
+<p>Por que três critérios? Porque "melhor caminho" depende da pessoa. Quem tem pressa quer o mais rápido. Dona Maria prefere o mais seguro. Um cadeirante precisa do acessível, que descarta trechos inacessíveis e avisa quando não há caminho.</p>
+<h3>1.4 Objetivos de Desenvolvimento Sustentável</h3>
+<table>
+<thead>
+<tr>
+<th>ODS</th>
+<th>Meta</th>
+<th>Como o CaminhoSeguro contribui</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>11</strong> Cidades e comunidades sustentáveis</td>
+<td><strong>11.2</strong> Acesso a sistemas de transporte e mobilidade seguros e acessíveis, com atenção a pessoas em situação de vulnerabilidade, pessoas com deficiência e idosos</td>
+<td>A rota acessível e a rota segura tornam o deslocamento a pé viável para quem tem mobilidade reduzida</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>11.7</strong> Acesso universal a espaços públicos seguros, inclusivos e acessíveis, em especial para idosos e pessoas com deficiência</td>
+<td>As ocorrências mostram onde a calçada falha e orientam a priorização de melhorias pela subprefeitura</td>
+</tr>
+<tr>
+<td><strong>10</strong> Redução das desigualdades</td>
+<td><strong>10.2</strong> Empoderar e promover a inclusão social de todos, independentemente de deficiência ou idade</td>
+<td>Dá autonomia para sair sozinho e participa da vida do bairro; a comunidade tem voz ao registrar problemas</td>
+</tr>
+<tr>
+<td><strong>3</strong> Saúde e bem-estar</td>
+<td>Contribuição indireta: acesso a serviços de saúde (meta 3.8) e bem-estar (meta 3.4)</td>
+<td>Facilita chegar à UBS e estimula caminhar com segurança, reduzindo risco de quedas e isolamento</td>
+</tr>
+</tbody>
+</table>
+<p><em>Referência: Agenda 2030 da ONU, versão em português do Brasil (ONU Brasil / IPEA). A contribuição é "indireta" e depende de ação do poder público sobre as ocorrências; o app informa, não constrói a obra.</em></p>
+<h3>1.5 As seis perguntas do briefing</h3>
+<table>
+<thead>
+<tr>
+<th>Pergunta</th>
+<th>Resposta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Quem é o cidadão beneficiado?</td>
+<td>Pessoas com mobilidade reduzida e idosos da Bela Vista (personagem: dona Maria, 72 anos, fictícia)</td>
+</tr>
+<tr>
+<td>2. Qual problema será resolvido?</td>
+<td>Calçadas irregulares, ladeiras e travessias de risco fazem esses moradores desistirem de sair de casa</td>
+</tr>
+<tr>
+<td>3. Como a solução funcionará?</td>
+<td>O morador pede uma rota e recebe o caminho mais rápido, o mais seguro ou o mais acessível; a comunidade registra os trechos problemáticos</td>
+</tr>
+<tr>
+<td>4. Quais tecnologias serão empregadas?</td>
+<td>Python (grafos, Dijkstra, Floyd-Warshall, programação dinâmica), banco de dados relacional, API em Java (DDD) no Render, análise de dados em notebook, simulação AR-VR e rede segmentada no Packet Tracer (VLANs, NAT, ACL, SSH, Wi-Fi WPA2)</td>
+</tr>
+<tr>
+<td>5. Quem participará do ecossistema?</td>
+<td>Moradores e idosos, a comunidade que registra ocorrências, a UBS e o Centro Comunitário (pontos de apoio e Wi-Fi público), a subprefeitura (responsável por calçadas e rampas) e a equipe de desenvolvimento</td>
+</tr>
+<tr>
+<td>6. Como o impacto será medido e ampliado?</td>
+<td>% de trechos acessíveis e rotas acessíveis consultadas por semana; ampliar para outros bairros trocando só os dados dos locais e trechos (a tabela de bairros já existe no banco)</td>
+</tr>
+</tbody>
+</table>
+<h3>1.6 Como trabalhamos (Squad Framework)</h3>
+<p>Somos um squad de dois integrantes. Lucas e Vitor dividem os papéis do Scrum no ciclo: ambos atuam como time de desenvolvimento e cada um assume um papel de facilitação por sprint (Product Owner e Scrum Master, alternando no Sprint 2). O backlog (seção 4) é a fonte única de prioridade. Cada sprint tem planejamento, acompanhamento diário curto e revisão. O uso de IA como copiloto está registrado em <code>prompts.md</code>.</p>
+<hr />
+<h2 class="quebra">2. Personas</h2>
+<p><em>Todas as personas abaixo são <strong>fictícias</strong>, criadas a partir do problema e de conversas informais. Não representam pessoas reais e não contêm dados pessoais reais.</em></p>
+<h3>2.1 Dona Maria, 72 anos (usuária principal) | perfil IDOSO</h3>
+<p><em>Ator no diagrama: Idoso.</em> Quinta-feira de manhã, dona Maria abre a geladeira e vê que falta quase tudo. O mercado fica a poucas quadras, mas ela pensa na calçada quebrada da esquina e na ladeira de volta, e acaba pedindo entrega, de novo. Com o CaminhoSeguro ela escolhe o mercado como destino, toca em "Mais segura" e sai tranquila, sabendo onde pode parar para descansar.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contexto</strong></td>
+<td>Viúva, mora sozinha há 30 anos em um apartamento na Bela Vista, sem elevador, no segundo andar. Aposentada. A filha mora em outro bairro e trabalha o dia todo.</td>
+</tr>
+<tr>
+<td><strong>Objetivos</strong></td>
+<td>Ir sozinha à UBS para consultas e ao mercado todo semana; manter a rotina e a independência; não depender de ninguém para sair.</td>
+</tr>
+<tr>
+<td><strong>Dores e frustrações</strong></td>
+<td>Já tropeçou numa calçada quebrada. Evita ladeiras porque sente falta de ar. Teme atravessar ruas largas sem tempo suficiente. Às vezes desiste de sair e pede entrega, o que a deixa mais isolada.</td>
+</tr>
+<tr>
+<td><strong>Comportamento com tecnologia</strong></td>
+<td>Usa smartphone com WhatsApp e chamadas de vídeo. Letra pequena e muitas opções a confundem. Prefere poucos botões, textos grandes e linguagem simples.</td>
+</tr>
+<tr>
+<td><strong>Citação</strong></td>
+<td>"Eu não tenho medo de caminhar. Tenho medo de cair no meio do caminho."</td>
+</tr>
+<tr>
+<td><strong>Como o CaminhoSeguro ajuda</strong></td>
+<td>Ela escolhe a UBS como destino, toca em "Mais segura" e recebe o trajeto passo a passo, com pontos de apoio (UBS, Centro Comunitário) onde pode descansar. Se vê um buraco, registra a ocorrência em poucos toques. (UC01, UC04, UC05, UC08)</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Carlos, 34 anos (usuário de cadeira de rodas) | perfil PCD</h3>
+<p><em>Ator no diagrama: Pessoa com deficiência.</em> Carlos tem consulta marcada e já aprendeu que o caminho mais curto no mapa nem sempre existe para ele: uma rampa que falta e ele volta quarteirões inteiros. Antes de sair, ele pede uma rota "Mais acessível" e confia na resposta, porque, se não houver caminho viável, o aplicativo diz isso com clareza. No trajeto, avisa sobre um obstáculo e ajuda quem vem depois.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contexto</strong></td>
+<td>Analista de suporte, cadeirante desde um acidente. Mora e trabalha perto da Av. Paulista e circula a pé e de transporte público.</td>
+</tr>
+<tr>
+<td><strong>Objetivos</strong></td>
+<td>Chegar ao trabalho, a consultas e ao mercado sem encontrar um trecho intransponível no meio do caminho. Saber antes de sair se há rota acessível.</td>
+</tr>
+<tr>
+<td><strong>Dores e frustrações</strong></td>
+<td>Rampas ausentes ou íngremes, calçadas estreitas, obstáculos. Já teve que voltar quarteirões inteiros e circular pela rua. Aplicativos comuns não dizem se a calçada é viável.</td>
+</tr>
+<tr>
+<td><strong>Comportamento com tecnologia</strong></td>
+<td>Usuário avançado, usa vários aplicativos todos os dias e se incomoda com cadastro longo. Valoriza resposta rápida e informação confiável.</td>
+</tr>
+<tr>
+<td><strong>Citação</strong></td>
+<td>"O mapa me mostra o caminho mais curto. Eu preciso do caminho que existe para mim."</td>
+</tr>
+<tr>
+<td><strong>Como o CaminhoSeguro ajuda</strong></td>
+<td>O critério ACESSIVEL ignora trechos marcados como inacessíveis e, quando não há caminho, diz isso claramente. Ele também registra ocorrências, que passam a pesar nas rotas dos outros. (UC01, UC03, UC08)</td>
+</tr>
+</tbody>
+</table>
+<h3>2.3 Renata, 45 anos (cuidadora) | perfil CUIDADOR</h3>
+<p><em>Ator no diagrama: Cuidador.</em> No sábado, Renata leva a mãe à UBS e, na semana, se preocupa quando a mãe quer ir sozinha. Ela abre o CaminhoSeguro, confere o trajeto mais seguro e os pontos de apoio no meio do caminho e, no futuro, poderá compartilhar a rota com a mãe. Se vê um problema na calçada, registra em poucos toques.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contexto</strong></td>
+<td>Filha de uma idosa, trabalha em horário comercial e acompanha a mãe nas idas à UBS aos fins de semana.</td>
+</tr>
+<tr>
+<td><strong>Objetivos</strong></td>
+<td>Escolher um trajeto confortável para a mãe; ficar tranquila quando ela vai sozinha; saber onde estão os pontos de apoio.</td>
+</tr>
+<tr>
+<td><strong>Dores e frustrações</strong></td>
+<td>Não sabe como estão as calçadas do bairro da mãe. Se preocupa com a mãe sozinha na rua. Tem pouco tempo para pesquisar.</td>
+</tr>
+<tr>
+<td><strong>Comportamento com tecnologia</strong></td>
+<td>Usa o celular o dia todo, faz tudo por aplicativo, mas só aceita ferramentas diretas, sem tutorial.</td>
+</tr>
+<tr>
+<td><strong>Citação</strong></td>
+<td>"Se eu soubesse que o caminho é bom, eu ficaria mais tranquila de deixar minha mãe ir sozinha."</td>
+</tr>
+<tr>
+<td><strong>Como o CaminhoSeguro ajuda</strong></td>
+<td>Consulta rotas pelo mesmo critério, conhece os pontos de apoio no trajeto e registra problemas que vê. Compartilhar a rota com a mãe está previsto no escopo total (UC17). (UC01, UC04, UC05, UC08)</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4 Patrícia, 41 anos (agente da subprefeitura) | perfil AGENTE</h3>
+<p><em>Ator no diagrama: Agente público.</em> Patrícia começa o dia com dezenas de pedidos espalhados em planilhas e e-mails, sem saber qual trecho é mais perigoso. No painel do CaminhoSeguro ela filtra as ocorrências abertas, vê trecho, tipo e gravidade, muda o status para "em análise" e, quando a obra termina, marca como resolvida com a data. Assim sabe onde "dói mais" primeiro e mostra o que foi feito.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contexto</strong></td>
+<td>Servidora responsável por receber demandas de calçadas, rampas e travessias da região. Tem recursos limitados e muitas solicitações.</td>
+</tr>
+<tr>
+<td><strong>Objetivos</strong></td>
+<td>Saber quais trechos têm problema, quais são mais graves e priorizar as intervenções; mostrar o que foi resolvido.</td>
+</tr>
+<tr>
+<td><strong>Dores e frustrações</strong></td>
+<td>Demandas chegam por canais dispersos, sem localização exata nem gravidade. É difícil comparar e priorizar. Não há retorno claro ao cidadão.</td>
+</tr>
+<tr>
+<td><strong>Comportamento com tecnologia</strong></td>
+<td>Usa sistemas internos e planilhas. Quer filtro simples, lista clara e poucos cliques para atualizar o status.</td>
+</tr>
+<tr>
+<td><strong>Citação</strong></td>
+<td>"Preciso saber onde dói mais primeiro, porque não consigo consertar tudo ao mesmo tempo."</td>
+</tr>
+<tr>
+<td><strong>Como o CaminhoSeguro ajuda</strong></td>
+<td>O painel lista as ocorrências com filtro por status, mostra trecho, tipo e gravidade, e permite mudar para EM_ANALISE ou RESOLVIDA, registrando a data de resolução. (UC12, UC18, UC19, UC20)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div class="paisagem"><h2 class="quebra">3. Diagrama de Casos de Uso (escopo total)</h2><figure><img src="casos_de_uso.png" alt="Diagrama de casos de uso" style="max-height:158mm"><figcaption>Figura 1: diagrama de casos de uso do CaminhoSeguro (escopo total). Elipses verdes = MVP; tracejadas = escopo futuro.</figcaption></figure></div>
+
+<p><em>Especificação precisa para desenhar o diagrama (UML). Os casos marcados "fora do MVP" fazem parte do escopo total e aparecem no diagrama, mas não são implementados na primeira entrega.</em></p>
+<h3>3.1 Atores</h3>
+<table>
+<thead>
+<tr>
+<th>Ator</th>
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Perfil na API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cidadão</strong></td>
+<td>Primário, <strong>abstrato</strong></td>
+<td>Qualquer pessoa que consulta rotas e registra ocorrências. Generaliza os quatro atores abaixo</td>
+<td>(generalização)</td>
+</tr>
+<tr>
+<td>Morador</td>
+<td>Primário, especialização de Cidadão</td>
+<td>Morador ou frequentador do bairro</td>
+<td>MORADOR</td>
+</tr>
+<tr>
+<td>Idoso</td>
+<td>Primário, especialização de Cidadão</td>
+<td>Pessoa idosa (persona dona Maria)</td>
+<td>IDOSO</td>
+</tr>
+<tr>
+<td>Pessoa com deficiência</td>
+<td>Primário, especialização de Cidadão</td>
+<td>Pessoa com deficiência ou mobilidade reduzida (persona Carlos)</td>
+<td>PCD</td>
+</tr>
+<tr>
+<td>Cuidador</td>
+<td>Primário, especialização de Cidadão</td>
+<td>Quem acompanha ou apoia o idoso ou a pessoa com deficiência (persona Renata)</td>
+<td>CUIDADOR</td>
+</tr>
+<tr>
+<td><strong>Agente público</strong></td>
+<td>Primário</td>
+<td>Servidor da subprefeitura (persona Patrícia)</td>
+<td>AGENTE</td>
+</tr>
+<tr>
+<td><strong>Administrador</strong></td>
+<td>Primário</td>
+<td>Equipe do sistema; mantém locais, trechos e usuários. Não é um perfil de usuário da API; os cadastros são feitos pelos endpoints de gestão (nesta fase, pela equipe)</td>
+<td>(fora do enum)</td>
+</tr>
+<tr>
+<td><strong>Serviço de mapas</strong></td>
+<td>Secundário (sistema externo)</td>
+<td>Fornece o mapa de fundo para visualizar a rota. Fora do MVP</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Generalização de atores:</strong> Morador, Idoso, Pessoa com deficiência e Cuidador especializam Cidadão (herdam todas as associações de Cidadão). Agente público e Administrador são atores independentes.</p>
+<h3>3.2 Casos de uso</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Caso de uso</th>
+<th>Resumo</th>
+<th>Escopo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UC01</td>
+<td>Buscar rota</td>
+<td>Obter o caminho entre dois locais segundo um critério</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC02</td>
+<td>Informar origem e destino</td>
+<td>Escolher dois locais do bairro</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC03</td>
+<td>Escolher critério da rota</td>
+<td>RAPIDA, SEGURA ou ACESSIVEL</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC04</td>
+<td>Ver passo a passo da rota</td>
+<td>Lista de locais, tempo total, risco total e se é totalmente acessível</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC05</td>
+<td>Destacar pontos de apoio no caminho</td>
+<td>Mostra UBS e Centro Comunitário ao longo da rota</td>
+<td>Fora do MVP (Should; a API já devolve o campo pontoApoio, então a tela já destaca como bônus)</td>
+</tr>
+<tr>
+<td>UC06</td>
+<td>Registrar consulta no histórico</td>
+<td>Grava a consulta quando o usuário é identificado (indicador de impacto)</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC07</td>
+<td>Consultar locais e pontos de apoio</td>
+<td>Lista de locais, com filtro por ponto de apoio</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC08</td>
+<td>Registrar ocorrência</td>
+<td>Relatar um problema em um trecho</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC09</td>
+<td>Selecionar trecho</td>
+<td>Escolher o trecho onde está o problema</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC10</td>
+<td>Escolher tipo e gravidade</td>
+<td>Tipo da ocorrência (com gravidade padrão sugerida) e gravidade de 1 a 5</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC11</td>
+<td>Anexar foto da ocorrência</td>
+<td>Complementa o relato com imagem</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC12</td>
+<td>Consultar ocorrências</td>
+<td>Lista de ocorrências, com filtro por status</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC13</td>
+<td>Confirmar ocorrência existente</td>
+<td>Outro morador confirma que o problema persiste</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC14</td>
+<td>Cadastrar-se</td>
+<td>Cidadão cria seu usuário com perfil</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC15</td>
+<td>Autenticar-se</td>
+<td>Login com perfil e permissões</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC16</td>
+<td>Receber alerta de trecho crítico</td>
+<td>Aviso na rota sobre trecho com ocorrência grave aberta</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC17</td>
+<td>Compartilhar rota com cuidador</td>
+<td>Envia a rota a outra pessoa</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC18</td>
+<td>Acessar painel do agente</td>
+<td>Visão das ocorrências para gestão</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC19</td>
+<td>Alterar status da ocorrência</td>
+<td>ABERTA, EM_ANALISE ou RESOLVIDA</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC20</td>
+<td>Registrar data de resolução</td>
+<td>Ao resolver, grava a data (não pode ser anterior ao registro)</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC21</td>
+<td>Priorizar melhorias com orçamento</td>
+<td>Escolhe as melhorias de maior benefício dentro de um orçamento (problema da mochila, em Python)</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC22</td>
+<td>Ver indicadores de impacto</td>
+<td>% de trechos acessíveis e rotas acessíveis por semana</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC23</td>
+<td>Gerenciar locais</td>
+<td>Cadastrar, consultar, editar e excluir locais</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC24</td>
+<td>Gerenciar trechos</td>
+<td>Cadastrar, consultar, editar e excluir trechos</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC25</td>
+<td>Gerenciar usuários</td>
+<td>Cadastrar, consultar, editar e excluir usuários</td>
+<td><strong>MVP</strong></td>
+</tr>
+<tr>
+<td>UC26</td>
+<td>Visualizar rota no mapa</td>
+<td>Exibe a rota sobre um mapa</td>
+<td>Fora do MVP</td>
+</tr>
+<tr>
+<td>UC27</td>
+<td>Simular barreiras da calçada (AR-VR)</td>
+<td>Visualiza em simulação as barreiras de um trecho</td>
+<td>Fora do MVP</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 Associações ator → caso de uso</h3>
+<table>
+<thead>
+<tr>
+<th>Ator</th>
+<th>Casos de uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cidadão (e, por herança, Morador, Idoso, PCD, Cuidador)</td>
+<td>UC01, UC07, UC08, UC12, UC14, UC27 (UC13 e UC17 são alcançados pelas extensões de UC12 e UC04)</td>
+</tr>
+<tr>
+<td>Agente público</td>
+<td>UC18, UC19, UC21, UC22 (UC12 é alcançado pelo include de UC18; UC15 pelos includes)</td>
+</tr>
+<tr>
+<td>Administrador</td>
+<td>UC22, UC23, UC24, UC25 (UC15 é alcançado pelos includes)</td>
+</tr>
+<tr>
+<td>Serviço de mapas (secundário)</td>
+<td>UC26</td>
+</tr>
+</tbody>
+</table>
+<h3>3.4 Relações entre casos de uso</h3>
+<p><strong>«include» (obrigatório, o caso base chama o incluído):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Base</th>
+<th>Incluído</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UC01 Buscar rota</td>
+<td>UC02 Informar origem e destino</td>
+<td></td>
+</tr>
+<tr>
+<td>UC01 Buscar rota</td>
+<td>UC03 Escolher critério</td>
+<td></td>
+</tr>
+<tr>
+<td>UC01 Buscar rota</td>
+<td>UC04 Ver passo a passo</td>
+<td>Resultado da busca</td>
+</tr>
+<tr>
+<td>UC02 Informar origem e destino</td>
+<td>UC07 Consultar locais</td>
+<td>Os locais vêm da lista</td>
+</tr>
+<tr>
+<td>UC08 Registrar ocorrência</td>
+<td>UC09 Selecionar trecho</td>
+<td></td>
+</tr>
+<tr>
+<td>UC08 Registrar ocorrência</td>
+<td>UC10 Escolher tipo e gravidade</td>
+<td></td>
+</tr>
+<tr>
+<td>UC18 Acessar painel do agente</td>
+<td>UC12 Consultar ocorrências</td>
+<td></td>
+</tr>
+<tr>
+<td>UC18, UC23, UC24, UC25</td>
+<td>UC15 Autenticar-se</td>
+<td>Fora do MVP; no MVP não há login</td>
+</tr>
+</tbody>
+</table>
+<p><strong>«extend» (opcional, a seta parte do caso que estende para o caso base):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Extensão</th>
+<th>Base</th>
+<th>Condição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UC06 Registrar consulta no histórico</td>
+<td>UC01 Buscar rota</td>
+<td>Quando o usuário é identificado</td>
+</tr>
+<tr>
+<td>UC05 Destacar pontos de apoio</td>
+<td>UC04 Ver passo a passo</td>
+<td>Quando a rota passa por ponto de apoio</td>
+</tr>
+<tr>
+<td>UC16 Receber alerta de trecho crítico</td>
+<td>UC04 Ver passo a passo</td>
+<td>Quando há ocorrência ABERTA com gravidade 4 ou 5 no caminho</td>
+</tr>
+<tr>
+<td>UC17 Compartilhar rota com cuidador</td>
+<td>UC04 Ver passo a passo</td>
+<td>Quando o usuário escolhe compartilhar</td>
+</tr>
+<tr>
+<td>UC26 Visualizar rota no mapa</td>
+<td>UC04 Ver passo a passo</td>
+<td>Quando o mapa está disponível</td>
+</tr>
+<tr>
+<td>UC11 Anexar foto</td>
+<td>UC08 Registrar ocorrência</td>
+<td>Quando o usuário quer anexar imagem</td>
+</tr>
+<tr>
+<td>UC13 Confirmar ocorrência existente</td>
+<td>UC12 Consultar ocorrências</td>
+<td>Quando o usuário vê uma ocorrência que também presencia</td>
+</tr>
+<tr>
+<td>UC19 Alterar status da ocorrência</td>
+<td>UC18 Acessar painel do agente</td>
+<td>Quando o agente seleciona uma ocorrência (ponto de extensão: "ocorrência selecionada")</td>
+</tr>
+<tr>
+<td>UC20 Registrar data de resolução</td>
+<td>UC19 Alterar status</td>
+<td>Quando o novo status é RESOLVIDA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Generalização de casos de uso:</strong> não utilizada, para manter o diagrama simples.</p>
+<h3>3.5 Regras de negócio ligadas aos casos de uso</h3>
+<ul>
+<li>UC01: origem diferente de destino (senão erro 422). Pesos: RAPIDA = tempo; SEGURA = tempo + 2 × risco; ACESSIVEL ignora trechos inacessíveis e usa tempo + risco. Trechos com ocorrência ABERTA de gravidade 4 ou 5 recebem +5 no peso em SEGURA e ACESSIVEL. Sem caminho acessível, mensagem clara (404).</li>
+<li>UC19/UC20: a data de resolução não pode ser anterior ao registro (422).</li>
+<li>UC23: não é possível excluir local que tem trechos (409). UC25: e-mail não pode repetir (409).</li>
+</ul>
+<h3>3.6 Rastreabilidade com a API (coerência entre entregáveis)</h3>
+<table>
+<thead>
+<tr>
+<th>UC</th>
+<th>Recurso da API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UC01 a UC04, UC06</td>
+<td><code>GET /api/rotas?origem&amp;destino&amp;criterio&amp;usuario</code> (grava em T_CS_ROTA_CONSULTA quando <code>usuario</code> vem)</td>
+</tr>
+<tr>
+<td>UC07</td>
+<td><code>GET /api/locais</code> (filtro <code>?pontoApoio=true</code>)</td>
+</tr>
+<tr>
+<td>UC08 a UC10</td>
+<td><code>POST /api/ocorrencias</code>, <code>GET /api/tipos-ocorrencia</code>, <code>GET /api/trechos</code></td>
+</tr>
+<tr>
+<td>UC12, UC18</td>
+<td><code>GET /api/ocorrencias</code> (filtro <code>?status=ABERTA</code>)</td>
+</tr>
+<tr>
+<td>UC19, UC20</td>
+<td><code>PUT /api/ocorrencias/{id}</code> (status e dataResolucao)</td>
+</tr>
+<tr>
+<td>UC14, UC25</td>
+<td><code>/api/usuarios</code> (CRUD)</td>
+</tr>
+<tr>
+<td>UC23</td>
+<td><code>/api/locais</code> (CRUD)</td>
+</tr>
+<tr>
+<td>UC24</td>
+<td><code>/api/trechos</code> (CRUD)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 class="quebra">4. Backlog do Produto</h2>
+<h3>4.1 Critérios de priorização</h3>
+<ul>
+<li><strong>MoSCoW:</strong> <em>Must</em> (compõe o MVP), <em>Should</em> (importante, próxima entrega), <em>Could</em> (desejável), <em>Won't</em> (não nesta vez).</li>
+<li><strong>Story Points:</strong> sequência de Fibonacci (1, 2, 3, 5, 8, 13), medindo esforço relativo, não horas.</li>
+<li><strong>MVP = todas as histórias Must.</strong> Elas correspondem ao que a API e o front realmente fazem: buscar rota por critério, ver passo a passo, registrar ocorrência, painel do agente mudar status e cadastrar locais, trechos e usuários.</li>
+</ul>
+<h3>4.2 Histórias de usuário</h3>
+<p>Formato: <strong>Como</strong> <code>&lt;persona&gt;</code>, <strong>quero</strong> <code>&lt;ação&gt;</code>, <strong>para</strong> <code>&lt;benefício&gt;</code>.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>História</th>
+<th>UC</th>
+<th>Critérios de aceite</th>
+<th>MoSCoW</th>
+<th>SP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US01</td>
+<td>Como <strong>dona Maria</strong>, quero ver a lista de locais do bairro (UBS, mercado etc.), para escolher de onde saio e aonde vou</td>
+<td>UC02, UC07</td>
+<td>Lista traz nome e se é ponto de apoio; é possível filtrar por ponto de apoio; origem e destino selecionáveis</td>
+<td><strong>Must</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US02</td>
+<td>Como <strong>dona Maria</strong>, quero pedir uma rota pelo critério mais rápida, mais segura ou mais acessível, para sair com a opção que combina comigo</td>
+<td>UC01, UC03</td>
+<td>Os três critérios retornam rota; resposta traz tempo total, risco total e se é totalmente acessível; pesos conforme as regras da seção 3.5</td>
+<td><strong>Must</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>US03</td>
+<td>Como <strong>dona Maria</strong>, quero ver o passo a passo da rota, para seguir o caminho com segurança</td>
+<td>UC04</td>
+<td>Lista os locais na ordem; mostra tempo total e risco total; texto grande e simples</td>
+<td><strong>Must</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td>US04</td>
+<td>Como <strong>Carlos</strong>, quero uma mensagem clara quando não existir rota acessível, para não perder tempo e saber o motivo</td>
+<td>UC01</td>
+<td>Sem caminho acessível: "Não há rota acessível entre X e Y"; origem igual ao destino é recusada com mensagem explicativa</td>
+<td><strong>Must</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>US05</td>
+<td>Como <strong>equipe do CaminhoSeguro</strong>, quero que as consultas de rota fiquem registradas, para calcular as rotas acessíveis consultadas por semana</td>
+<td>UC06</td>
+<td>Quando <code>usuario</code> é informado, a consulta é gravada com critério, locais, tempo e data</td>
+<td><strong>Must</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>US06</td>
+<td>Como <strong>Carlos</strong>, quero que trechos com ocorrência grave aberta pesem na rota, para que a comunidade influencie o caminho que me é sugerido</td>
+<td>UC01</td>
+<td>Trecho com ocorrência ABERTA de gravidade 4 ou 5 recebe +5 nos critérios SEGURA e ACESSIVEL; ao resolver, volta ao peso normal</td>
+<td><strong>Must</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US07</td>
+<td>Como <strong>Renata</strong>, quero registrar um problema em um trecho, para alertar a comunidade e a subprefeitura</td>
+<td>UC08, UC09</td>
+<td>Escolhe o trecho; informa tipo, gravidade (1 a 5) e descrição; ocorrência nasce ABERTA com data de registro; confirmação ao usuário</td>
+<td><strong>Must</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td>US08</td>
+<td>Como <strong>dona Maria</strong>, quero escolher o tipo de problema em uma lista com gravidade sugerida, para registrar sem precisar descrever tudo</td>
+<td>UC10</td>
+<td>Lista de tipos traz descrição e gravidade padrão; a gravidade pode ser ajustada</td>
+<td><strong>Must</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>US09</td>
+<td>Como <strong>Patrícia</strong>, quero ver as ocorrências no painel e filtrar por status, para saber o que precisa de atenção</td>
+<td>UC12, UC18</td>
+<td>Lista com trecho, tipo, gravidade e status; filtro por ABERTA, EM_ANALISE e RESOLVIDA</td>
+<td><strong>Must</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US10</td>
+<td>Como <strong>Patrícia</strong>, quero mudar o status de uma ocorrência e registrar a data de resolução, para mostrar o que foi tratado</td>
+<td>UC19, UC20</td>
+<td>Altera para EM_ANALISE ou RESOLVIDA; ao resolver, grava a data; data anterior ao registro é recusada com mensagem</td>
+<td><strong>Must</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td>US11</td>
+<td>Como <strong>administrador</strong>, quero cadastrar, editar e excluir locais, para manter o mapa do bairro atualizado</td>
+<td>UC23</td>
+<td>Campos nome, endereço, tipo, coordenadas e ponto de apoio; local com trechos não pode ser excluído</td>
+<td><strong>Must</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US12</td>
+<td>Como <strong>administrador</strong>, quero cadastrar, editar e excluir trechos, para representar as calçadas entre os locais</td>
+<td>UC24</td>
+<td>Informa origem, destino, tempo, risco (0 a 10), acessível, declividade e largura; origem diferente de destino</td>
+<td><strong>Must</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US13</td>
+<td>Como <strong>morador</strong>, quero criar meu usuário com meu perfil (idoso, pessoa com deficiência, cuidador ou morador), para usar o aplicativo e registrar ocorrências</td>
+<td>UC14, UC25</td>
+<td>Nome, e-mail e perfil obrigatórios; e-mail repetido é recusado; administrador pode listar, editar e excluir</td>
+<td><strong>Must</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US14</td>
+<td>Como <strong>equipe</strong>, quero validações e mensagens de erro padronizadas, para que o usuário entenda o que corrigir</td>
+<td>UC08, UC23, UC24, UC25</td>
+<td>Campos inválidos indicam qual campo; recurso inexistente informa o id; conflito e regra de negócio têm mensagem própria</td>
+<td><strong>Must</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US15</td>
+<td>Como <strong>Renata</strong>, quero ver os pontos de apoio destacados no passo a passo, para planejar onde a minha mãe pode descansar</td>
+<td>UC05</td>
+<td>Pontos de apoio aparecem destacados na lista de locais da rota</td>
+<td><strong>Should</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>US16</td>
+<td>Como <strong>Patrícia</strong>, quero entrar com login e ter acesso apenas ao que meu perfil permite, para que só agentes alterem o status</td>
+<td>UC15</td>
+<td>Login por perfil; painel só para AGENTE; cadastros só para administrador</td>
+<td><strong>Should</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>US17</td>
+<td>Como <strong>Patrícia</strong>, quero ver indicadores (% de trechos acessíveis e rotas acessíveis por semana), para acompanhar o impacto</td>
+<td>UC22</td>
+<td>Dois indicadores calculados a partir dos dados do banco</td>
+<td><strong>Should</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td>US18</td>
+<td>Como <strong>Carlos</strong>, quero ver a rota sobre um mapa, para entender melhor o caminho</td>
+<td>UC26</td>
+<td>Rota desenhada sobre o mapa de um serviço externo</td>
+<td><strong>Could</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>US19</td>
+<td>Como <strong>Renata</strong>, quero anexar uma foto ao registrar um problema, para que a subprefeitura veja o problema</td>
+<td>UC11</td>
+<td>Foto opcional anexada à ocorrência, com limite de tamanho</td>
+<td><strong>Could</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td>US20</td>
+<td>Como <strong>Renata</strong>, quero compartilhar a rota com a minha mãe, para que ela a receba no celular</td>
+<td>UC17</td>
+<td>Envio de link ou mensagem com a rota escolhida</td>
+<td><strong>Could</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US21</td>
+<td>Como <strong>morador</strong>, quero confirmar que uma ocorrência continua existindo, para reforçar a prioridade</td>
+<td>UC13</td>
+<td>Confirmação única por usuário; contador visível ao agente</td>
+<td><strong>Could</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US22</td>
+<td>Como <strong>Carlos</strong>, quero ser avisado se a rota passa por trecho com problema grave aberto, para decidir se sigo ou mudo de caminho</td>
+<td>UC16</td>
+<td>Aviso na rota listando os trechos com ocorrência ABERTA de gravidade 4 ou 5</td>
+<td><strong>Could</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>US23</td>
+<td>Como <strong>Patrícia</strong>, quero um cálculo das melhorias de maior benefício dentro do orçamento, para priorizar as obras</td>
+<td>UC21</td>
+<td>Dado um orçamento, indica o conjunto de melhorias de maior benefício (mochila). Existe em Python como estudo; integração ao aplicativo fica para depois</td>
+<td><strong>Won't</strong> (desta vez)</td>
+<td>13</td>
+</tr>
+<tr>
+<td>US24</td>
+<td>Como <strong>dona Maria</strong>, quero ver uma simulação (AR-VR) das barreiras de um trecho, para me preparar antes de sair</td>
+<td>UC27</td>
+<td>Simulação do trecho com barreiras. A simulação existe como entrega separada de AR-VR; integração ao aplicativo fica para depois</td>
+<td><strong>Won't</strong> (desta vez)</td>
+<td>13</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resumo:</strong> 24 histórias | 14 Must | 3 Should | 5 Could | 2 Won't.</p>
+<h3>4.3 Planning Poker</h3>
+<p><strong>Participantes:</strong> Lucas Branquinho e Vitor Bordalo (time de desenvolvimento).
+<strong>Escala:</strong> 1, 2, 3, 5, 8, 13.
+<strong>Método:</strong> para cada história, o PO lê e responde dúvidas; cada um escolhe uma carta em segredo; reveladas juntas. Se houver divergência, quem votou o maior e o menor explicam e vota-se de novo, até o consenso.</p>
+<p><strong>História de referência = 3 pontos:</strong> <strong>US01</strong> (listar locais do bairro para escolher origem e destino): consulta simples a um recurso, com um filtro e uma tela de seleção. As demais foram comparadas com ela ("é maior, igual ou menor que a US01?").</p>
+<p><strong>Exemplo de rodada com divergência (US02, buscar rota por critério):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Rodada</th>
+<th>Lucas</th>
+<th>Vitor</th>
+<th>Discussão</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>8</td>
+<td>5</td>
+<td>Vitor: "Dijkstra a gente já viu em Dynamic Programming, é adaptar." Lucas: "São três pesos diferentes, trechos bidirecionais, descarte dos trechos inacessíveis, mensagem de erro, mais o +5 das ocorrências graves. E precisa testar cada critério."</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8</td>
+<td>8</td>
+<td>Vitor concorda que os casos de borda dobram o trabalho</td>
+</tr>
+<tr>
+<td><strong>Consenso</strong></td>
+<td><strong>8</strong></td>
+<td></td>
+<td>Registrado no backlog</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exemplo sem divergência (US07, registrar ocorrência):</strong> 5 e 5. Justificativa: três validações (trecho, usuário e tipo), regra de status inicial e tela com formulário, maior que a US01 e menor que a US02.</p>
+<p><strong>Exemplo de outro consenso (US10, mudar status):</strong> Lucas 3, Vitor 5. Vitor lembrou da regra da data de resolução e da mensagem de erro; Lucas aceitou. Consenso: 5.</p>
+<h3>4.4 MVP</h3>
+<p>O MVP reúne as 14 histórias Must (US01 a US14).</p>
+<table>
+<thead>
+<tr>
+<th>Bloco</th>
+<th>Histórias</th>
+<th>Pontos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rotas</td>
+<td>US01, US02, US03, US04, US05, US06</td>
+<td>3 + 8 + 5 + 2 + 2 + 3 = <strong>23</strong></td>
+</tr>
+<tr>
+<td>Ocorrências e painel do agente</td>
+<td>US07, US08, US09, US10</td>
+<td>5 + 2 + 3 + 5 = <strong>15</strong></td>
+</tr>
+<tr>
+<td>Cadastros e validações</td>
+<td>US11, US12, US13, US14</td>
+<td>3 + 3 + 3 + 3 = <strong>12</strong></td>
+</tr>
+<tr>
+<td><strong>Total do MVP</strong></td>
+<td>14 histórias</td>
+<td><strong>50 pontos</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>4.5 Divisão em 2 sprints</h3>
+<p>Meta de capacidade: cerca de 25 pontos por sprint (duas pessoas).</p>
+<table>
+<thead>
+<tr>
+<th>Sprint</th>
+<th>Meta</th>
+<th>Histórias</th>
+<th>Pontos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sprint 1</strong></td>
+<td>"Dados e rota funcionando": cadastros e rota por critério</td>
+<td>US11, US12, US13 (cadastros); US01 (locais); US02 (rota); US04 (mensagens); US05 (histórico)</td>
+<td>3 + 3 + 3 + 3 + 8 + 2 + 2 = <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Sprint 2</strong></td>
+<td>"Passo a passo, ocorrências e painel": comunidade e agente</td>
+<td>US03 (passo a passo); US06 (+5 por ocorrência grave); US07 e US08 (registrar ocorrência); US09 e US10 (painel); US14 (validações)</td>
+<td>5 + 3 + 5 + 2 + 3 + 5 + 3 = <strong>26</strong></td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td>14 histórias</td>
+<td><strong>50</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Justificativa da ordem: sem locais e trechos cadastrados não há rota, então os cadastros vão primeiro. As ocorrências dependem de trechos e usuários, e a regra +5 depende de ocorrências, por isso ficam no Sprint 2. As validações (US14) são aplicadas ao longo dos dois sprints e fechadas no Sprint 2.</p>
+<p><strong>Definição de pronto:</strong> critérios de aceite atendidos, testado manualmente com os dados simulados, coerente com o contrato da API e com o banco, e revisado pelo outro integrante.</p>
+<hr />
+<h2 class="quebra">5. Protótipo</h2>
+<p>O protótipo do CaminhoSeguro apresenta quatro telas que cobrem os dois fluxos principais: o do cidadão (pedir rota e registrar problema) e o da agente (tratar ocorrências). As telas foram pensadas para dona Maria: poucos elementos por tela, letras grandes, contraste alto e linguagem simples (sem "grafo", "peso" ou "trecho técnico"). Cada tela é mostrada abaixo, seguida dos comentários de intenção e de adequação da UX.</p>
+<h3>Tela 1: Início: para onde você quer ir?</h3>
+<figure><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/1-inicio-celular.png" style="height:100mm;border:1px solid #ccc;margin:0 6pt"><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/1-inicio-desktop.png" style="width:110mm;border:1px solid #ccc;margin:0 6pt;vertical-align:top"><figcaption>Tela 1 no celular e no computador</figcaption></figure>
+
+<ul>
+<li><strong>Objetivo:</strong> levar a pessoa de zero até pedir uma rota em poucos toques.</li>
+<li><strong>Para quem:</strong> dona Maria e qualquer morador; é a porta de entrada.</li>
+<li><strong>Decisões de UX:</strong></li>
+<li>Uma ação principal por tela: o botão âmbar "Ver caminho", largura total.</li>
+<li>Pergunta em linguagem de conversa ("De onde você sai? / Para onde você vai?"), com listas de lugares em vez de digitar endereço (menos erro, bom para quem tem dificuldade de digitar).</li>
+<li>Três critérios como cartões grandes com ícone e uma linha de explicação. <strong>"Mais acessível" vem marcado por padrão</strong>, porque é o que o público principal precisa; os outros dois são uma escolha consciente.</li>
+<li>Três pontos curtos explicam o valor do app sem texto longo.</li>
+<li><strong>Acessibilidade:</strong> <code>&lt;label&gt;</code> em cada seleção; validação própria com mensagem junto do campo e resumo em <code>role="alert"</code>; o foco vai ao primeiro campo com problema; destino igual à origem é bloqueado com texto claro. Nenhuma cor sozinha indica erro (ícone e frase).</li>
+</ul>
+<h3 class="quebra">Tela 2: Resultado da rota</h3>
+<figure><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/2-rota-celular.png" style="height:100mm;border:1px solid #ccc;margin:0 6pt"><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/2-rota-desktop.png" style="width:110mm;border:1px solid #ccc;margin:0 6pt;vertical-align:top"><figcaption>Tela 2 no celular e no computador</figcaption></figure>
+
+<ul>
+<li><strong>Objetivo:</strong> mostrar o caminho de forma que dê para seguir andando, e deixar claro quanto tempo leva e se há risco.</li>
+<li><strong>Para quem:</strong> dona Maria no dia a dia; cuidadores que combinam o trajeto com ela.</li>
+<li><strong>Decisões de UX:</strong></li>
+<li><strong>Lista numerada grande</strong> com os locais em sequência ("Você sai de", "Passe por", "Você chega em"), ligados por linha pontilhada. Cada trecho mostra tempo e se é acessível.</li>
+<li><strong>Tempo total em destaque</strong>, com selo do critério usado e selo "Totalmente acessível" (ícone de certo, verde) ou "Não é totalmente acessível" (ícone de alerta, âmbar), com aviso em texto e atalho para a versão mais acessível.</li>
+<li><strong>Pontos de apoio destacados</strong> no próprio passo (etiqueta âmbar com coração: "dá para descansar e pedir ajuda") e resumidos no cartão lateral. Pensado para quem precisa parar no caminho.</li>
+<li>Avisos abertos da comunidade aparecem no trecho afetado, mostrando que o relato de moradores entra no cálculo.</li>
+<li><strong>Sem rota (404):</strong> mensagem amigável com o motivo, o que fazer (outro tipo de caminho com cuidado, ou outro destino) e botões para tentar. Nada de tela de erro técnica. Origem igual a destino (422) e falha de rede também têm texto próprio.</li>
+<li>Ação secundária bem visível: "Avisar um problema neste caminho", que leva os trechos da rota para a tela 3.</li>
+<li><strong>Acessibilidade:</strong> a região do resultado é <code>aria-live="polite"</code> e o foco vai para o título ao carregar; cada passo tem "Passo N" para leitor de tela; informação de acessibilidade nunca depende só de cor.</li>
+</ul>
+<h3 class="quebra">Tela 3: Avisar um problema</h3>
+<figure><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/3-ocorrencia-celular.png" style="height:100mm;border:1px solid #ccc;margin:0 6pt"><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/3-ocorrencia-desktop.png" style="width:110mm;border:1px solid #ccc;margin:0 6pt;vertical-align:top"><figcaption>Tela 3 no celular e no computador</figcaption></figure>
+
+<ul>
+<li><strong>Objetivo:</strong> permitir que qualquer pessoa registre um problema de calçada em menos de um minuto, alimentando o cálculo das rotas.</li>
+<li><strong>Para quem:</strong> moradores, idosos, cuidadores.</li>
+<li><strong>Decisões de UX:</strong></li>
+<li><strong>Trecho pré-selecionado</strong> quando a pessoa vem do resultado da rota; os trechos do caminho aparecem primeiro, num grupo "Neste caminho".</li>
+<li><strong>Tipo de problema em botões grandes com ícone</strong> (buraco, calçada estreita, esquina sem rampa, iluminação, travessia, ladeira), dois ou três por linha, reconhecíveis sem ler.</li>
+<li><strong>Gravidade de 1 a 5 em palavras</strong> ("Incomoda um pouco" a "Perigoso"), com número visível. Ao escolher o tipo, sugerimos a gravidade padrão daquele tipo, que a pessoa pode mudar.</li>
+<li>Descrição <strong>opcional</strong>, dita como tal; só três campos são obrigatórios.</li>
+<li><strong>Confirmação clara</strong> ao enviar: ícone de certo, "Aviso enviado. Obrigada, Maria!", resumo do que foi enviado e próximos passos (voltar ao início ou avisar outro). Se falhar, o que a pessoa preencheu fica na tela.</li>
+<li><strong>Acessibilidade:</strong> <code>&lt;fieldset&gt;</code> e <code>&lt;legend&gt;</code> para os grupos de rádio; erro junto de cada grupo e resumo em <code>role="alert"</code>; foco no primeiro problema; botão muda para "Enviando..." e fica desativado para evitar envio duplicado; a confirmação recebe o foco e é anunciada.</li>
+</ul>
+<h3 class="quebra">Tela 4: Painel da agente pública</h3>
+<figure><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/4-painel-celular.png" style="height:100mm;border:1px solid #ccc;margin:0 6pt"><img src="file:///C:/Users/Pichau/Desktop/GS-2026/repo/05-ddd-java/front/prints/4-painel-desktop.png" style="width:110mm;border:1px solid #ccc;margin:0 6pt;vertical-align:top"><figcaption>Tela 4 no celular e no computador</figcaption></figure>
+
+<ul>
+<li><strong>Objetivo:</strong> dar ao agente da subprefeitura uma visão rápida do que precisa de ação e um jeito simples de atualizar a situação.</li>
+<li><strong>Para quem:</strong> agente público (secundário), que também pode ser acompanhado por cuidadores e moradores interessados.</li>
+<li><strong>Decisões de UX:</strong></li>
+<li><strong>Três contadores</strong> no topo (abertos, em análise, resolvidos), com ícone, número grande e borda de cor diferente. Respondem "o que está pendente?" em um olhar.</li>
+<li><strong>Filtro por situação</strong> com um único campo; a lista vem ordenada com abertos primeiro e, dentro deles, os mais graves.</li>
+<li>Cada aviso é um cartão com tipo, situação e gravidade (ícone e texto), trecho em palavras (origem para destino), data e descrição. A faixa lateral colorida reforça, mas não é a única pista.</li>
+<li><strong>Mudar a situação</strong> com um campo e botão "Salvar" no próprio cartão; o resultado é confirmado em mensagem e os contadores atualizam na hora. Ao resolver, a data de resolução é preenchida.</li>
+<li>Estado vazio do filtro explica o que fazer ("Escolha 'Todos'").</li>
+<li><strong>Acessibilidade:</strong> os contadores e as mensagens de confirmação ficam em regiões <code>aria-live</code>; após salvar, o foco volta ao botão do cartão alterado; tabelas foram evitadas em favor de cartões, que funcionam melhor em tela pequena e com leitor de tela.</li>
+</ul>
+<hr />
+<h2 class="quebra">6. Roteiro do Vídeo Pitch (até 3 minutos)</h2>
+<p><strong>Narradores:</strong> Lucas (L) e Vitor (V). <strong>Fala total:</strong> cerca de 315 palavras (≈ 2 min 05 s em ritmo calmo), dentro do limite de 2 min 50 s de fala; o restante é pausa e transições. <strong>Duração total prevista:</strong> 2 min 55 s.</p>
+<h3>6.1 Roteiro cronometrado</h3>
+<table>
+<thead>
+<tr>
+<th>Cena</th>
+<th>Tempo</th>
+<th>O que aparece na tela</th>
+<th>Narração</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Problema</td>
+<td>0:00 a 0:20</td>
+<td>Foto ou ilustração de calçada quebrada e ladeira na Bela Vista; texto "Bela Vista, São Paulo"</td>
+<td><strong>L:</strong> "Imagine ter 72 anos e querer ir sozinha à UBS. Na Bela Vista, calçada quebrada, ladeira e travessia perigosa fazem muita gente desistir de sair de casa. Esse é o problema que a gente quis resolver."</td>
+</tr>
+<tr>
+<td>2. Cidadão</td>
+<td>0:20 a 0:40</td>
+<td>Ilustração de dona Maria; selo "personagem fictícia"; ao lado, Carlos e Renata</td>
+<td><strong>V:</strong> "Esta é a dona Maria, personagem fictícia de 72 anos. Ela quer ir sozinha ao mercado e à UBS, mas não sabe qual caminho é seguro para ela. O CaminhoSeguro é para ela, para cadeirantes e para cuidadores."</td>
+</tr>
+<tr>
+<td>3. Solução funcionando</td>
+<td>0:40 a 1:30</td>
+<td>Tela 1 (escolher origem, destino e critério); Tela 2 (resultado com passo a passo, tempo, risco, pontos de apoio); Tela 3 (registrar problema); Tela 4 (painel da agente mudando o status)</td>
+<td><strong>L:</strong> "Na tela inicial, ela escolhe de onde sai, aonde vai e como quer ir: mais rápida, mais segura ou mais acessível. Recebe o caminho passo a passo, com tempo, risco e pontos de apoio." <strong>V:</strong> "Se vê um buraco, registra o problema em poucos toques. A agente da subprefeitura vê no painel, muda o status para em análise ou resolvida, e os problemas graves passam a pesar nas próximas rotas."</td>
+</tr>
+<tr>
+<td>4. Tecnologia (7 disciplinas)</td>
+<td>1:30 a 2:15</td>
+<td>Slide com sete ícones, um por disciplina, aparecendo em sequência</td>
+<td><strong>V:</strong> "Em Agile, organizamos o trabalho em backlog e dois sprints. Em Database, um banco relacional guarda locais, trechos e ocorrências. Em DDD Java, uma API no Render entrega rotas e ocorrências." <strong>L:</strong> "Em Dynamic Programming, o Dijkstra calcula as rotas e a mochila prioriza melhorias com orçamento. Em Data Science, analisamos as ocorrências por trecho. Em AR-VR, simulamos as barreiras da calçada. Em Network, uma rede com VLANs, NAT, ACL e SSH conecta equipe e servidor."</td>
+</tr>
+<tr>
+<td>5. Impacto e ODS</td>
+<td>2:15 a 2:40</td>
+<td>Dois indicadores em destaque; logos dos ODS 11, 10 e 3; frase "Outro bairro: trocar os dados"</td>
+<td><strong>L:</strong> "Medimos o impacto por dois indicadores: o percentual de trechos acessíveis e o número de rotas acessíveis consultadas por semana. Isso apoia os ODS 11, 10 e 3: cidade acessível, menos desigualdade e mais bem-estar. Para outro bairro, basta trocar os dados."</td>
+</tr>
+<tr>
+<td>6. Fechamento</td>
+<td>2:40 a 2:55</td>
+<td>Logo CaminhoSeguro, nomes, RMs, turma 2ESPH, equipe 1, link do repositório</td>
+<td><strong>V:</strong> "Os dados desta fase são simulados, mas a solução funciona. Somos Vitor Bordalo e Lucas Branquinho, equipe 1, turma 2ESPH." <strong>Ambos:</strong> "CaminhoSeguro: sair de casa com segurança."</td>
+</tr>
+</tbody>
+</table>
+<h3>6.2 Orientações de gravação</h3>
+<ul>
+<li>Telas gravadas do protótipo ou da aplicação rodando; destacar o critério escolhido e o resultado.</li>
+<li>Falas curtas, sem pressa; legendas na tela (acessibilidade). Exportar com no máximo 3 min.</li>
+<li>Publicar no YouTube como <strong>não listado</strong> e colocar o link na capa do PDF.</li>
+</ul>
+<h3>6.3 Como as sete disciplinas se conectam</h3>
+<table>
+<thead>
+<tr>
+<th>Disciplina</th>
+<th>Papel no CaminhoSeguro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agile</td>
+<td>Backlog, sprints e pitch</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>8 tabelas T_CS (bairro, tipo de local, local, trecho, usuário, tipo de ocorrência, ocorrência, consulta de rota), com DDL, DML e DQL em Oracle</td>
+</tr>
+<tr>
+<td>DDD Java</td>
+<td>API REST descrita no contrato (<code>/api/rotas</code>, <code>/api/ocorrencias</code>, ...)</td>
+</tr>
+<tr>
+<td>Dynamic Programming</td>
+<td>Dijkstra e Floyd-Warshall para rotas; mochila para melhorias com orçamento</td>
+</tr>
+<tr>
+<td>Data Science</td>
+<td>Análise de ocorrências por trecho</td>
+</tr>
+<tr>
+<td>AR-VR</td>
+<td>Simulação da rota e das barreiras</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Rede segmentada: VLANs, NAT, ACL, SSH, Wi-Fi WPA2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 class="quebra">Apêndice. Roteiro de conversa com um morador real</h2>
+<p>O briefing pede conversar com alguém que convive com o problema. Sugestão de roteiro (10 a 15 minutos). Antes de começar, explicar o objetivo e pedir permissão; <strong>não registrar nome, endereço, telefone nem outros dados pessoais</strong> no trabalho (identificar apenas como "moradora, 70+ anos", por exemplo).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pergunta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Com que frequência o(a) senhor(a) sai de casa a pé e para onde costuma ir?</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Já deixou de sair ou mudou de planos por causa da calçada, da ladeira ou de uma travessia? Pode contar uma situação?</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Qual é o pior trecho do seu caminho e o que o torna difícil?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Já caiu, tropeçou ou passou perto disso? O que aconteceu?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Como o(a) senhor(a) escolhe o caminho hoje? Usa aplicativo, pergunta a alguém, segue o costume?</td>
+</tr>
+<tr>
+<td>6</td>
+<td>O que preferiria: o caminho mais rápido, o mais seguro ou o mais plano? Por quê?</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Se existisse um aplicativo que mostrasse rotas seguras e permitisse avisar sobre um buraco, usaria? O que ele precisaria ter para ser fácil?</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Já tentou avisar a prefeitura sobre um problema na calçada? Como foi?</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[RESPOSTAS]</strong></p>
+<p><em>(O aluno preenche após a conversa: perfil resumido e anônimo da pessoa, principais frases, o que surpreendeu e o que mudaria no projeto.)</em></p></body></html>

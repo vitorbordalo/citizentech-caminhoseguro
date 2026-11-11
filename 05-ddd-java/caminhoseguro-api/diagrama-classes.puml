@@ -1,0 +1,167 @@
+@startuml diagrama-classes
+title CaminhoSeguro API - Diagrama de classes (Domain Driven Design - Java)
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+left to right direction
+
+package "model (tabelas do banco)" {
+  class Bairro { Long id; String nome; String cidade; String uf }
+  class TipoLocal { Long id; String descricao }
+  class Local {
+    Long id; Long idBairro; Long idTipoLocal
+    String nome; String endereco
+    Double latitude; Double longitude; Boolean pontoApoio
+  }
+  class Trecho {
+    Long id; Long idLocalOrigem; Long idLocalDestino
+    Integer tempoMin; Integer risco; Boolean acessivel
+    Double declividadePct; Double larguraCalcadaM
+  }
+  class Usuario { Long id; String nome; String email; String perfil; LocalDate dataCadastro }
+  class TipoOcorrencia { Long id; String descricao; Integer gravidadePadrao }
+  class Ocorrencia {
+    Long id; Long idTrecho; Long idUsuario; Long idTipoOcorrencia
+    String descricao; Integer gravidade; String status
+    LocalDate dataRegistro; LocalDate dataResolucao
+  }
+  class RotaConsulta {
+    Long id; Long idUsuario; Long idLocalOrigem; Long idLocalDestino
+    String criterio; Integer tempoTotal; LocalDate dataConsulta
+  }
+  Bairro "1" -- "0..*" Local
+  TipoLocal "1" -- "0..*" Local
+  Local "1" -- "0..*" Trecho : origem / destino
+  Trecho "1" -- "0..*" Ocorrencia
+  Usuario "1" -- "0..*" Ocorrencia
+  TipoOcorrencia "1" -- "0..*" Ocorrencia
+  Usuario "1" -- "0..*" RotaConsulta
+  Local "1" -- "0..*" RotaConsulta : origem / destino
+}
+
+package "dto" {
+  class RotaResposta {
+    String criterio; int tempoTotalMin; int riscoTotal
+    boolean totalmenteAcessivel
+    List<LocalResumo> locais; List<Long> trechos
+  }
+  class "RotaResposta.LocalResumo" as LocalResumo { Long id; String nome; boolean pontoApoio }
+  class ErroResposta {
+    LocalDateTime timestamp; int status; String erro
+    String mensagem; String caminho; Map<String,String> campos
+  }
+  RotaResposta *-- LocalResumo
+}
+
+package "dao (JDBC puro + DataSource)" {
+  abstract class BaseDAO {
+    #DataSource dataSource
+    #abrir(): Connection
+    #existe(sql, params): boolean
+  }
+  class BairroDAO { buscarPorId() }
+  class TipoLocalDAO { buscarPorId() }
+  class LocalDAO { listar(); buscarPorId(); buscarPorNome(); inserir(); atualizar(); excluir(); existe(); temTrechos(); temConsultas() }
+  class TrechoDAO { listar(); buscarPorId(); buscarPorPar(); inserir(); atualizar(); excluir(); existe(); temOcorrencias() }
+  class UsuarioDAO { listar(); buscarPorId(); buscarPorEmail(); inserir(); atualizar(); excluir(); existe() }
+  class TipoOcorrenciaDAO { listar(); existe() }
+  class OcorrenciaDAO { listar(status); buscarPorId(); inserir(); atualizar(); excluir(); existePorUsuario(); trechosComOcorrenciaGrave() }
+  class RotaConsultaDAO { inserir(); existePorUsuario() }
+  BaseDAO <|-- BairroDAO
+  BaseDAO <|-- TipoLocalDAO
+  BaseDAO <|-- LocalDAO
+  BaseDAO <|-- TrechoDAO
+  BaseDAO <|-- UsuarioDAO
+  BaseDAO <|-- TipoOcorrenciaDAO
+  BaseDAO <|-- OcorrenciaDAO
+  BaseDAO <|-- RotaConsultaDAO
+}
+
+package "bo (regras de negócio)" {
+  class UsuarioBO
+  class LocalBO
+  class TrechoBO
+  class OcorrenciaBO
+  class TipoOcorrenciaBO
+  class RotaBO { calcular(origem, destino, criterio, usuario): RotaResposta }
+  class CalculadoraRotaBO { calcular(trechos, graves, criterio, origem, destino): Caminho  // Dijkstra }
+}
+
+package "controller (@RestController)" {
+  class UsuarioController
+  class LocalController
+  class TrechoController
+  class OcorrenciaController
+  class TipoOcorrenciaController
+  class RotaController
+  class StatusController
+}
+
+package "exception" {
+  class RecursoNaoEncontradoException <<404>>
+  class RegraNegocioException <<422>>
+  class ConflitoException <<409>>
+  class RequisicaoInvalidaException <<400>>
+  class ErroBancoException <<500>>
+  class ManipuladorExcecoes <<@RestControllerAdvice>>
+  RuntimeException <|-- RecursoNaoEncontradoException
+  RuntimeException <|-- RegraNegocioException
+  RuntimeException <|-- ConflitoException
+  RuntimeException <|-- RequisicaoInvalidaException
+  RuntimeException <|-- ErroBancoException
+  ManipuladorExcecoes ..> ErroResposta : devolve
+}
+
+package "config" {
+  class CorsConfig
+  class OpenApiConfig
+}
+
+' Controller -> BO
+UsuarioController --> UsuarioBO
+LocalController --> LocalBO
+TrechoController --> TrechoBO
+OcorrenciaController --> OcorrenciaBO
+TipoOcorrenciaController --> TipoOcorrenciaBO
+RotaController --> RotaBO
+
+' BO -> DAO
+UsuarioBO --> UsuarioDAO
+UsuarioBO --> OcorrenciaDAO
+UsuarioBO --> RotaConsultaDAO
+LocalBO --> LocalDAO
+LocalBO --> BairroDAO
+LocalBO --> TipoLocalDAO
+TrechoBO --> TrechoDAO
+TrechoBO --> LocalDAO
+OcorrenciaBO --> OcorrenciaDAO
+OcorrenciaBO --> TrechoDAO
+OcorrenciaBO --> UsuarioDAO
+OcorrenciaBO --> TipoOcorrenciaDAO
+TipoOcorrenciaBO --> TipoOcorrenciaDAO
+RotaBO --> LocalDAO
+RotaBO --> TrechoDAO
+RotaBO --> UsuarioDAO
+RotaBO --> OcorrenciaDAO
+RotaBO --> RotaConsultaDAO
+RotaBO --> CalculadoraRotaBO
+RotaBO ..> RotaResposta
+
+' DAO -> model
+UsuarioDAO ..> Usuario
+LocalDAO ..> Local
+TrechoDAO ..> Trecho
+OcorrenciaDAO ..> Ocorrencia
+TipoOcorrenciaDAO ..> TipoOcorrencia
+RotaConsultaDAO ..> RotaConsulta
+BairroDAO ..> Bairro
+TipoLocalDAO ..> TipoLocal
+CalculadoraRotaBO ..> Trecho
+
+' BO lança exceções
+LocalBO ..> RecursoNaoEncontradoException
+TrechoBO ..> RegraNegocioException
+UsuarioBO ..> ConflitoException
+OcorrenciaBO ..> RegraNegocioException
+RotaBO ..> RecursoNaoEncontradoException
+BaseDAO ..> ErroBancoException
+@enduml

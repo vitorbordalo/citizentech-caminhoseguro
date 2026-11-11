@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>CaminhoSeguro - Domain Driven Design - Java</title>
+<!--
+  TEMPLATE da documentação. Os marcadores {{LINK_GITHUB}} e {{LINK_DEPLOY}} são trocados por
+  `node doc/montar_pdf.mjs LINK_GITHUB LINK_DEPLOY` (que também gera o PDF). {{PG_x}} = número da página no índice.
+-->
+<link rel="stylesheet" href="../../_doc/doc.css">
+<style>
+  @page { margin: 18mm 16mm 20mm 16mm; @bottom-left { content: "CaminhoSeguro · Domain Driven Design - Java · Equipe 1 · 2ESPH"; font: 8pt "Segoe UI", Arial, sans-serif; color: #666; } @bottom-right { content: counter(page); font: 9pt "Segoe UI", Arial, sans-serif; color: #0b3d5c; } }
+  @page :first { @bottom-left { content: none; } @bottom-right { content: none; } }
+  @page paisagem { size: A4 landscape; margin: 12mm 14mm 16mm 14mm; @bottom-left { content: "CaminhoSeguro · Domain Driven Design - Java · Equipe 1 · 2ESPH"; font: 8pt "Segoe UI", Arial, sans-serif; color: #666; } @bottom-right { content: counter(page); font: 9pt "Segoe UI", Arial, sans-serif; color: #0b3d5c; } }
+  .paisagem { page: paisagem; page-break-before: always; page-break-after: always; }
+  .paisagem h2 { margin-top: 0; font-size: 14pt; }
+  .paisagem p { font-size: 9.5pt; margin-bottom: 4pt; }
+  .paisagem figure { margin: 4pt 0 0; }
+  .paisagem figure img { width: auto; max-width: 100%; max-height: 138mm; }
+  body { font-size: 10.5pt; }
+  .capa .meio h1 { font-size: 34pt; }
+  .capa .disc { font-size: 15pt; font-weight: 600; margin-bottom: 4pt; }
+  .capa .meio .sub { margin-bottom: 14pt; }
+  .links td:first-child { white-space: nowrap; font-weight: 600; width: 22%; }
+  a.mark { color: #0b3d5c; font-weight: 600; text-decoration: underline; background: #fff7e0; padding: 0 3pt; }
+  .sumario ol { font-size: 11pt; }
+  .sumario li { display: flex; justify-content: space-between; }
+  .sumario li span.t { background: #fff; padding-right: 4pt; }
+  .sumario li span.pg { background: #fff; padding-left: 4pt; color: #0b3d5c; font-weight: 600; }
+  .sumario li.sub { padding-left: 16pt; font-size: 10pt; color: #333; }
+  table.ep { font-size: 8pt; }
+  table.ep td, table.ep th { padding: 2.5pt 4pt; }
+  table.ep code { font-size: 7.6pt; }
+  .m { font-weight: 700; color: #fff; padding: 1pt 4pt; border-radius: 2pt; font-size: 7.6pt; display: inline-block; min-width: 30pt; text-align: center; }
+  .GET { background: #127a4a; } .POST { background: #0b3d5c; } .PUT { background: #b86e00; } .DELETE { background: #a8281f; }
+  pre { font-size: 8pt; margin: 3pt 0 7pt; }
+  .tela { display: flex; gap: 10pt; align-items: flex-start; }
+  .tela img { border: 1px solid #bbb; }
+  .cel { display: flex; justify-content: space-between; align-items: flex-start; gap: 8pt; }
+  .cel figure { margin: 0; flex: 1; }
+  .cel img { width: 100%; border: 1px solid #bbb; }
+  .passo { counter-increment: p; }
+  h3.num::before { content: counter(p) ". "; }
+  td.c { text-align: center; }
+  .nowrap { white-space: nowrap; }
+  table.sq { page-break-inside: avoid; }
+  .paisagem table { font-size: 8.5pt; margin: 6pt 0 0; }
+  .paisagem td, .paisagem th { padding: 2.5pt 6pt; }
+  .tela1 { text-align: center; }
+</style></head><body>
+
+<!-- ============================ CAPA ============================ -->
+<section class="capa">
+  <div class="topo">FIAP · ENGENHARIA DE SOFTWARE · 2º ANO · TURMA 2ESPH · GLOBAL SOLUTION 2026.2 — CITIZENTECH</div>
+  <div class="meio">
+    <div class="disc">Domain Driven Design - Java</div>
+    <h1>CaminhoSeguro</h1>
+    <div class="sub">API REST de rotas a pé acessíveis e seguras, decididas com a comunidade</div>
+    <p><b>Equipe 1</b> · Turma 2ESPH · Bairro atendido: Bela Vista, São Paulo/SP</p>
+    <table>
+      <tr><th>Integrante (ordem alfabética)</th><th>RM</th></tr>
+      <tr><td>Lucas Branquinho</td><td>562262</td></tr>
+      <tr><td>Vitor Bordalo</td><td>561592</td></tr>
+    </table>
+    <table class="links">
+      <tr><td>Repositório GitHub</td><td><a class="mark" href="{{LINK_GITHUB}}">{{LINK_GITHUB}}</a></td></tr>
+      <tr><td>Deploy (Render)</td><td><a class="mark" href="{{LINK_DEPLOY}}">{{LINK_DEPLOY}}</a></td></tr>
+    </table>
+  </div>
+  <div class="rodape">São Paulo — novembro de 2026</div>
+</section>
+
+<!-- ============================ ÍNDICE ============================ -->
+<section class="sumario">
+  <h2 style="margin-top:0">Índice</h2>
+  <ol>
+    <li><span class="t">1. Descritivo da solução</span><span class="pg">{{PG_1}}</span></li>
+    <li class="sub"><span class="t">1.1 O problema e a solução</span><span class="pg">{{PG_1}}</span></li>
+    <li class="sub"><span class="t">1.2 Funcionalidades e tecnologias</span><span class="pg">{{PG_1}}</span></li>
+    <li><span class="t">2. Justificativa</span><span class="pg">{{PG_2}}</span></li>
+    <li><span class="t">3. Objetivos</span><span class="pg">{{PG_3}}</span></li>
+    <li><span class="t">4. Arquitetura da API (padrão de aula)</span><span class="pg">{{PG_4}}</span></li>
+    <li><span class="t">5. Diagrama de classes (reflete o código Java)</span><span class="pg">{{PG_5}}</span></li>
+    <li class="sub"><span class="t">Figuras 1 a 9: model, camadas por recurso, DAO, exceções, dto e config</span><span class="pg">{{PG_5}}</span></li>
+    <li><span class="t">6. DER: modelo do banco de dados (Oracle)</span><span class="pg">{{PG_6}}</span></li>
+    <li><span class="t">7. Tabela de endpoints (GET, POST, PUT e DELETE)</span><span class="pg">{{PG_7}}</span></li>
+    <li class="sub"><span class="t">7.1 Exemplos de requisição e resposta (JSON)</span><span class="pg">{{PG_71}}</span></li>
+    <li><span class="t">8. Protótipos das telas do front-end</span><span class="pg">{{PG_8}}</span></li>
+    <li><span class="t">9. Instruções para executar</span><span class="pg">{{PG_9}}</span></li>
+    <li class="sub"><span class="t">9.1 Ferramentas e versões · 9.2 Links</span><span class="pg">{{PG_9}}</span></li>
+    <li class="sub"><span class="t">9.3 Passo a passo (H2 rápido e Oracle FIAP) · 9.4 Testes</span><span class="pg">{{PG_93}}</span></li>
+    <li class="sub"><span class="t">9.5 Deploy no Render (Docker)</span><span class="pg">{{PG_95}}</span></li>
+    <li><span class="t">10. Demais informações</span><span class="pg">{{PG_10}}</span></li>
+  </ol>
+  <div class="nota" style="margin-top:14pt"><b>Como o documento está organizado.</b> As seções 1 a 3 são a especificação. As seções 4 e 5 mostram a estrutura do código: o diagrama é gerado
+  automaticamente a partir dos arquivos <code>.java</code>, então reflete o que está no repositório. As seções 6 a 8 trazem o banco, a API e as telas.
+  A seção 9 ensina a rodar tudo, do zero.</div>
+</section>
+
+<!-- ============================ 1. DESCRITIVO ============================ -->
+<h2 class="quebra" id="s1">1. Descritivo da solução</h2>
+<h3>1.1 O problema e a solução</h3>
+<p>O <b>CaminhoSeguro</b> é a CitizenTech da Equipe 1 para a Global Solution 2026.2. Ela atende <b>idosos e pessoas com mobilidade reduzida</b> que moram ou circulam no bairro
+<b>Bela Vista, em São Paulo</b>. A persona do projeto é a dona Maria (72 anos, fictícia), que quer ir sozinha ao posto de saúde e ao mercado. Calçadas irregulares, ladeiras, esquinas sem rampa e travessias perigosas fazem
+muita gente desistir de sair de casa ou correr risco no caminho.</p>
+<p>A solução funciona como duas pontas que se alimentam:</p>
+<ul>
+  <li><b>Ponta do cidadão:</b> o morador pede uma rota entre dois locais do bairro e escolhe o critério (<code>RAPIDA</code>, <code>SEGURA</code> ou <code>ACESSIVEL</code>). A API devolve o passo a passo, o tempo total, o risco acumulado e se o caminho é totalmente acessível. Qualquer usuário também pode registrar uma <b>ocorrência</b> (buraco, esquina sem rampa, iluminação ruim) em um trecho de calçada.</li>
+  <li><b>Ponta do poder público:</b> o agente da subprefeitura acompanha as ocorrências em um painel e muda o status (<code>ABERTA</code>, <code>EM_ANALISE</code>, <code>RESOLVIDA</code>).</li>
+  <li><b>Ciclo:</b> uma ocorrência <b>aberta</b> de gravidade 4 ou 5 aumenta o peso do trecho nas rotas segura e acessível. A comunidade, portanto, influencia o caminho recomendado.</li>
+</ul>
+<p>O trabalho desta disciplina é a <b>API REST em Java</b> (Spring Boot) que guarda e entrega esses dados, conectada ao banco Oracle da disciplina de Database Design. O mapa do bairro é um grafo: cada <b>local</b> é um nó e cada <b>trecho</b> de calçada é uma aresta (com tempo, risco de 0 a 10, acessibilidade, declividade e largura). A rota é calculada com o algoritmo de <b>Dijkstra</b>, com pesos diferentes por critério (seção 4). Todos os dados do projeto são <b>simulados</b>.</p>
+
+<h3>1.2 Funcionalidades e tecnologias</h3>
+<table>
+  <tr><th style="width:26%">Funcionalidade</th><th>O que a API entrega</th></tr>
+  <tr><td>Cadastros (CRUD)</td><td>Usuários, locais, trechos e ocorrências, com GET, POST, PUT e DELETE e validação dos dados.</td></tr>
+  <tr><td>Consulta de domínio</td><td>Lista de tipos de ocorrência (com a gravidade sugerida) e filtros por <code>pontoApoio</code> e <code>status</code>.</td></tr>
+  <tr><td>Cálculo de rota</td><td><code>GET /api/rotas</code> com Dijkstra e três critérios. Se vier o usuário, grava o histórico em <code>T_CS_ROTA_CONSULTA</code> (base do indicador de impacto).</td></tr>
+  <tr><td>Tratamento de erros</td><td>Respostas padronizadas em JSON, com status 400, 404, 409, 422 e 500, sem expor detalhes internos.</td></tr>
+  <tr><td>Documentação e saúde</td><td>Swagger UI em <code>/swagger-ui.html</code> e health check em <code>/api/status</code> (usado pelo Render).</td></tr>
+  <tr><td>Front-end</td><td>Quatro telas em HTML, CSS e JS puros (início, rota, ocorrência e painel do agente) que consomem a API.</td></tr>
+</table>
+<table class="sq">
+  <tr><th style="width:26%">Tecnologia</th><th>Uso</th></tr>
+  <tr><td>Java 21 e Spring Boot 3.5</td><td>API REST (<code>spring-boot-starter-web</code>), validação (<code>starter-validation</code>) e <code>DataSource</code> (<code>starter-jdbc</code>).</td></tr>
+  <tr><td>JDBC puro (sem JPA)</td><td>DAOs com <code>PreparedStatement</code>, conforme o padrão visto em aula.</td></tr>
+  <tr><td>Oracle (FIAP) e H2</td><td>Oracle com driver <code>ojdbc11</code>; H2 em memória (modo Oracle) para rodar sem a rede da FIAP e nos testes.</td></tr>
+  <tr><td>springdoc-openapi 2.8</td><td>Swagger UI gerado a partir dos controllers.</td></tr>
+  <tr><td>Maven Wrapper, Docker e Render</td><td>Build sem instalar o Maven, imagem com JRE 21 e deploy web.</td></tr>
+</table>
+
+<!-- ============================ 2. JUSTIFICATIVA ============================ -->
+<h2 id="s2">2. Justificativa</h2>
+<p>Quem tem mobilidade reduzida decide o dia pelo trajeto. Uma calçada estreita, uma ladeira forte ou uma travessia curta demais transformam uma ida à unidade de saúde em risco de queda, e muitas pessoas simplesmente deixam de sair. Isso afeta autonomia, saúde e convívio social.</p>
+<p>Escolhemos esse problema por quatro razões:</p>
+<ol>
+  <li><b>É concreto e local.</b> A Bela Vista tem relevo acidentado, calçadas de idades diferentes e muita circulação, e fica ao lado do campus da FIAP Paulista. Podemos observar o problema de perto.</li>
+  <li><b>Falta informação, não só obra.</b> Aplicativos de rota comuns otimizam tempo e distância, mas não perguntam se o caminho serve para uma bengala, um andador ou uma cadeira de rodas.</li>
+  <li><b>Cabe no escopo de uma equipe de dois.</b> Um grafo de locais e trechos, uma API e um painel simples já entregam valor. Nossa regra foi &quot;simples primeiro&quot;.</li>
+  <li><b>Une as disciplinas.</b> O mesmo banco e as mesmas regras alimentam a API (DDD), a análise de dados, os algoritmos de grafos e a rede da solução.</li>
+</ol>
+<p>Escolhemos <b>três critérios de rota</b> porque &quot;melhor caminho&quot; depende da pessoa: quem tem pressa quer o mais rápido; dona Maria prefere o mais seguro; quem usa cadeira de rodas precisa do acessível, que descarta trechos inacessíveis e avisa claramente quando não existe caminho.</p>
+<p>Do ponto de vista técnico, a arquitetura em camadas (Controller, BO, DAO) deixa cada parte com uma responsabilidade e facilita testar e explicar o código. O contexto público também apoia a escolha: o Censo 2022 do IBGE mostra o envelhecimento da população brasileira, e a norma ABNT NBR 9050 é a referência técnica de acessibilidade em espaços urbanos (por isso o banco guarda declividade e largura da calçada por trecho).</p>
+
+<!-- ============================ 3. OBJETIVOS ============================ -->
+<h2 id="s3">3. Objetivos</h2>
+<h3>Objetivo geral</h3>
+<p>Entregar uma API REST em Java, ligada ao Oracle da FIAP e publicada na nuvem, que permita a idosos e pessoas com mobilidade reduzida da Bela Vista encontrar o caminho mais rápido, mais seguro ou mais acessível a pé, usando os problemas de calçada registrados pela própria comunidade.</p>
+<h3>Objetivos específicos</h3>
+<ul>
+  <li>Modelar em classes (<code>model</code>) as oito tabelas do banco e persisti-las com DAOs em JDBC puro.</li>
+  <li>Concentrar as regras de negócio nos BOs: validações, unicidades, integridade referencial e cálculo de rota.</li>
+  <li>Expor os recursos com GET, POST, PUT e DELETE e códigos HTTP corretos (200, 201, 204, 400, 404, 409, 422).</li>
+  <li>Tratar todos os erros em um único ponto (<code>@RestControllerAdvice</code>) com resposta JSON clara e sem vazar detalhes técnicos.</li>
+  <li>Calcular rotas com Dijkstra e fazer a comunidade influenciar o resultado (ocorrência aberta grave soma +5 ao trecho).</li>
+  <li>Documentar a API (Swagger), testar os fluxos principais (testes de integração) e publicar o serviço no Render.</li>
+  <li>Contribuir com os ODS 11 (cidades e comunidades sustentáveis, metas 11.2 e 11.7), 10 (redução das desigualdades, meta 10.2) e 3 (saúde e bem-estar, de forma indireta).</li>
+</ul>
+<h3>Como vamos medir o impacto</h3>
+<p>Dois indicadores saem direto do banco: o <b>percentual de trechos acessíveis</b> do bairro e o <b>número de rotas acessíveis consultadas por semana</b> (tabela <code>T_CS_ROTA_CONSULTA</code>). Para ampliar a outros bairros basta cadastrar novos locais e trechos, pois a tabela de bairros já existe.</p>
+
+<!-- ============================ 4. ARQUITETURA ============================ -->
+<h2 id="s4">4. Arquitetura da API (padrão de aula)</h2>
+<p>O projeto fica em <code>caminhoseguro-api/</code>, pacote base <code>br.com.fiap.caminhoseguro</code>. O fluxo de uma requisição é <b>Controller → BO → DAO → Oracle</b>, e os erros voltam por um tratador único.</p>
+<table>
+  <tr><th style="width:15%">Pacote</th><th>Papel</th></tr>
+  <tr><td><code>model</code></td><td>Uma classe por tabela (<code>Bairro</code>, <code>TipoLocal</code>, <code>Local</code>, <code>Trecho</code>, <code>Usuario</code>, <code>TipoOcorrencia</code>, <code>Ocorrencia</code>, <code>RotaConsulta</code>), com as validações do Bean Validation.</td></tr>
+  <tr><td><code>dao</code></td><td>Acesso ao banco com <b>JDBC puro</b> (<code>PreparedStatement</code>). Todos os DAOs estendem <code>BaseDAO</code>, que recebe o <code>DataSource</code> do Spring e concentra a conversão de datas, números e S/N. Sem JPA.</td></tr>
+  <tr><td><code>bo</code></td><td>Regras de negócio e validações; chama os DAOs. <code>CalculadoraRotaBO</code> implementa o Dijkstra sem tocar no banco (recebe os trechos prontos).</td></tr>
+  <tr><td><code>controller</code></td><td><code>@RestController</code> com GET, POST, PUT e DELETE. Só recebe e devolve HTTP.</td></tr>
+  <tr><td><code>exception</code></td><td>Cinco exceções próprias e o <code>ManipuladorExcecoes</code> (<code>@RestControllerAdvice</code>).</td></tr>
+  <tr><td><code>dto</code></td><td><code>RotaResposta</code> (resposta da rota) e <code>ErroResposta</code> (formato do erro).</td></tr>
+  <tr><td><code>config</code></td><td><code>CorsConfig</code> (libera o front) e <code>OpenApiConfig</code> (título do Swagger).</td></tr>
+</table>
+<h3>Regras de negócio principais (no BO)</h3>
+<ul>
+  <li>Risco de 0 a 10, gravidade de 1 a 5, perfil entre <code>IDOSO</code>, <code>PCD</code>, <code>CUIDADOR</code>, <code>MORADOR</code> e <code>AGENTE</code>, e-mail válido.</li>
+  <li>E-mail de usuário único (409); nome de local único no bairro (409); par origem/destino de trecho único, inclusive no sentido inverso (409).</li>
+  <li>Origem diferente do destino no trecho e na rota (422).</li>
+  <li>Não excluir local com trechos ou no histórico de rotas, trecho com ocorrências, nem usuário com ocorrências ou consultas (409).</li>
+  <li>Ocorrência: <code>dataResolucao</code> não pode ser anterior à <code>dataRegistro</code> (422); status <code>RESOLVIDA</code> sem data usa a data de hoje; status padrão <code>ABERTA</code>.</li>
+  <li>Chave estrangeira inexistente resulta em 404 com mensagem clara (ex.: &quot;Bairro 999 não encontrado&quot;).</li>
+</ul>
+<h3>Cálculo da rota (Dijkstra)</h3>
+<p>Os trechos são <b>bidirecionais</b>. O peso de cada trecho depende do critério:</p>
+<table>
+  <tr><th style="width:18%">Critério</th><th>Peso do trecho</th></tr>
+  <tr><td><code>RAPIDA</code></td><td><code>tempoMin</code></td></tr>
+  <tr><td><code>SEGURA</code></td><td><code>tempoMin + 2 × risco</code></td></tr>
+  <tr><td><code>ACESSIVEL</code></td><td>ignora trechos com <code>acessivel = false</code>; peso <code>tempoMin + risco</code></td></tr>
+</table>
+<p>Trecho com ocorrência <b>ABERTA</b> de gravidade 4 ou 5 soma <b>+5</b> nos critérios <code>SEGURA</code> e <code>ACESSIVEL</code>. Se não existir caminho, a API responde 404 (&quot;Não há rota acessível entre X e Y&quot;).</p>
+
+<!-- ============================ 5. DIAGRAMAS ============================ -->
+<section class="paisagem" id="s5">
+  <h2>5. Diagrama de classes (reflete o código Java)</h2>
+  <p>Os diagramas abaixo foram <b>gerados por script a partir dos arquivos <code>.java</code></b> (<code>doc/gerar_diagrama_classes.mjs</code>): classes, atributos com visibilidade e tipo, métodos públicos, herança e dependências por campos injetados e chaves estrangeiras. Legenda: <b>+</b> público, <b>-</b> privado, <b>#</b> protegido; seta aberta = associação (campo); seta tracejada = uso em assinatura de método; triângulo vazado = herança/realização; losango cheio = composição; caixa tracejada = classe de outra figura, resumida. Em <code>model</code> as entidades se ligam por chave estrangeira (<code>idXxx</code>, que no banco é FK), como no DER. Construtores de classes injetadas por Spring foram omitidos.</p>
+  <figure><img src="diagramas/fig-1.svg" alt="Figura 1"><figcaption>Figura 1. Pacote <code>model</code>: as oito entidades e as referências por chave estrangeira (<b>*</b> = muitos, <b>1</b> = um).</figcaption></figure>
+</section>
+<section class="paisagem">
+  <p><b>Camadas por recurso.</b> Cada recurso segue o mesmo desenho: o <code>Controller</code> guarda uma referência ao <code>BO</code> (injetada pelo construtor) e o <code>BO</code> guarda os <code>DAO</code> de que precisa. O BO de Usuário, por exemplo, consulta também o DAO de Ocorrência e o de Consulta de Rota para impedir a exclusão de quem tem histórico.</p>
+  <figure><img src="diagramas/fig-2.svg" alt="Figura 2"><figcaption>Figura 2. Camadas dos recursos <code>/api/usuarios</code>, <code>/api/tipos-ocorrencia</code> e <code>/api/status</code>.</figcaption></figure>
+</section>
+<section class="paisagem">
+  <p><b>Locais.</b> O <code>LocalBO</code> valida a existência do bairro e do tipo de local (404), o nome único no bairro (409) e impede excluir local que tenha trechos ou apareça no histórico de rotas.</p>
+  <figure><img src="diagramas/fig-3.svg" alt="Figura 3"><figcaption>Figura 3. Camadas do recurso <code>/api/locais</code>.</figcaption></figure>
+  <table><tr><th style="width:18%">Endpoints</th><td>GET e POST <code>/api/locais</code> (filtro <code>?pontoApoio=true</code>); GET, PUT e DELETE <code>/api/locais/{id}</code></td></tr>
+  <tr><th>Regras no BO</th><td>bairro e tipo de local precisam existir (404); nome único dentro do bairro (409); <code>pontoApoio</code> vazio vira <code>false</code>; exclusão bloqueada se houver trechos ou histórico de rotas (409).</td></tr></table>
+</section>
+<section class="paisagem">
+  <p><b>Trechos.</b> O <code>TrechoBO</code> exige origem diferente do destino (422), locais existentes (404) e par origem/destino único (409), considerando também o sentido inverso, já que o trecho vale nos dois sentidos.</p>
+  <figure><img src="diagramas/fig-4.svg" alt="Figura 4"><figcaption>Figura 4. Camadas do recurso <code>/api/trechos</code>.</figcaption></figure>
+  <table><tr><th style="width:18%">Endpoints</th><td>GET e POST <code>/api/trechos</code>; GET, PUT e DELETE <code>/api/trechos/{id}</code></td></tr>
+  <tr><th>Regras no BO</th><td>origem diferente do destino (422); locais existentes (404); par repetido, inclusive invertido (409); <code>acessivel</code> vazio vira <code>true</code> (padrão do banco); exclusão bloqueada se houver ocorrências (409).</td></tr></table>
+</section>
+<section class="paisagem">
+  <p><b>Ocorrências.</b> O <code>OcorrenciaBO</code> confere trecho, usuário e tipo (404), aplica os padrões (status <code>ABERTA</code>, data de hoje) e valida as datas (422).</p>
+  <figure><img src="diagramas/fig-5.svg" alt="Figura 5"><figcaption>Figura 5. Camadas do recurso <code>/api/ocorrencias</code>.</figcaption></figure>
+  <table><tr><th style="width:18%">Endpoints</th><td>GET e POST <code>/api/ocorrencias</code> (filtro <code>?status=ABERTA</code>); GET, PUT e DELETE <code>/api/ocorrencias/{id}</code></td></tr>
+  <tr><th>Regras no BO</th><td>trecho, usuário e tipo precisam existir (404); status padrão <code>ABERTA</code>; data de registro padrão = hoje (no PUT, mantém a original); <code>RESOLVIDA</code> sem data de resolução usa hoje; resolução anterior ao registro é rejeitada (422).</td></tr></table>
+</section>
+<section class="paisagem">
+  <p><b>Rota.</b> O <code>RotaBO</code> valida critério e locais, carrega os trechos e as ocorrências graves abertas, chama a <code>CalculadoraRotaBO</code> (Dijkstra, sem acesso a banco), monta o <code>RotaResposta</code> e, se vier <code>usuario</code>, grava a consulta.</p>
+  <figure><img src="diagramas/fig-6.svg" alt="Figura 6"><figcaption>Figura 6. Camadas do recurso <code>/api/rotas</code> e cálculo do caminho (a classe aninhada <code>CalculadoraRotaBO.Caminho</code> é o retorno do cálculo).</figcaption></figure>
+  <table><tr><th style="width:18%">Endpoint</th><td><code>GET /api/rotas?origem=&amp;destino=&amp;criterio=&amp;usuario=</code> (<code>usuario</code> opcional)</td></tr>
+  <tr><th>Regras no BO</th><td>critério entre <code>RAPIDA</code>, <code>SEGURA</code> e <code>ACESSIVEL</code> (400); origem diferente do destino (422); locais e usuário existentes (404); sem caminho, 404 com mensagem clara; ocorrência aberta de gravidade 4 ou 5 soma +5 ao trecho em SEGURA e ACESSIVEL.</td></tr></table>
+</section>
+<section class="paisagem">
+  <p><b>DAO.</b> Os oito DAOs herdam de <code>BaseDAO</code> (abstrata), que abre conexão pelo <code>DataSource</code>, converte erros SQL em <code>ErroBancoException</code> e oferece utilitários de data, número e S/N.</p>
+  <figure><img src="diagramas/fig-7.svg" alt="Figura 7"><figcaption>Figura 7. Pacote <code>dao</code>: hierarquia a partir de <code>BaseDAO</code> (os métodos sublinhados são estáticos).</figcaption></figure>
+</section>
+<section class="paisagem">
+  <p><b>Exceções.</b> Cada regra violada lança uma exceção própria (todas <code>RuntimeException</code>). O <code>ManipuladorExcecoes</code> converte cada uma em resposta JSON padronizada (<code>ErroResposta</code>) com o status certo: 404, 422, 409, 400 e 500. Erros de validação, JSON malformado e parâmetros ausentes também passam por ele.</p>
+  <figure><img src="diagramas/fig-8.svg" alt="Figura 8"><figcaption>Figura 8. Pacote <code>exception</code>.</figcaption></figure>
+</section>
+<section class="paisagem">
+  <p><b>DTO, configuração e classe principal.</b> <code>RotaResposta</code> (com o record <code>LocalResumo</code>) e <code>ErroResposta</code> definem o formato das respostas. <code>CorsConfig</code> libera o front-end e <code>OpenApiConfig</code> define o título do Swagger.</p>
+  <figure><img src="diagramas/fig-9.svg" alt="Figura 9"><figcaption>Figura 9. Pacotes <code>dto</code> e <code>config</code> e a classe <code>CaminhoseguroApiApplication</code>.</figcaption></figure>
+</section>
+
+<!-- ============================ 6. DER ============================ -->
+<section class="paisagem" id="s6">
+  <h2>6. DER: modelo do banco de dados (Oracle)</h2>
+  <figure><img src="img/modelo_logico_recortado.png" alt="DER" style="width:100%; max-height:none"><figcaption>Figura 10. Modelo relacional do CaminhoSeguro (chaves primárias P, estrangeiras F, únicas U e obrigatórias *; relacionamentos 1:N).</figcaption></figure>
+</section>
+<section>
+  <p style="margin-top:0">O banco foi projetado na disciplina de Database Design (Oracle Data Modeler) e criado no Oracle da FIAP pelos scripts <code>04-database/01_DDL_caminhoseguro.sql</code> (tabelas e constraints) e <code>02_DML_caminhoseguro.sql</code> (dados simulados). São <b>8 tabelas</b> com prefixo <code>T_CS_</code>; as classes do pacote <code>model</code> correspondem uma a uma a elas.</p>
+  <h3 style="margin-top:8pt">Tabelas e classes correspondentes</h3>
+  <table>
+    <tr><th>Tabela</th><th>Classe (model)</th><th>Papel</th><th>Chaves estrangeiras</th></tr>
+    <tr><td><code>T_CS_BAIRRO</code></td><td>Bairro</td><td>Bairro atendido (Bela Vista etc.)</td><td>-</td></tr>
+    <tr><td><code>T_CS_TIPO_LOCAL</code></td><td>TipoLocal</td><td>Domínio: residência, unidade de saúde, comércio, ponto de apoio...</td><td>-</td></tr>
+    <tr><td><code>T_CS_LOCAL</code></td><td>Local</td><td>Ponto do bairro (nó do grafo)</td><td>bairro, tipo de local</td></tr>
+    <tr><td><code>T_CS_TRECHO</code></td><td>Trecho</td><td>Calçada entre dois locais (aresta, nos dois sentidos)</td><td>local de origem, local de destino</td></tr>
+    <tr><td><code>T_CS_USUARIO</code></td><td>Usuario</td><td>Idoso, PCD, cuidador, morador ou agente (dados simulados)</td><td>-</td></tr>
+    <tr><td><code>T_CS_TIPO_OCORRENCIA</code></td><td>TipoOcorrencia</td><td>Domínio dos problemas de calçada, com gravidade padrão</td><td>-</td></tr>
+    <tr><td><code>T_CS_OCORRENCIA</code></td><td>Ocorrencia</td><td>Problema registrado pela comunidade em um trecho</td><td>trecho, usuário, tipo de ocorrência</td></tr>
+    <tr><td><code>T_CS_ROTA_CONSULTA</code></td><td>RotaConsulta</td><td>Histórico de rotas pedidas (indicador de impacto)</td><td>usuário, local de origem, local de destino</td></tr>
+  </table>
+  <h3>Relacionamentos (todos 1:N)</h3>
+  <table class="sq">
+    <tr><th>Lado 1 (pai)</th><th>Lado N (filho)</th><th>Coluna da FK no filho</th></tr>
+    <tr><td>T_CS_BAIRRO</td><td>T_CS_LOCAL</td><td><code>id_bairro</code></td></tr>
+    <tr><td>T_CS_TIPO_LOCAL</td><td>T_CS_LOCAL</td><td><code>id_tipo_local</code></td></tr>
+    <tr><td>T_CS_LOCAL</td><td>T_CS_TRECHO</td><td><code>id_local_origem</code> e <code>id_local_destino</code></td></tr>
+    <tr><td>T_CS_TRECHO</td><td>T_CS_OCORRENCIA</td><td><code>id_trecho</code></td></tr>
+    <tr><td>T_CS_USUARIO</td><td>T_CS_OCORRENCIA</td><td><code>id_usuario</code></td></tr>
+    <tr><td>T_CS_TIPO_OCORRENCIA</td><td>T_CS_OCORRENCIA</td><td><code>id_tipo_ocorrencia</code></td></tr>
+    <tr><td>T_CS_USUARIO</td><td>T_CS_ROTA_CONSULTA</td><td><code>id_usuario</code></td></tr>
+    <tr><td>T_CS_LOCAL</td><td>T_CS_ROTA_CONSULTA</td><td><code>id_local_origem</code> e <code>id_local_destino</code></td></tr>
+  </table>
+  <p>Detalhes de colunas, constraints (CHECK de risco 0 a 10, gravidade 1 a 5, perfil e status) e consultas de apoio estão no documento de Database Design. As colunas S/N do banco (<code>st_acessivel</code>, ponto de apoio) viram <code>Boolean</code> em Java, convertidos no <code>BaseDAO</code>. Para testes sem Oracle, o perfil <code>h2</code> usa <code>schema-h2.sql</code> e <code>data-h2.sql</code>, equivalentes ao DDL e DML.</p>
+</section>
+
+<!-- ============================ 7. ENDPOINTS ============================ -->
+<h2 class="quebra" id="s7">7. Tabela de endpoints (GET, POST, PUT e DELETE)</h2>
+<p>Base: <code>/api</code>. JSON em <i>camelCase</i>, datas em <code>yyyy-MM-dd</code>. Os 23 endpoints abaixo são os que existem nos controllers. &quot;Ex.&quot; indica o exemplo de corpo da seção 7.1. Sucesso com <code>POST</code> devolve o header <code>Location</code>. Qualquer endpoint pode devolver 500 (erro genérico, sem detalhes internos).</p>
+<table class="ep">
+  <tr><th>Método</th><th>URL</th><th>Descrição</th><th>Corpo</th><th>Sucesso</th><th>Erros</th></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/usuarios</code></td><td>Lista usuários</td><td>-</td><td>200</td><td>-</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/usuarios/{id}</code></td><td>Busca um usuário</td><td>-</td><td>200</td><td>400 (id inválido), 404</td></tr>
+  <tr><td><span class="m POST">POST</span></td><td><code>/api/usuarios</code></td><td>Cria usuário (data de cadastro = hoje)</td><td>Ex. 1</td><td>201</td><td>400, 409 (e-mail repetido)</td></tr>
+  <tr><td><span class="m PUT">PUT</span></td><td><code>/api/usuarios/{id}</code></td><td>Atualiza usuário</td><td>Ex. 1</td><td>200</td><td>400, 404, 409</td></tr>
+  <tr><td><span class="m DELETE">DELETE</span></td><td><code>/api/usuarios/{id}</code></td><td>Exclui usuário</td><td>-</td><td>204</td><td>404, 409 (tem ocorrências ou consultas)</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/locais</code><br><code>?pontoApoio=true</code></td><td>Lista locais; filtro opcional por ponto de apoio</td><td>-</td><td>200</td><td>400 (filtro inválido)</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/locais/{id}</code></td><td>Busca um local</td><td>-</td><td>200</td><td>400, 404</td></tr>
+  <tr><td><span class="m POST">POST</span></td><td><code>/api/locais</code></td><td>Cria local</td><td>Ex. 2</td><td>201</td><td>400, 404 (bairro ou tipo), 409 (nome repetido)</td></tr>
+  <tr><td><span class="m PUT">PUT</span></td><td><code>/api/locais/{id}</code></td><td>Atualiza local</td><td>Ex. 2</td><td>200</td><td>400, 404, 409</td></tr>
+  <tr><td><span class="m DELETE">DELETE</span></td><td><code>/api/locais/{id}</code></td><td>Exclui local</td><td>-</td><td>204</td><td>404, 409 (tem trechos ou histórico)</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/trechos</code></td><td>Lista trechos</td><td>-</td><td>200</td><td>-</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/trechos/{id}</code></td><td>Busca um trecho</td><td>-</td><td>200</td><td>400, 404</td></tr>
+  <tr><td><span class="m POST">POST</span></td><td><code>/api/trechos</code></td><td>Cria trecho</td><td>Ex. 3</td><td>201</td><td>400, 404 (local), 409 (par repetido), 422 (origem = destino)</td></tr>
+  <tr><td><span class="m PUT">PUT</span></td><td><code>/api/trechos/{id}</code></td><td>Atualiza trecho</td><td>Ex. 3</td><td>200</td><td>400, 404, 409, 422</td></tr>
+  <tr><td><span class="m DELETE">DELETE</span></td><td><code>/api/trechos/{id}</code></td><td>Exclui trecho</td><td>-</td><td>204</td><td>404, 409 (tem ocorrências)</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/ocorrencias</code><br><code>?status=ABERTA</code></td><td>Lista ocorrências; filtro opcional por status</td><td>-</td><td>200</td><td>400 (status inválido)</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/ocorrencias/{id}</code></td><td>Busca uma ocorrência</td><td>-</td><td>200</td><td>400, 404</td></tr>
+  <tr><td><span class="m POST">POST</span></td><td><code>/api/ocorrencias</code></td><td>Registra ocorrência (status padrão ABERTA, data de hoje)</td><td>Ex. 4</td><td>201</td><td>400, 404 (trecho, usuário ou tipo), 422 (datas)</td></tr>
+  <tr><td><span class="m PUT">PUT</span></td><td><code>/api/ocorrencias/{id}</code></td><td>Atualiza (ex.: muda o status no painel)</td><td>Ex. 5</td><td>200</td><td>400, 404, 422</td></tr>
+  <tr><td><span class="m DELETE">DELETE</span></td><td><code>/api/ocorrencias/{id}</code></td><td>Exclui ocorrência</td><td>-</td><td>204</td><td>404</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/tipos-ocorrencia</code></td><td>Lista os tipos de ocorrência (tabela de domínio, só leitura)</td><td>-</td><td>200</td><td>-</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/rotas</code><br><code>?origem=1&amp;destino=3<br>&amp;criterio=ACESSIVEL<br>&amp;usuario=1</code></td><td>Calcula a rota (Dijkstra). <code>usuario</code> é opcional: se vier, grava o histórico</td><td>-</td><td>200</td><td>400 (critério inválido ou parâmetro ausente), 404 (local/usuário inexistente ou sem rota), 422 (origem = destino)</td></tr>
+  <tr><td><span class="m GET">GET</span></td><td><code>/api/status</code></td><td>Health check (usado pelo Render)</td><td>-</td><td>200</td><td>-</td></tr>
+</table>
+<p style="font-size:9pt">Além da API, <code>/swagger-ui.html</code> abre o Swagger. Recursos só com GET (<code>tipos-ocorrencia</code>, <code>rotas</code>, <code>status</code>) são consultas; os quatro cadastros têm CRUD completo.</p>
+
+<h3 id="s71" class="quebra">7.1 Exemplos de requisição e resposta (JSON)</h3>
+<p><b>Ex. 1.</b> <span class="m POST">POST</span> <code>/api/usuarios</code> (o PUT usa o mesmo formato). Resposta 201 com <code>Location: /api/usuarios/8</code>:</p>
+<pre>{ "nome": "Helena Costa Teste", "email": "helena.teste@caminhoseguro.example", "perfil": "MORADOR" }
+
+201 Created
+{ "id": 8, "nome": "Helena Costa Teste", "email": "helena.teste@caminhoseguro.example",
+  "perfil": "MORADOR", "dataCadastro": "2026-11-11" }</pre>
+<p><b>Ex. 2.</b> <span class="m POST">POST</span> <code>/api/locais</code> (<code>idBairro</code> e <code>idTipoLocal</code> precisam existir):</p>
+<pre>{ "idBairro": 1, "idTipoLocal": 3, "nome": "Padaria Exemplo", "endereco": "Endereço de exemplo - Bela Vista",
+  "latitude": -23.5601, "longitude": -46.6502, "pontoApoio": false }
+
+201 Created
+{ "id": 14, "idBairro": 1, "idTipoLocal": 3, "nome": "Padaria Exemplo", "endereco": "Endereço de exemplo - Bela Vista",
+  "latitude": -23.5601, "longitude": -46.6502, "pontoApoio": false }</pre>
+<p><b>Ex. 3.</b> <span class="m POST">POST</span> <code>/api/trechos</code> (risco de 0 a 10; trecho vale nos dois sentidos):</p>
+<pre>{ "idLocalOrigem": 12, "idLocalDestino": 5, "tempoMin": 7, "risco": 3, "acessivel": true,
+  "declividadePct": 3.0, "larguraCalcadaM": 2.1 }
+
+201 Created
+{ "id": 22, "idLocalOrigem": 12, "idLocalDestino": 5, "tempoMin": 7, "risco": 3, "acessivel": true,
+  "declividadePct": 3.0, "larguraCalcadaM": 2.1 }</pre>
+<p><b>Ex. 4.</b> <span class="m POST">POST</span> <code>/api/ocorrencias</code> (gravidade de 1 a 5; sem <code>status</code> e <code>dataRegistro</code> a API usa <code>ABERTA</code> e a data de hoje):</p>
+<pre>{ "idTrecho": 8, "idUsuario": 1, "idTipoOcorrencia": 3, "descricao": "Esquina sem rampa em frente à escola.", "gravidade": 4 }
+
+201 Created
+{ "id": 11, "idTrecho": 8, "idUsuario": 1, "idTipoOcorrencia": 3, "descricao": "Esquina sem rampa em frente à escola.",
+  "gravidade": 4, "status": "ABERTA", "dataRegistro": "2026-11-11", "dataResolucao": null }</pre>
+<p><b>Ex. 5.</b> <span class="m PUT">PUT</span> <code>/api/ocorrencias/1</code> (agente marca como resolvida; sem <code>dataResolucao</code> a API usa hoje e mantém a <code>dataRegistro</code> original):</p>
+<pre>{ "idTrecho": 2, "idUsuario": 1, "idTipoOcorrencia": 3, "descricao": "Esquina da escola sem rampa, precisei descer pela rua.",
+  "gravidade": 4, "status": "RESOLVIDA" }
+
+200 OK
+{ "id": 1, "idTrecho": 2, "idUsuario": 1, "idTipoOcorrencia": 3, "descricao": "Esquina da escola sem rampa, precisei descer pela rua.",
+  "gravidade": 4, "status": "RESOLVIDA", "dataRegistro": "2026-10-02", "dataResolucao": "2026-11-11" }</pre>
+<p><b>Ex. 6.</b> <span class="m GET">GET</span> <code>/api/rotas?origem=1&amp;destino=3&amp;criterio=ACESSIVEL</code> (casa da dona Maria até o posto de saúde):</p>
+<pre>200 OK
+{ "criterio": "ACESSIVEL", "tempoTotalMin": 11, "riscoTotal": 3, "totalmenteAcessivel": true,
+  "locais": [ { "id": 1, "nome": "Casa da dona Maria", "pontoApoio": false },
+              { "id": 2, "nome": "Praça 14 Bis",       "pontoApoio": false },
+              { "id": 3, "nome": "Posto de Saúde",     "pontoApoio": true } ],
+  "trechos": [1, 4] }</pre>
+<p><b>Ex. 7.</b> Formato dos erros (todos os endpoints). Validação (400), com o mapa <code>campos</code>; não encontrado (404); conflito (409); regra de negócio (422):</p>
+<pre>400  { "timestamp": "2026-11-11T10:15:02", "status": 400, "erro": "Requisição inválida", "mensagem": "Dados inválidos",
+       "caminho": "/api/usuarios", "campos": { "nome": "obrigatório" } }
+404  { "timestamp": "...", "status": 404, "erro": "Não encontrado", "mensagem": "Local 99 não encontrado", "caminho": "/api/locais/99" }
+409  { "timestamp": "...", "status": 409, "erro": "Conflito", "mensagem": "Local 3 não pode ser excluído: possui trechos ligados a ele", ... }
+422  { "timestamp": "...", "status": 422, "erro": "Regra de negócio violada", "mensagem": "A origem deve ser diferente do destino", ... }</pre>
+
+<!-- ============================ 8. TELAS ============================ -->
+<h2 id="s8">8. Protótipos das telas do front-end</h2>
+<p>O front-end é um protótipo web estático (HTML, CSS e JS puros) que <b>consome a API real</b>; os prints abaixo foram tirados com a API rodando. Persona principal: dona Maria, 72 anos. Decisões gerais: letra base de 20 px, contraste alto (texto escuro sobre fundo claro, acima de 15:1), botões com no mínimo 56 px de altura, estados sempre com ícone e texto (nunca só cor), foco visível no teclado, campos com <code>&lt;label&gt;</code>, mensagens em regiões <code>aria-live</code> e <code>prefers-reduced-motion</code> respeitado. Se a API não responder, o front usa dados simulados e mostra o selo &quot;Modo demonstração&quot;.</p>
+<figure><img src="img/1-inicio.png" style="width:132mm" alt="Tela 1"><figcaption><b>Tela 1: Início (<code>index.html</code>).</b> &quot;Para onde você quer ir?&quot;: listas de lugares (<code>GET /api/locais</code>) em vez de digitar endereço; três critérios em cartões grandes, com &quot;Mais acessível&quot; marcado por padrão; uma ação principal, &quot;Ver caminho&quot;.</figcaption></figure>
+<figure><img src="img/2-rota.png" style="width:132mm" alt="Tela 2"><figcaption><b>Tela 2: Resultado do caminho (<code>rota.html</code>).</b> Usa <code>GET /api/rotas</code>. Passos numerados com tempo e acessibilidade, tempo total em destaque, selo &quot;Totalmente acessível&quot;, pontos de apoio destacados e atalho &quot;Avisar um problema neste caminho&quot;. Sem rota (404) mostra mensagem amigável.</figcaption></figure>
+<figure><img src="img/3-ocorrencia.png" style="width:132mm" alt="Tela 3"><figcaption><b>Tela 3: Registrar problema (<code>ocorrencia.html</code>).</b> Usa <code>GET /api/trechos</code>, <code>GET /api/tipos-ocorrencia</code> e <code>POST /api/ocorrencias</code>. Trecho pré-selecionado quando vem da rota, tipos em botões com ícone, gravidade de 1 a 5 em palavras, descrição opcional e confirmação clara.</figcaption></figure>
+<figure><img src="img/4-painel.png" style="width:132mm" alt="Tela 4"><figcaption><b>Tela 4: Painel do agente público (<code>painel.html</code>).</b> Usa <code>GET /api/ocorrencias</code> (com filtro de status) e <code>PUT /api/ocorrencias/{id}</code>. Três contadores (abertos, em análise, resolvidos), cartões ordenados por urgência e troca de situação no próprio cartão.</figcaption></figure>
+<figure><img src="img/5-swagger.png" style="width:150mm" alt="Swagger"><figcaption><b>Documentação interativa (Swagger UI, <code>/swagger-ui.html</code>).</b> Lista todos os endpoints da seção 7 e permite testá-los pelo navegador.</figcaption></figure>
+<h3>Versão para celular (390 px)</h3>
+<p>O layout é pensado primeiro para o celular: uma coluna, sem rolagem lateral; no desktop o conteúdo se reorganiza em duas colunas.</p>
+<div class="cel">
+  <figure><img src="img/1-inicio-celular.png" alt="Início no celular"><figcaption>Início</figcaption></figure>
+  <figure><img src="img/2-rota-celular.png" alt="Rota no celular"><figcaption>Rota</figcaption></figure>
+  <figure><img src="img/2b-rota-sem-acessivel-celular.png" alt="Sem rota acessível"><figcaption>Sem rota acessível (404 tratado)</figcaption></figure>
+</div>
+
+<!-- ============================ 9. EXECUÇÃO ============================ -->
+<h2 class="quebra" id="s9">9. Instruções para executar</h2>
+<h3>9.1 Ferramentas e versões</h3>
+<table>
+  <tr><th style="width:30%">Item</th><th>Versão / observação</th></tr>
+  <tr><td>IDE</td><td><b>IntelliJ IDEA</b> (Community ou Ultimate); VS Code com o Extension Pack for Java também funciona</td></tr>
+  <tr><td>Java (JDK)</td><td><b>JDK 21</b> ou superior (<code>java.version = 21</code> no <code>pom.xml</code>). A variável <code>JAVA_HOME</code> deve apontar para o JDK, não para um Java 8</td></tr>
+  <tr><td>Maven</td><td>Não precisa instalar: o projeto traz o <b>Maven Wrapper</b> (<code>mvnw</code> e <code>mvnw.cmd</code>)</td></tr>
+  <tr><td>Framework</td><td>Spring Boot 3.5.16, springdoc-openapi 2.8.9</td></tr>
+  <tr><td>Banco de dados</td><td><b>Oracle da FIAP</b> (<code>oracle.fiap.com.br:1521/ORCL</code>), driver <code>ojdbc11</code>; ou <b>H2</b> em memória (perfil <code>h2</code>) para teste rápido</td></tr>
+  <tr><td>Cliente SQL</td><td>Oracle SQL Developer (para rodar os scripts 01 e 02 no Oracle)</td></tr>
+  <tr><td>Deploy</td><td>Render (Web Service com Docker; imagem <code>eclipse-temurin:21-jre</code>)</td></tr>
+  <tr><td>Navegador / Git</td><td>Chrome, Edge ou Firefox atualizados; Git</td></tr>
+</table>
+<h3>9.2 Links do projeto</h3>
+<table class="links">
+  <tr><td>Repositório GitHub</td><td><a class="mark" href="{{LINK_GITHUB}}">{{LINK_GITHUB}}</a></td></tr>
+  <tr><td>Aplicação publicada (Render)</td><td><a class="mark" href="{{LINK_DEPLOY}}">{{LINK_DEPLOY}}</a></td></tr>
+  <tr><td>Health check</td><td><code>{{LINK_DEPLOY}}/api/status</code></td></tr>
+  <tr><td>Swagger (documentação da API)</td><td><code>{{LINK_DEPLOY}}/swagger-ui.html</code></td></tr>
+</table>
+<p style="font-size:9.5pt">Observação: no plano gratuito do Render o serviço &quot;dorme&quot; após alguns minutos sem uso, e a primeira chamada depois disso demora um pouco mais.</p>
+
+<h3 id="s93">9.3 Passo a passo</h3>
+<h3 style="font-size:11.5pt">Opção A: teste rápido com H2 (sem Oracle, sem senha)</h3>
+<ol>
+  <li>Clone o repositório e abra a pasta <code>caminhoseguro-api</code> no IntelliJ IDEA (<i>File &gt; Open</i>). Aguarde o Maven importar as dependências.</li>
+  <li>Em <i>File &gt; Project Structure &gt; SDK</i>, confirme o <b>JDK 21</b>.</li>
+  <li>Rode pelo terminal, dentro de <code>caminhoseguro-api</code>:
+<pre>./mvnw spring-boot:run -Dspring-boot.run.profiles=h2            # Linux, macOS e Git Bash
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=h2"       # Windows (PowerShell)</pre>
+  No IntelliJ, também dá para criar uma configuração de execução da classe <code>CaminhoseguroApiApplication</code> com <i>Active profiles</i> = <code>h2</code>.</li>
+  <li>O perfil <code>h2</code> cria o banco em memória com <code>schema-h2.sql</code> e <code>data-h2.sql</code> (mesmos dados do DML).</li>
+  <li>Abra <code>http://localhost:8080/swagger-ui.html</code> (Swagger), <code>http://localhost:8080/api/status</code> (saúde) e <code>http://localhost:8080/</code> (telas do front-end, servidas pela própria API).</li>
+</ol>
+<h3 style="font-size:11.5pt">Opção B: com o Oracle da FIAP</h3>
+<ol>
+  <li>No <b>SQL Developer</b>, conecte com seu usuário (RM) em <code>oracle.fiap.com.br:1521/ORCL</code> e rode, nesta ordem, <code>04-database/01_DDL_caminhoseguro.sql</code> (cria as 8 tabelas) e <code>04-database/02_DML_caminhoseguro.sql</code> (insere os dados).</li>
+  <li>Defina as variáveis de ambiente. <b>Nunca coloque usuário e senha no código nem no Git.</b>
+<table>
+  <tr><th style="width:16%">Variável</th><th>Descrição</th><th style="width:36%">Valor / padrão</th></tr>
+  <tr><td><code>DB_URL</code></td><td>URL JDBC do Oracle</td><td><code>jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL</code> (padrão)</td></tr>
+  <tr><td><code>DB_USER</code></td><td>Usuário (RM)</td><td>sem padrão</td></tr>
+  <tr><td><code>DB_PASSWORD</code></td><td>Senha</td><td>sem padrão</td></tr>
+  <tr><td><code>PORT</code></td><td>Porta HTTP</td><td><code>8080</code> (padrão)</td></tr>
+</table>
+<pre>$env:DB_USER="rm_aqui"; $env:DB_PASSWORD="senha_aqui"      # PowerShell
+export DB_USER=rm_aqui DB_PASSWORD=senha_aqui              # Git Bash / Linux</pre>
+  No IntelliJ: <i>Run &gt; Edit Configurations &gt; Environment variables</i>.</li>
+  <li>Rode sem perfil (o padrão é o Oracle): <code>./mvnw spring-boot:run</code> (ou <code>.\mvnw.cmd spring-boot:run</code>). A rede da FIAP ou a VPN precisa estar acessível.</li>
+  <li>Teste em <code>http://localhost:8080/api/status</code> e <code>http://localhost:8080/swagger-ui.html</code>.</li>
+</ol>
+<h3 style="font-size:11.5pt">9.4 Testes automatizados</h3>
+<p>Os testes de integração (MockMvc, perfil <code>h2</code>) chamam os endpoints e conferem status, regras de negócio e o cálculo das rotas. Rode com <code>./mvnw test</code> (ou <code>.\mvnw.cmd test</code>). Para gerar o pacote sem testes: <code>./mvnw package -DskipTests</code>, que cria <code>target/caminhoseguro-api-1.0.0.jar</code>.</p>
+<p><b>Teste manual sugerido (Swagger ou navegador):</b> <code>GET /api/rotas?origem=1&amp;destino=3&amp;criterio=ACESSIVEL</code> deve devolver 3 locais e tempo total de 11 minutos (Ex. 6); <code>GET /api/rotas?origem=1&amp;destino=13&amp;criterio=ACESSIVEL</code> deve devolver 404 com a mensagem &quot;Não há rota acessível...&quot;.</p>
+
+<h3 id="s95">9.5 Deploy no Render (Docker)</h3>
+<ol>
+  <li>Suba o projeto para o GitHub. A pasta <code>caminhoseguro-api/</code> deve ficar na raiz do repositório, ou aponte o <i>Root Directory</i> para ela no Render.</li>
+  <li>No Render: <b>New &gt; Blueprint</b> (usa o <code>render.yaml</code>) ou <b>New &gt; Web Service</b>, escolhendo o repositório e <b>Runtime: Docker</b>.</li>
+  <li>Em <b>Environment</b>, cadastre <code>DB_URL</code>, <code>DB_USER</code> e <code>DB_PASSWORD</code> (o <code>render.yaml</code> declara as três com <code>sync: false</code>, então o Render pede os valores; a senha nunca vai para o Git).</li>
+  <li><b>Health Check Path:</b> <code>/api/status</code> (já definido no <code>render.yaml</code>).</li>
+  <li>Faça o deploy. O build usa o <code>Dockerfile</code> em duas etapas (Maven com JDK 21 gera o <code>.jar</code>; imagem final <code>eclipse-temurin:21-jre</code>). O Render define a variável <code>PORT</code> e a aplicação já a lê (<code>server.port=${PORT:8080}</code>).</li>
+  <li>Teste: <code>https://SEU-SERVICO.onrender.com/api/status</code> e <code>/swagger-ui.html</code> (o endereço real está em 9.2).</li>
+</ol>
+<div class="nota"><b>Problemas comuns.</b> <i>Erro de conexão com o Oracle:</i> confira <code>DB_URL</code>, usuário e senha e se está na rede da FIAP/VPN. <i>Tabelas inexistentes (ORA-00942):</i> rode os scripts 01 e 02 no mesmo usuário usado na aplicação. <i>Porta 8080 ocupada:</i> defina <code>PORT=8081</code>. <i>&quot;JAVA_HOME&quot; aponta para Java 8:</i> ajuste para o JDK 21 ou superior.</div>
+
+<!-- ============================ 10. DEMAIS INFORMAÇÕES ============================ -->
+<h2 id="s10">10. Demais informações</h2>
+<table>
+  <tr><th style="width:26%">Item</th><th>Informação</th></tr>
+  <tr><td>Disciplina</td><td>Domain Driven Design - Java · Global Solution FIAP 2026.2 · CitizenTech</td></tr>
+  <tr><td>Equipe</td><td>Equipe 1, turma 2ESPH: Lucas Branquinho (RM 562262) e Vitor Bordalo (RM 561592)</td></tr>
+  <tr><td>Dados</td><td>Todos simulados; e-mails no domínio de exemplo <code>.example</code>. Não há dados pessoais reais</td></tr>
+  <tr><td>Segurança</td><td>Credenciais só por variáveis de ambiente; erros 500 não expõem stack trace; CORS liberado para o front do protótipo; sem autenticação nesta versão (limite assumido do protótipo)</td></tr>
+  <tr><td>Fora do escopo</td><td>Login real, fotos das ocorrências e mapas externos: ficam para versões futuras</td></tr>
+  <tr><td>ODS</td><td>11 (metas 11.2 e 11.7), 10 (meta 10.2) e 3 (contribuição indireta)</td></tr>
+  <tr><td>IA como copiloto</td><td>Uso permitido pela disciplina e registrado em <code>prompts.md</code> no repositório</td></tr>
+  <tr><td>Documentos relacionados</td><td>Database Design (DER, DDL, DML, DQL), Agile (backlog e pitch) e <code>CONTRATO_API.md</code> (contrato dos endpoints)</td></tr>
+</table>
+
+</body></html>

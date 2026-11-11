@@ -25,11 +25,11 @@ interface g0/1
  description Trunk para R1
  switchport mode trunk
  switchport trunk allowed vlan 10,20,30
+ip domain-name citizentech.local
 crypto key generate rsa
 1024
 enable secret Gs2026@en
 service password-encryption
-ip domain-name citizentech.local
 username admin secret Gs2026@ssh
 ip ssh version 2
 line con 0

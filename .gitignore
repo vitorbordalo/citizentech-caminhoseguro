@@ -4,3 +4,8 @@ __pycache__/
 *.zip
 enunciados/
 _backup/
+
+# Vídeos vão para o YouTube (pesados demais para o Git)
+*.mp4
+# Build Java
+**/target/

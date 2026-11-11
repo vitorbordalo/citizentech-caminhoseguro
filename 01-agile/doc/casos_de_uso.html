@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Casos de uso CaminhoSeguro</title>
+<style>body{margin:0;background:#fff;font-family:"Segoe UI",Arial,sans-serif}</style></head><body>
+<svg id="s" width="2000" height="1440" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+const W=230,H=58; // elipse
+const UC={
+ UC14:[620,150,"Cadastrar-se"],UC07:[620,250,"Consultar locais e\npontos de apoio"],UC01:[620,370,"Buscar rota"],
+ UC02:[620,480,"Informar origem\ne destino"],UC03:[620,580,"Escolher critério\nda rota"],
+ UC08:[620,730,"Registrar ocorrência"],UC09:[620,830,"Selecionar trecho"],UC10:[620,920,"Escolher tipo\ne gravidade"],
+ UC11:[1000,1010,"Anexar foto da\nocorrência"],UC27:[620,1130,"Simular barreiras\nda calçada (AR-VR)"],
+ UC06:[1000,150,"Registrar consulta\nno histórico"],UC05:[1380,140,"Destacar pontos\nde apoio"],UC04:[1000,370,"Ver passo a passo\nda rota"],
+ UC16:[1380,225,"Receber alerta de\ntrecho crítico"],UC17:[1380,310,"Compartilhar rota\ncom cuidador"],UC26:[1380,395,"Visualizar rota\nno mapa"],
+ UC12:[1000,680,"Consultar ocorrências"],UC13:[1000,780,"Confirmar ocorrência\nexistente"],UC15:[1000,1120,"Autenticar-se"],
+ UC21:[1380,520,"Priorizar melhorias\ncom orçamento"],UC18:[1380,840,"Acessar painel\ndo agente"],UC19:[1380,740,"Alterar status\nda ocorrência"],
+ UC20:[1380,640,"Registrar data\nde resolução"],UC22:[1380,950,"Ver indicadores\nde impacto"],UC23:[1380,1090,"Gerenciar locais"],
+ UC24:[1380,1190,"Gerenciar trechos"],UC25:[1380,1290,"Gerenciar usuários"]
+};
+const MVP=new Set(["UC01","UC02","UC03","UC04","UC06","UC07","UC08","UC09","UC10","UC12","UC14","UC18","UC19","UC20","UC23","UC24","UC25"]);
+const ACT={cid:[230,600,"Cidadão"],mor:[70,330,"Morador"],ido:[70,520,"Idoso"],pcd:[70,710,"Pessoa com\ndeficiência"],cui:[70,900,"Cuidador"],
+ age:[1800,780,"Agente público"],adm:[1800,1200,"Administrador"],map:[1800,330,"Serviço de mapas\n«sistema externo»"]};
+const ASSOC=[["cid",["UC01","UC07","UC08","UC12","UC14","UC27"]],["age",["UC18","UC19","UC21","UC22"]],
+ ["adm",["UC22","UC23","UC24","UC25"]],["map",["UC26"]]];
+const INC=[["UC01","UC02"],["UC01","UC03"],["UC01","UC04"],["UC02","UC07"],["UC08","UC09"],["UC08","UC10"],["UC18","UC12"],
+ ["UC18","UC15"],["UC23","UC15"],["UC24","UC15"],["UC25","UC15"]];
+const EXT=[["UC06","UC01"],["UC05","UC04"],["UC16","UC04"],["UC17","UC04"],["UC26","UC04"],["UC11","UC08"],["UC13","UC12"],["UC19","UC18"],["UC20","UC19"]];
+let o=`<defs><marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#444" stroke-width="1.5"/></marker>
+<marker id="g" viewBox="0 0 12 12" refX="12" refY="6" markerWidth="14" markerHeight="14" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#fff" stroke="#222" stroke-width="1.2"/></marker></defs>`;
+o+=`<text x="20" y="36" font-size="24" font-weight="700" fill="#0b3d5c">CaminhoSeguro — Diagrama de Casos de Uso (escopo total)</text>`;
+o+=`<rect x="460" y="90" width="1100" height="1290" rx="10" fill="#f7fafc" stroke="#0b3d5c" stroke-width="2"/>`;
+o+=`<text x="480" y="118" font-size="17" font-weight="700" fill="#0b3d5c">Sistema CaminhoSeguro</text>`;
+function edge(p,q,rx,ry){const dx=q[0]-p[0],dy=q[1]-p[1];const t=1/Math.sqrt((dx*dx)/(rx*rx)+(dy*dy)/(ry*ry));return [p[0]+dx*t,p[1]+dy*t];}
+const ucE=(id,to)=>edge(UC[id],to,W/2,H/2);
+// associações
+const cor={cid:"#2b6cb0",age:"#b45309",adm:"#4a5568",map:"#6b46c1"};
+for(const [a,list] of ASSOC){const A=ACT[a];for(const u of list){const from=[A[0]+(A[0]<1000?28:-28),A[1]-10];const e=a==='cid'?[UC[u][0]-W/2,UC[u][1]]:ucE(u,from);
+ o+=`<line x1="${from[0]}" y1="${from[1]}" x2="${e[0]}" y2="${e[1]}" stroke="${cor[a]}" stroke-width="1.6" opacity=".75"/>`;}}
+// generalização atores
+for(const k of ["mor","ido","pcd","cui"]){const A=ACT[k],C=ACT.cid;o+=`<line x1="${A[0]+22}" y1="${A[1]-10}" x2="${C[0]-24}" y2="${C[1]-10}" stroke="#222" stroke-width="1.3" marker-end="url(#g)"/>`;}
+function dashed(a,b,label){const pa=UC[a],pb=UC[b];const s=ucE(a,pb),e=ucE(b,pa);const mx=(s[0]+e[0])/2,my=(s[1]+e[1])/2;
+ o+=`<line x1="${s[0]}" y1="${s[1]}" x2="${e[0]}" y2="${e[1]}" stroke="#444" stroke-width="1.3" stroke-dasharray="6 4" marker-end="url(#a)"/>`;
+ o+=`<text x="${mx}" y="${my-3}" font-size="11.5" text-anchor="middle" fill="#333" paint-order="stroke" stroke="#f7fafc" stroke-width="4">${label}</text>`;}
+INC.forEach(([a,b])=>dashed(a,b,"«include»"));EXT.forEach(([a,b])=>dashed(a,b,"«extend»"));
+// elipses
+for(const [id,[x,y,t]] of Object.entries(UC)){const m=MVP.has(id);
+ o+=`<ellipse cx="${x}" cy="${y}" rx="${W/2}" ry="${H/2}" fill="${m?'#dff3e7':'#fff'}" stroke="${m?'#127a4a':'#7a8a99'}" stroke-width="${m?2:1.4}" ${m?'':'stroke-dasharray="5 3"'}/>`;
+ const ls=t.split("\n");ls.forEach((l,i)=>{o+=`<text x="${x}" y="${y+(i-(ls.length-1)/2)*15+4}" font-size="13" text-anchor="middle" fill="#111">${i==0?`<tspan font-weight="700">${id}</tspan> `:''}${l}</text>`;});}
+// atores
+for(const [k,[x,y,t]] of Object.entries(ACT)){
+ if(k==="map"){o+=`<rect x="${x-70}" y="${y-40}" width="140" height="56" fill="#fff" stroke="#6b46c1" stroke-width="1.6"/>`;}
+ else{o+=`<g stroke="#222" stroke-width="2" fill="none"><circle cx="${x}" cy="${y-48}" r="12" fill="#fff"/><line x1="${x}" y1="${y-36}" x2="${x}" y2="${y-4}"/><line x1="${x-18}" y1="${y-26}" x2="${x+18}" y2="${y-26}"/><line x1="${x}" y1="${y-4}" x2="${x-14}" y2="${y+18}"/><line x1="${x}" y1="${y-4}" x2="${x+14}" y2="${y+18}"/></g>`;}
+ const ls=t.split("\n");ls.forEach((l,i)=>{o+=`<text x="${x}" y="${(k==='map'?y-18:y+38)+i*16}" font-size="14" font-weight="${i==0?700:400}" ${k==='cid'?'font-style="italic"':''} text-anchor="middle">${l}</text>`;});}
+// legenda
+o+=`<g font-size="13"><ellipse cx="560" cy="1410" rx="40" ry="13" fill="#dff3e7" stroke="#127a4a" stroke-width="2"/><text x="610" y="1415">MVP (1ª entrega)</text>
+<ellipse cx="800" cy="1410" rx="40" ry="13" fill="#fff" stroke="#7a8a99" stroke-dasharray="5 3"/><text x="850" y="1415">Escopo futuro</text>
+<text x="1010" y="1415">Cidadão (em itálico) é ator abstrato: Morador, Idoso, PCD e Cuidador herdam suas associações (seta de generalização).</text></g>`;
+document.getElementById('s').innerHTML=o;
+</script></body></html>
